@@ -1,0 +1,362 @@
+.row-options + div {
+  margin-left: 28px;
+}
+.row-options {
+  position: absolute;
+  background-color: transparent;
+  font-size: 1.2em;
+  color: #C8CED6;
+  font-family: "jaf-bernino-sans-condensed", "Arial Narrow", sans-serif;
+  border: none;
+  width: 27px;
+  height: 27px;
+  padding-left: 11px;
+  padding-top: 4px;
+  text-align: left;
+  left: 50px;
+  cursor: pointer;
+  z-index: 9;
+}
+.row-options:hover {
+  color: #006699;
+}
+.row-options:active {
+  color: #002233;
+}
+.list-header {
+  font-family: "ff-dagny-web-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  color: #708095;
+  font-size: 1em;
+  position: relative;
+  display: inline-flex;
+  min-width: 100%;
+  z-index: 15;
+  background-color: #E8EFF4;
+  background-color: #f7f7f7;
+}
+.list-header .list-row-header > .list-cell {
+  padding: 5px 6px;
+}
+.list-header .row-menu-button {
+  width: 28px;
+}
+.list-header .list-cell-first-edit {
+  margin-top: 0px;
+}
+.scroolOverlayInner {
+  position: fixed;
+  top: 270px;
+  bottom: 0px;
+  width: 95%;
+  overflow: scroll;
+}
+.list {
+  float: left;
+}
+.clipboard-container {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 0px;
+  height: 0px;
+  z-index: 100;
+  display: none;
+  opacity: 0;
+}
+.clipboard-container .clipboard {
+  width: 1px;
+  height: 1px;
+  padding: 0px;
+}
+.list-row-header {
+  border-top: 1px solid #ddd;
+}
+.list-row-header,
+.list-row-new,
+.list-row-lazzy,
+.list-row-loaded,
+.list-row-deleted,
+.list-row-imported,
+.list-row-sesupdated,
+.list-row-staging,
+.list-row-checking,
+.list-row-selected {
+  cursor: default;
+  display: flex;
+  text-decoration: none;
+  position: relative;
+  height: 35px;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.list-row-header .select,
+.list-row-new .select,
+.list-row-lazzy .select,
+.list-row-loaded .select,
+.list-row-deleted .select,
+.list-row-imported .select,
+.list-row-sesupdated .select,
+.list-row-staging .select,
+.list-row-checking .select,
+.list-row-selected .select {
+  padding-left: 3px;
+  display: none;
+}
+.list-row-header .first-cell,
+.list-row-new .first-cell,
+.list-row-lazzy .first-cell,
+.list-row-loaded .first-cell,
+.list-row-deleted .first-cell,
+.list-row-imported .first-cell,
+.list-row-sesupdated .first-cell,
+.list-row-staging .first-cell,
+.list-row-checking .first-cell,
+.list-row-selected .first-cell {
+  width: 50px;
+  background-color: #f7f7f7;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+.list-row-header .first-cell input[type=checkbox],
+.list-row-new .first-cell input[type=checkbox],
+.list-row-lazzy .first-cell input[type=checkbox],
+.list-row-loaded .first-cell input[type=checkbox],
+.list-row-deleted .first-cell input[type=checkbox],
+.list-row-imported .first-cell input[type=checkbox],
+.list-row-sesupdated .first-cell input[type=checkbox],
+.list-row-staging .first-cell input[type=checkbox],
+.list-row-checking .first-cell input[type=checkbox],
+.list-row-selected .first-cell input[type=checkbox] {
+  width: 17px;
+  height: 17px;
+}
+.list-row-header .row-options,
+.list-row-new .row-options,
+.list-row-lazzy .row-options,
+.list-row-loaded .row-options,
+.list-row-deleted .row-options,
+.list-row-imported .row-options,
+.list-row-sesupdated .row-options,
+.list-row-staging .row-options,
+.list-row-checking .row-options,
+.list-row-selected .row-options {
+  display: none;
+}
+.list-row:hover .select,
+.list-row-header:hover .select,
+.list-row-new:hover .select,
+.list-row-lazzy:hover .select,
+.list-row-loaded:hover .select,
+.list-row-staging:hover .select,
+.list-row-imported:hover .select,
+.list-row-sesupdated:hover .select,
+.list-row-checking:hover .select,
+.list-row-selected:hover .select {
+  display: block;
+}
+.list-row:hover .view,
+.list-row-header:hover .view,
+.list-row-new:hover .view,
+.list-row-lazzy:hover .view,
+.list-row-loaded:hover .view,
+.list-row-staging:hover .view,
+.list-row-imported:hover .view,
+.list-row-sesupdated:hover .view,
+.list-row-checking:hover .view,
+.list-row-selected:hover .view {
+  display: none;
+}
+.list-row:hover .row-options,
+.list-row-header:hover .row-options,
+.list-row-new:hover .row-options,
+.list-row-lazzy:hover .row-options,
+.list-row-loaded:hover .row-options,
+.list-row-staging:hover .row-options,
+.list-row-imported:hover .row-options,
+.list-row-sesupdated:hover .row-options,
+.list-row-checking:hover .row-options,
+.list-row-selected:hover .row-options {
+  display: block;
+  color: #08c;
+  border: none;
+  background-color: transparent;
+}
+.list-row-deleted {
+  color: #C8CED6;
+}
+.list-row-deleted .select {
+  display: none;
+}
+.list-row-deleted .view {
+  display: block;
+}
+.list-row-deleted .row-options {
+  display: none;
+}
+.list-row-staging {
+  font-weight: 600;
+}
+.list-row-staging .select {
+  display: none;
+}
+.list-row-staging .view {
+  display: block;
+}
+.list-row-checked {
+  background-color: #ebedf0;
+}
+.list-row-header .select,
+.list-row-checking .select {
+  display: block;
+}
+.list-row-header .view,
+.list-row-checking .view {
+  display: none;
+}
+.list-row-new {
+  font-weight: 100;
+}
+.list-row-selected {
+  background-color: #f1f1f1;
+}
+.list-row-selected .row-options {
+  display: block;
+  color: #08c;
+  border: none;
+  background-color: transparent;
+}
+/* .roundedTwo */
+.roundedTwo {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  background: #fcfff4;
+  background: linear-gradient(to bottom, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  border-radius: 50px;
+  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.roundedTwo label {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #222 0%, #45484d 100%);
+  border-radius: 50px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px #ffffff;
+}
+.roundedTwo label:after {
+  content: '';
+  width: 9px;
+  height: 5px;
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  border: 3px solid #fcfff4;
+  border-top: none;
+  border-right: none;
+  background: transparent;
+  opacity: 0;
+  transform: rotate(-45deg);
+}
+.roundedTwo label:hover::after {
+  opacity: 0.3;
+}
+.roundedTwo input[type=checkbox] {
+  visibility: hidden;
+}
+.roundedTwo input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+/* end .roundedTwo */
+.form-modal {
+  width: 70%;
+}
+.header {
+  border-bottom: 1px solid #ddd;
+}
+.header .edit-header-container,
+.header .history-header-container {
+  display: inline-block;
+}
+.header .edit-header-container {
+  border-right: 1px solid #ddd;
+  width: 65%;
+}
+.header .edit-header-container .edit-header {
+  padding: 15px;
+}
+.header .history-header-container {
+  width: 30%;
+}
+.header .history-header-container .history-header {
+  padding-left: 15px;
+}
+.header .close-button {
+  position: absolute;
+  font-size: 2em;
+  color: #5C6F7F;
+  cursor: pointer;
+  opacity: .9;
+}
+.form {
+  margin: 2px;
+  height: 80vh;
+}
+.form label {
+  font-size: 1em;
+  font-weight: normal;
+  display: block;
+  vertical-align: top;
+  font-weight: bold;
+  color: #5C6F7F;
+}
+.form h1 {
+  background-color: #FFF;
+  font-family: "ff-dagny-web-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.3em;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+  margin: 0px;
+  width: 100%;
+}
+.form h2 {
+  font-family: "ff-dagny-web-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #dddddd;
+  padding: 5px 0px 5px 10px;
+  font-size: 1.2em;
+  margin: 0px;
+}
+.form .edit-panel,
+.form .history-panel {
+  vertical-align: top;
+  display: inline-block;
+}
+.form .edit-panel {
+  width: 65%;
+  border-right: 1px solid #ddd;
+  padding-top: 2px;
+  overflow-y: scroll;
+  height: 80vh;
+}
+.form .history-panel {
+  width: 35%;
+  height: inherit;
+  display: inline-flex;
+  flex-direction: column;
+}
+.form .history-panel .comments-panel {
+  height: inherit;
+  padding-top: 2px;
+  overflow-y: scroll;
+}
+.form .history-panel .action-panel {
+  border-top: 1px solid #ddd;
+  padding: 5px;
+}
+.form .history-panel .action-panel input {
+  width: 70%;
+}

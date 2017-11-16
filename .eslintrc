@@ -1,0 +1,12 @@
+{
+  "globals": {
+    "$": true
+  },
+  "env": {
+    "jest": true
+  },
+  "extends": [
+    "eslint-config-vtex",
+    "eslint-config-vtex-react"
+  ]
+}

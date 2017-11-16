@@ -1,0 +1,101 @@
+@import '../../vtex-variables.less';
+
+@border: 1px solid #ddd;
+
+.form-modal {
+  //max-width: 900px;
+  width: 70%;
+}
+.header {
+  border-bottom: @border;
+  .edit-header-container, .history-header-container {
+    display: inline-block;
+  }
+  .edit-header-container {
+    border-right: @border;
+    width: 65%;
+    .edit-header {
+    padding: 15px;
+  }
+}
+  .history-header-container{
+    width: 30%;
+    .history-header{
+    padding-left: 15px;
+    }
+  }
+
+  .close-button {
+    position: absolute;
+    font-size: 2em;
+    color: @gray-solid-b;
+    cursor: pointer;
+    opacity: .9;
+  }
+}
+
+.form {
+  // background-color: @gray-soft;
+  margin: 2px;
+  height: 80vh;
+  label {
+    font-size: 1em;
+    font-weight: normal;
+    display: block;
+    vertical-align: top;
+    font-weight: bold;
+    color: @gray-solid-b;
+  }
+
+  h1 {
+    background-color: @white;
+    font-family: @font-body;
+    font-size: 1.3em;
+    border-bottom: @border;
+    text-align: center;
+    padding: 8px;
+    margin: 0px;
+    width: 100%;
+  }
+
+  h2 {
+    font-family: @font-body;
+    background-color: lighten(@black-soft, 40%);
+    // color: @white;
+    padding: 5px 0px 5px 10px;
+    font-size: 1.2em;
+    margin: 0px;
+  }
+
+  .edit-panel, .history-panel {
+    vertical-align: top;
+    display: inline-block;
+  }
+  .edit-panel {
+    width: 65%;
+    border-right: @border;
+    padding-top: 2px;
+    overflow-y: scroll;
+    height: 80vh;
+  }
+  .history-panel {
+    width: 35%;
+    height: inherit;
+    display: inline-flex;
+    flex-direction: column;
+
+    .comments-panel {
+      height: inherit;
+      padding-top: 2px;
+      overflow-y: scroll;
+    }
+
+    .action-panel {
+      border-top: @border;
+      padding:5px;
+      input{
+        width: 70%;
+      }
+    }
+  }
+}
