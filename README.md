@@ -1,3 +1,4 @@
+
 # react-jsonschema-table
 
 > Easy to use component for generate an infinite scroll table with inline editing that use JSONSchema to define the structure of data.
