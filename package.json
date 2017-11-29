@@ -6,7 +6,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:transitive-bullshit/react-modern-library-boilerplate.git"
+    "url":
+      "git@github.com:transitive-bullshit/react-modern-library-boilerplate.git"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -34,6 +35,7 @@
     "react-slick": "^0.15.0",
     "react-widgets": "^4.0.0",
     "react-widgets-moment": "^4.0.0",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reflux": "^6.4.1",
     "underscore": "^1.8.3",
@@ -85,12 +87,7 @@
     "globals": {
       "NODE_ENV": "test"
     },
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ]
+    "moduleFileExtensions": ["js", "jsx"]
   },
-  "files": [
-    "dist"
-  ]
+  "files": ["dist"]
 }

@@ -1,32 +1,41 @@
 import * as types from './ActionTypes'
 import { GetFetcher } from './FetcherWrapper'
 
-export const fetchItemsRequest = () => ({
+const fetchItemsRequest = () => ({
   type: types.ITEMS_LOAD_BEGAN,
 })
 
-export const fetchItemsSucess = items => ({
+const fetchItemsSucess = (items, totalRows, rowStart, sort, where) => ({
   type: types.ITEMS_LOAD_SUCCESS,
   items: items,
+  totalRows: totalRows,
+  rowStart: rowStart,
+  sort: sort,
+  where: where,
 })
 
-export const fetchItemsFailure = error => ({
+const fetchItemsFailure = error => ({
   type: types.ITEMS_LOAD_FAIL,
   error: error,
 })
 
-export const fetchItems = () => (
-  context,
-  fields,
-  skip,
-  size,
-  where,
-  sort
-) => dispatch => {
-  const fetcher = GetFetcher()
-  dispatch.fetchItemsRequest(context, fields, skip, size, where, sort)
-  return fetcher
-    .getItems(context, fields, skip, size, where, sort)
-    .then(json => dispatch(fetchItemsSucess(json.body)))
-    .catch(ex => dispatch(fetchItemsFailure(ex)))
+export function fetchItems(context, fields, skip, size, where, sort) {
+  return dispatch => {
+    const fetcher = GetFetcher()
+    dispatch(fetchItemsRequest(context, fields, skip, size, where, sort))
+    return fetcher
+      .getItems(context, fields, skip, size, where, sort)
+      .then(response =>
+        dispatch(
+          fetchItemsSucess(
+            response.items,
+            response.totalRows,
+            response.rowStart,
+            sort,
+            where
+          )
+        )
+      )
+      .catch(ex => dispatch(fetchItemsFailure(ex)))
+  }
 }
