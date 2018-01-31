@@ -261,7 +261,7 @@ describe('Items Reducer', () => {
       staging: {
         '3': {
           status: 'new',
-          document: {},
+          document: { id: '3' },
           validationErrors: null,
         },
       },
@@ -272,6 +272,363 @@ describe('Items Reducer', () => {
       invalidItems: [],
       checkedItems: [],
       stagingItems: ['3'],
+    })
+  })
+
+  it('WHEN UPDATE_ITEM action WITH valid value THEN the staging contains the item with the updatet version', () => {
+    expect(
+      reducer(
+        {
+          isFetching: false,
+          source: [
+            {
+              document: { id: '1', name: 'test' },
+              status: 'loaded',
+              virtualIndex: 0,
+            },
+            {
+              document: { id: '2', name: 'test2' },
+              status: 'loaded',
+              virtualIndex: 1,
+            },
+          ],
+          staging: {},
+          sort: null,
+          where: null,
+          historyChanges: [],
+          historyIndex: 0,
+          invalidItems: [],
+          checkedItems: [],
+          stagingItems: [],
+        },
+        {
+          type: types.UPDATE_ITEM,
+          id: '2',
+          schema: {
+            properties: {
+              name: { type: 'string' },
+            },
+          },
+          changes: { name: { value: 'test updated' } },
+          lang: 'pt-BR',
+        }
+      )
+    ).toEqual({
+      isFetching: false,
+      source: [
+        {
+          document: { id: '1', name: 'test' },
+          status: 'loaded',
+          virtualIndex: 0,
+        },
+        {
+          document: { id: '2', name: 'test2' },
+          status: 'loaded',
+          virtualIndex: 1,
+        },
+      ],
+      staging: {
+        '2': {
+          status: 'loaded',
+          document: { name: 'test updated' },
+          validationErrors: null,
+        },
+      },
+      sort: null,
+      where: null,
+      historyChanges: [
+        {
+          changes: { name: { value: 'test updated' } },
+          id: '2',
+          status: 'loaded',
+        },
+      ],
+      historyIndex: 1,
+      invalidItems: [],
+      checkedItems: [],
+      stagingItems: ['2'],
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_BEGAN action THEN the state must have the isFetching = true', () => {
+    expect(reducer({}, { type: types.SAVE_ITEMS_CHANGES_BEGAN })).toEqual({
+      isFetching: true,
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_COMPLETE action THEN the state must have the isFetching = false', () => {
+    expect(
+      reducer(
+        { staging: {} },
+        { type: types.SAVE_ITEMS_CHANGES_COMPLETE, errors: null }
+      )
+    ).toEqual({
+      isFetching: false,
+      staging: {},
+      errors: null,
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_COMPLETE action THEN the state must have the isFetching = false', () => {
+    expect(
+      reducer(
+        { staging: {} },
+        { type: types.SAVE_ITEMS_CHANGES_COMPLETE, errors: null }
+      )
+    ).toEqual({
+      isFetching: false,
+      staging: {},
+      errors: null,
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_COMPLETE action THEN the state must have the isFetching = false', () => {
+    expect(
+      reducer(
+        { staging: {} },
+        { type: types.SAVE_ITEMS_CHANGES_COMPLETE, errors: null }
+      )
+    ).toEqual({
+      isFetching: false,
+      staging: {},
+      errors: null,
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_COMPLETE action WITH Update change THEN the state must have the UPDATED values', () => {
+    expect(
+      reducer(
+        {
+          isFetching: false,
+          errors: null,
+          source: [
+            {
+              document: { id: '1', name: 'test' },
+              status: 'loaded',
+              virtualIndex: 0,
+            },
+            {
+              document: { id: '2', name: 'test2' },
+              status: 'loaded',
+              virtualIndex: 1,
+            },
+          ],
+          staging: {
+            '2': {
+              status: 'loaded',
+              document: { name: 'test updated' },
+              validationErrors: null,
+            },
+            '3': {
+              status: 'new',
+              document: { id: '3', name: 'test new' },
+              validationErrors: null,
+            },
+          },
+          sort: null,
+          where: null,
+          historyChanges: [
+            {
+              changes: { name: { value: 'test updated' } },
+              id: '2',
+              status: 'loaded',
+            },
+            {
+              changes: { name: { value: 'test new' } },
+              id: '3',
+              status: 'new',
+            },
+          ],
+          historyIndex: 2,
+          invalidItems: [],
+          checkedItems: [],
+          stagingItems: ['2', '3'],
+        },
+        { type: types.SAVE_ITEMS_CHANGES_COMPLETE, errors: null }
+      )
+    ).toEqual({
+      isFetching: false,
+      errors: null,
+      source: [
+        {
+          document: { id: '1', name: 'test' },
+          status: 'loaded',
+          virtualIndex: 0,
+        },
+        {
+          document: { id: '2', name: 'test updated' },
+          status: 'loaded',
+          virtualIndex: 1,
+        },
+        {
+          document: { id: '3', name: 'test new' },
+          status: 'loaded',
+        },
+      ],
+      staging: {},
+      sort: null,
+      where: null,
+      historyChanges: [
+        {
+          changes: { name: { value: 'test updated' } },
+          id: '2',
+          status: 'loaded',
+        },
+        {
+          changes: { name: { value: 'test new' } },
+          id: '3',
+          status: 'new',
+        },
+      ],
+      historyIndex: 2,
+      invalidItems: [],
+      checkedItems: [],
+      stagingItems: [],
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_COMPLETE action WITH New Item change THEN the state must have the NEW item', () => {
+    expect(
+      reducer(
+        {
+          isFetching: false,
+          errors: null,
+          source: [
+            {
+              document: { id: '1', name: 'test' },
+              status: 'loaded',
+              virtualIndex: 0,
+            },
+            {
+              document: { id: '2', name: 'test2' },
+              status: 'loaded',
+              virtualIndex: 1,
+            },
+          ],
+          staging: {
+            '3': {
+              status: 'new',
+              document: { id: '3', name: 'test new' },
+              validationErrors: null,
+            },
+          },
+          sort: null,
+          where: null,
+          historyChanges: [
+            {
+              changes: { name: { value: 'test new' } },
+              id: '3',
+              status: 'new',
+            },
+          ],
+          historyIndex: 1,
+          invalidItems: [],
+          checkedItems: [],
+          stagingItems: ['3'],
+        },
+        { type: types.SAVE_ITEMS_CHANGES_COMPLETE, errors: null }
+      )
+    ).toEqual({
+      isFetching: false,
+      errors: null,
+      source: [
+        {
+          document: { id: '1', name: 'test' },
+          status: 'loaded',
+          virtualIndex: 0,
+        },
+        {
+          document: { id: '2', name: 'test2' },
+          status: 'loaded',
+          virtualIndex: 1,
+        },
+        {
+          document: { id: '3', name: 'test new' },
+          status: 'loaded',
+        },
+      ],
+      staging: {},
+      sort: null,
+      where: null,
+      historyChanges: [
+        {
+          changes: { name: { value: 'test new' } },
+          id: '3',
+          status: 'new',
+        },
+      ],
+      historyIndex: 1,
+      invalidItems: [],
+      checkedItems: [],
+      stagingItems: [],
+    })
+  })
+
+  it('WHEN SAVE_ITEMS_CHANGES_COMPLETE action WITH Delete change THEN the state must remove the deleted item', () => {
+    expect(
+      reducer(
+        {
+          isFetching: false,
+          errors: null,
+          source: [
+            {
+              document: { id: '1', name: 'test' },
+              status: 'loaded',
+              virtualIndex: 0,
+            },
+            {
+              document: { id: '2', name: 'test2' },
+              status: 'loaded',
+              virtualIndex: 1,
+            },
+          ],
+          staging: {
+            '2': {
+              status: 'deleted',
+              document: {},
+              validationErrors: null,
+            },
+          },
+          sort: null,
+          where: null,
+          historyChanges: [
+            {
+              changes: {},
+              id: '2',
+              status: 'delete',
+            },
+          ],
+          historyIndex: 1,
+          invalidItems: [],
+          checkedItems: [],
+          stagingItems: ['2'],
+        },
+        { type: types.SAVE_ITEMS_CHANGES_COMPLETE, errors: null }
+      )
+    ).toEqual({
+      isFetching: false,
+      errors: null,
+      source: [
+        {
+          document: { id: '1', name: 'test' },
+          status: 'loaded',
+          virtualIndex: 0,
+        },
+      ],
+      staging: {},
+      sort: null,
+      where: null,
+      historyChanges: [
+        {
+          changes: {},
+          id: '2',
+          status: 'delete',
+        },
+      ],
+      historyIndex: 1,
+      invalidItems: [],
+      checkedItems: [],
+      stagingItems: [],
     })
   })
 })

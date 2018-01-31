@@ -3,7 +3,6 @@ import React from 'react'
 import ReactDom from 'react-dom'
 import _ from 'underscore'
 import Actions from '../actions/Actions'
-// import MainActions from '../../../actions/Actions'
 import Store from '../stores/RowsStore'
 import STATUS from '../../stores/Status'
 import { HotKeys } from 'react-hotkeys'
@@ -74,7 +73,6 @@ class Row extends React.Component {
           this.state.selectionRange.cellB.row
         ))
     ) {
-      console.log(`updateRow:${this.props.item.virtualID}`)
       return true
     }
     if (
@@ -91,7 +89,6 @@ class Row extends React.Component {
           this.state.selectionFillHandleRange.cellB.row
         ))
     ) {
-      console.log('HandleFillRow')
       return true
     }
     var shouldUpdate = false
@@ -232,24 +229,29 @@ class Row extends React.Component {
               onFocusCell: onFocusCell,
               onEditCell: onEditCell,
               showLabel: false,
-              isSelected: selectionRange &&
+              isSelected:
+                selectionRange &&
                 that.isCellInSelectionRange(
                   { row: virtualID, col: colIndex },
                   selectionRange.cellA,
                   selectionRange.cellB
                 ),
-              isFillHandleSelected: selectionFillHandleRange &&
+              isFillHandleSelected:
+                selectionFillHandleRange &&
                 that.isCellInSelectionRange(
                   { row: virtualID, col: colIndex },
                   selectionFillHandleRange.cellA,
                   selectionFillHandleRange.cellB
                 ),
-              isFillHandleCell: virtualID === fillHandleCell.row &&
+              isFillHandleCell:
+                virtualID === fillHandleCell.row &&
                 colIndex === fillHandleCell.col,
-              isFocus: selectedCell &&
+              isFocus:
+                selectedCell &&
                 selectedCell.row === virtualID &&
                 selectedCell.col === colIndex,
-              isEditing: editingCell &&
+              isEditing:
+                editingCell &&
                 editingCell.row === virtualID &&
                 editingCell.col === colIndex,
             })

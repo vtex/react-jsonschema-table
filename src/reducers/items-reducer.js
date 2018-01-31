@@ -21,12 +21,14 @@ export default (state = initialState, action) => {
     case types.ITEMS_LOAD_BEGAN: {
       return Object.assign({}, state, { isFetching: true })
     }
+
     case types.ITEMS_LOAD_FAIL: {
       return Object.assign({}, state, {
         isFetching: false,
         errors: action.errors,
       })
     }
+
     case types.ITEMS_LOAD_SUCCESS: {
       const { items, sort, where, totalRows, rowStart } = action
       const newState = Object.assign({}, state)
@@ -65,16 +67,96 @@ export default (state = initialState, action) => {
       addToHistoryChanges(newState, documentId, Status.DELETED, null)
       return newState
     }
+
     case types.ADD_ITEM: {
       const { id, schema, lang } = action
       const newState = Object.assign({}, state)
-      addStaging(newState, id, Status.NEW, null, schema, lang)
+      addStaging(newState, id, Status.NEW, { id: { value: id } }, schema, lang)
       addToHistoryChanges(newState, id, Status.NEW, null)
       return newState
     }
-    // case types.SAVE_ITEMS_CHANGES: {
-    //   return state
-    // }
+
+    case types.UPDATE_ITEM: {
+      const { id, schema, changes, lang } = action
+      const newState = Object.assign({}, state)
+      addStaging(newState, id, Status.LOADED, changes, schema, lang)
+      addToHistoryChanges(newState, id, Status.LOADED, changes)
+      return newState
+    }
+
+    case types.SAVE_ITEMS_CHANGES_BEGAN: {
+      return Object.assign({}, state, { isFetching: true })
+    }
+
+    case types.SAVE_ITEMS_CHANGES_FAIL: {
+      return Object.assign({}, state, {
+        isFetching: false,
+        errors: action.errors,
+      })
+    }
+
+    case types.SAVE_ITEMS_CHANGES_COMPLETE: {
+      const { errors, notSavedIds } = action
+      const newState = Object.assign({}, state, {
+        isFetching: false,
+        errors: errors,
+      })
+      console.log(newState.staging)
+      const stagingIds = Object.keys(newState.staging)
+      console.log('stagingIds:', stagingIds)
+      for (const documentId of stagingIds) {
+        console.log('documentId', documentId)
+        if (notSavedIds && notSavedIds.includes(documentId)) {
+          continue
+        }
+        const stagingItem = newState.staging[documentId]
+        console.log('stagingItem', documentId)
+        if (stagingItem.status === Status.LOADED) {
+          const loadedItem = newState.source.find(
+            item => item.document && item.document.id === documentId
+          )
+          loadedItem.document = Object.assign(
+            {},
+            loadedItem.document,
+            stagingItem.document
+          )
+          delete newState.staging[documentId]
+          newState.stagingItems = newState.stagingItems.filter(
+            stagingId => stagingId !== documentId
+          )
+          continue
+        }
+
+        if (stagingItem.status === Status.NEW) {
+          const newItem = Object.assign(
+            {},
+            { document: newState.staging[documentId].document },
+            {
+              status: Status.LOADED,
+            }
+          )
+          newState.source.push(newItem)
+          delete newState.staging[documentId]
+          newState.stagingItems = newState.stagingItems.filter(
+            stagingId => stagingId !== documentId
+          )
+          continue
+        }
+
+        if (stagingItem.status === Status.DELETED) {
+          newState.source = newState.source.filter(
+            item => item.document.id !== documentId
+          )
+          delete newState.staging[documentId]
+          newState.stagingItems = newState.stagingItems.filter(
+            stagingId => stagingId !== documentId
+          )
+          continue
+        }
+      }
+      return newState
+    }
+
     default:
       return state
   }

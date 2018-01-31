@@ -7,9 +7,10 @@ import HeaderCell from './endlessTable/views/HeaderCell.react'
 import Form from './form/Form.react'
 import { SetFetcher } from './actions/FetcherWrapper'
 import NotificationSystem from 'react-notification-system'
-// import _ from 'underscore'
+import { connect, Provider } from 'react-redux'
+import store from './stores/configureStore'
 
-export default class JsonSchemaTable extends React.Component {
+class JsonSchemaTable extends React.Component {
   constructor(props) {
     super(props)
     SetFetcher(props.fetcher)
@@ -17,7 +18,7 @@ export default class JsonSchemaTable extends React.Component {
   }
   render() {
     return (
-      <div>
+      <Provider store={store}>
         <FixedToolbar
           context={this.props.context}
           onAdd={this.handleAddRow}
@@ -54,7 +55,7 @@ export default class JsonSchemaTable extends React.Component {
             this.msg = ref
           }}
         />
-      </div>
+      </Provider>
     )
   }
 
@@ -90,7 +91,7 @@ export default class JsonSchemaTable extends React.Component {
     return header
   }
 
-  handleGetNotLoadedDocument = () => {};
+  handleGetNotLoadedDocument = () => {}
 }
 
 JsonSchemaTable.propTypes = {
@@ -103,3 +104,12 @@ JsonSchemaTable.propTypes = {
   indexedFields: PropTypes.array,
   onSort: PropTypes.func,
 }
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(JsonSchemaTable)

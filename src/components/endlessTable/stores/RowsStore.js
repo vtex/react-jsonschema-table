@@ -2,16 +2,17 @@ import Reflux from 'reflux'
 import _ from 'underscore'
 import Actions from '../actions/Actions'
 
-class RowsStore extends Reflux.Store {
-  constructor() {
-    super()
-    this.state = {
-      focusedCell: null,
-      editingCell: null,
-      lastSelectedCell: null,
-      selectionFillHandleRange: null,
-      selectionRange: { cellA: null, cellB: null },
-    }
+var _store = {
+  focusedCell: null,
+  editingCell: null,
+  selectionFillHandleRange: null,
+  selectionRange: { cellA: null, cellB: null },
+}
+// function getStore() {
+// return _store
+// }
+export default Reflux.createStore({
+  init: function() {
     this.listenTo(Actions.selectCell, this.onFocusCell)
     this.listenTo(Actions.editCell, this.onEditCell)
     this.listenTo(Actions.exitEditCell, this.onExitEditCell)
@@ -19,71 +20,61 @@ class RowsStore extends Reflux.Store {
     this.listenTo(Actions.clearMassSelection, this.onClearMassSelection)
     this.listenTo(Actions.selectFillHandleCell, this.onSelectFillHandleCell)
     this.listenTo(Actions.selectCellsRange, this.onSelectionRangeChange)
-  }
-
+  },
   onFocusCell(cell) {
-    if (!_.isEqual(this.state.focusedCell, cell)) {
-      this.setState({
-        focusedCell: cell,
-        selectionRange: { cellA: cell, cellB: cell },
-        selectionFillHandleRange: null,
-        editingCell: null,
-      })
+    if (!_.isEqual(_store.focusedCell, cell)) {
+      _store.focusedCell = cell
+      _store.selectionRange.cellA = cell
+      _store.selectionRange.cellB = cell
+      _store.selectionFillHandleRange = null
+      _store.editingCell = null
+      this.trigger()
     }
-  }
+  },
 
   onCleanSelection() {
-    this.setState({
-      focusedCell: null,
-      editingCell: null,
-    })
-  }
+    _store.focusedCell = null
+    _store.editingCell = null
+    this.trigger()
+  },
 
   onEditCell(cell) {
-    if (!_.isEqual(this.state.editingCell, cell)) {
-      this.setState({
-        selectionRange: { cellA: cell, cellB: cell },
-        editingCell: cell,
-      })
+    if (!_.isEqual(_store.editingCell, cell)) {
+      _store.editingCell = cell
+      _store.selectionRange.cellA = cell
+      _store.selectionRange.cellB = cell
+      this.trigger()
     }
-  }
+  },
   onExitEditCell(cell) {
-    if (_.isEqual(this.state.editingCell, cell)) {
-      this.setState({
-        editingCell: null,
-      })
+    if (_.isEqual(_store.editingCell, cell)) {
+      _store.editingCell = null
     }
     this.trigger()
-  }
+  },
 
   onSelectionRangeChange(cellA, cellB) {
-    this.setState({
-      selectionRange: { cellA: cellA, cellB: cellB },
-      selectionFillHandleRange: null,
-    })
+    _store.selectionRange.cellA = cellA
+    _store.selectionRange.cellB = cellB
+    _store.selectionFillHandleRange = null
     this.trigger()
-  }
+  },
 
   onClearMassSelection() {
-    this.setState({
-      lastSelectedCell: null,
-    })
+    _store.lastSelectedCell = null
     this.trigger()
-  }
+  },
 
   onSelectFillHandleCell(cellA, cellB) {
-    if (!this.state.selectionFillHandleRange) {
-      this.state.selectionFillHandleRange = {}
+    if (!_store.selectionFillHandleRange) {
+      _store.selectionFillHandleRange = {}
     }
-    this.setState({
-      selectionRange: { cellA: cellA, cellB: cellB },
-    })
+    _store.selectionFillHandleRange.cellA = cellA
+    _store.selectionFillHandleRange.cellB = cellB
     this.trigger()
-  }
+  },
 
   get() {
-    return this.state
-  }
-}
-
-export default RowsStore
+    return _store
+  },
+})

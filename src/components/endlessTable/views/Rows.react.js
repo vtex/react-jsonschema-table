@@ -7,6 +7,7 @@ import Actions from '../actions/Actions.js'
 import { HotKeys } from 'react-hotkeys'
 import Row from './Row.react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 // import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
 // import { FormattedMessage } from 'react-intl'
 
@@ -62,42 +63,40 @@ class Rows extends React.Component {
 
     return (
       // <ContextMenuTrigger id="contextMenuRows">
-      (
-        <HotKeys
-          handlers={handlers}
-          onMouseUp={this.handleEndSelection}
-          onMouseDown={this.handleInitSelection}
-          ref={ref => {
-            this.rows = ref
+      <HotKeys
+        handlers={handlers}
+        onMouseUp={this.handleEndSelection}
+        onMouseDown={this.handleInitSelection}
+        ref={ref => {
+          this.rows = ref
+        }}
+      >
+        <VirtualList
+          ref={div => {
+            this.virtualList = div
           }}
+          items={this.props.items}
+          className="list-body"
+          container={listContainer}
+          itemHeight={34}
+          renderItem={this.renderItem}
+          tagName="div"
+          scrollDelay={0}
+        />
+        <div
+          ref={ref => {
+            this.clipboardContainer = ref
+          }}
+          className="clipboard-container"
         >
-          <VirtualList
-            ref={div => {
-              this.virtualList = div
-            }}
-            items={this.props.items}
-            className="list-body"
-            container={listContainer}
-            itemHeight={34}
-            renderItem={this.renderItem}
-            tagName="div"
-            scrollDelay={0}
-          />
-          <div
+          <textarea
             ref={ref => {
-              this.clipboardContainer = ref
+              this.clipboard = ref
             }}
-            className="clipboard-container"
-          >
-            <textarea
-              ref={ref => {
-                this.clipboard = ref
-              }}
-              className="clipboard"
-            />
-          </div>
-        </HotKeys>
-      )
+            className="clipboard"
+          />
+        </div>
+      </HotKeys>
       // <ContextMenu id="contextMenuRows">
       //   <MenuItem onClick={() => this.onCopy()}>
       //     <FormattedMessage id="Contextualmenu.copy" />
@@ -171,9 +170,10 @@ class Rows extends React.Component {
     e.preventDefault()
     var newSelection = {}
     var selectedCell = Store.get().focusedCell
-    newSelection.row = this.props.items.length - 1 === selectedCell.row
-      ? selectedCell.row
-      : selectedCell.row + 1
+    newSelection.row =
+      this.props.items.length - 1 === selectedCell.row
+        ? selectedCell.row
+        : selectedCell.row + 1
     newSelection.col = selectedCell.col
     if (newSelection.row >= LastVisibleItem.virtualID) {
       this.props.onScroll(34)
@@ -185,9 +185,8 @@ class Rows extends React.Component {
     e.preventDefault()
     var newSelection = {}
     var selectedCell = Store.get().focusedCell
-    newSelection.row = selectedCell.row !== 0
-      ? selectedCell.row - 1
-      : selectedCell.row
+    newSelection.row =
+      selectedCell.row !== 0 ? selectedCell.row - 1 : selectedCell.row
     newSelection.col = selectedCell.col
     if (newSelection.row <= firstVisibleItem.virtualID) {
       this.props.onScroll(-34)
@@ -209,17 +208,15 @@ class Rows extends React.Component {
     var maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
     if (minRow < focusedCell.row) {
       newSelectionA.col = minCol
-      newSelectionA.row = this.props.items.length - 1 === minRow
-        ? minRow
-        : minRow + 1
+      newSelectionA.row =
+        this.props.items.length - 1 === minRow ? minRow : minRow + 1
       newSelectionB.row = maxRow
       newSelectionB.col = maxCol
     } else {
       newSelectionA.col = minCol
       newSelectionA.row = minRow
-      newSelectionB.row = this.props.items.length - 1 === maxRow
-        ? maxRow
-        : maxRow + 1
+      newSelectionB.row =
+        this.props.items.length - 1 === maxRow ? maxRow : maxRow + 1
       newSelectionB.col = maxCol
     }
     if (newSelectionB.row >= LastVisibleItem.virtualID) {
@@ -258,9 +255,10 @@ class Rows extends React.Component {
     e.preventDefault()
     var newSelection = {}
     var selectedCell = Store.get().focusedCell
-    newSelection.col = selectedCell.col === this.props.columns.length - 1
-      ? selectedCell.col
-      : selectedCell.col + 1
+    newSelection.col =
+      selectedCell.col === this.props.columns.length - 1
+        ? selectedCell.col
+        : selectedCell.col + 1
     newSelection.row = selectedCell.row
     Actions.selectCell(newSelection)
   }
@@ -268,9 +266,8 @@ class Rows extends React.Component {
     e.preventDefault()
     var newSelection = {}
     var selectedCell = Store.get().focusedCell
-    newSelection.col = selectedCell.col !== 0
-      ? selectedCell.col - 1
-      : selectedCell.col
+    newSelection.col =
+      selectedCell.col !== 0 ? selectedCell.col - 1 : selectedCell.col
     newSelection.row = selectedCell.row
     Actions.selectCell(newSelection)
   }
@@ -285,9 +282,8 @@ class Rows extends React.Component {
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
     var maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
     if (minCol < focusedCell.col) {
-      newSelectionA.col = minCol === this.props.columns.length - 1
-        ? minCol
-        : minCol + 1
+      newSelectionA.col =
+        minCol === this.props.columns.length - 1 ? minCol : minCol + 1
       newSelectionA.row = minRow
       newSelectionB.row = maxRow
       newSelectionB.col = maxCol
@@ -295,9 +291,8 @@ class Rows extends React.Component {
       newSelectionA.col = minCol
       newSelectionA.row = minRow
       newSelectionB.row = maxRow
-      newSelectionB.col = maxCol === this.props.columns.length - 1
-        ? maxCol
-        : maxCol + 1
+      newSelectionB.col =
+        maxCol === this.props.columns.length - 1 ? maxCol : maxCol + 1
     }
     Actions.selectCellsRange(newSelectionA, newSelectionB)
   }
@@ -342,7 +337,7 @@ class Rows extends React.Component {
     } else {
       Actions.selectCell(cell)
     }
-  };
+  }
   handleSelectCell(cell) {
     if (this.state && this.state.initSelection && this.state.isMouseDown) {
       Actions.selectCellsRange(Store.get().focusedCell, cell)
@@ -502,4 +497,12 @@ Rows.propTypes = {
   onGetNotLoadedDocument: PropTypes.func,
 }
 
-export default Rows
+const mapStateToProps = state => {
+  return {}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rows)
