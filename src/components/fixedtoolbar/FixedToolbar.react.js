@@ -1,7 +1,5 @@
 import React from 'react'
-import Actions from '../../actions/Actions'
 import ColumnsToShow from './ColumnsToShow.react'
-import TableSelect from './TableSelection'
 import PropTypes from 'prop-types'
 import ConfirmAlert from '../alert/ConfirmAlert.react.js'
 import SaveButton from './SaveButton.react'
@@ -24,26 +22,12 @@ class FixedToolbar extends React.Component {
     this.renderCancelStagingConfirmation = this.renderCancelStagingConfirmation.bind(
       this
     )
-    this.handleCancelStagingConfirm = this.handleCancelStagingConfirm.bind(
-      this
-    )
+    this.handleCancelStagingConfirm = this.handleCancelStagingConfirm.bind(this)
     this.handleCancelStagingCancel = this.handleCancelStagingCancel.bind(this)
   }
 
   render() {
     var isColumnsToShowSelected = this.state.isColumnsToShowSelected
-
-    const isSelectedFilterActive = this.props.filter.isSelectedFilterActive
-      ? this.props.filter.isSelectedFilterActive
-      : false
-
-    const isStagingFilterActive = this.props.filter.isStagingFilterActive
-      ? this.props.filter.isStagingFilterActive
-      : false
-    const isInvalidFilterActive = this.props.filter.isInvalidFilterActive
-      ? this.props.filter.isInvalidFilterActive
-      : false
-
     var toolBarContent = null
 
     if (this.state.isImport) {
@@ -58,22 +42,18 @@ class FixedToolbar extends React.Component {
       toolBarContent = (
         <div className="flex justify-between items-center mb3">
           <div className="flex items-center">
-            <div>
-              <TableSelect context={this.props.context} />
-            </div>
             <div className="ph3">
               <ColumnsToShow
                 isSelected={isColumnsToShowSelected}
                 context={this.props.context}
-                configuration={this.props.configuration}
+                configuration={this.props.UISchema}
+                onViewAllColumns={this.props.onViewAllColumns}
+                onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
               <section
-                className={
-                  'pointer pv2 br3 ph2' +
-                    (isColumnsToShowSelected
-                      ? ' bg-light-gray bn relative'
-                      : '')
-                }
+                className={`pointer pv2 br3 ph2${
+                  isColumnsToShowSelected ? ' bg-light-gray bn relative' : ''
+                }`}
                 onClick={this.handleColumnsToShowClick}
               >
                 <i className="fa fa-columns pr2" />&nbsp;
@@ -87,12 +67,9 @@ class FixedToolbar extends React.Component {
                     ? 'Exibir somente os registros selecionados'
                     : 'Selecione um ou mais registros para ativar esse fitro'
                 }
-                className={
-                  'ph3 ' +
-                    (!this.props.hasCheckedItems
-                      ? 'o-30 cursor-not-allowed'
-                      : '')
-                }
+                className={`ph3 ${
+                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
+                }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -101,7 +78,7 @@ class FixedToolbar extends React.Component {
                     name="checkedRowsSlide1"
                     onChange={this.handleCheckFilterClick}
                     disabled={!this.props.hasCheckedItems}
-                    checked={isSelectedFilterActive}
+                    checked={this.props.isSelectedFilterActive}
                   />
                   <label htmlFor="checkedRowsSlide1">
                     <i className="fa fa-check" />
@@ -110,12 +87,9 @@ class FixedToolbar extends React.Component {
               </section>
               <section
                 title="Exibir somente os registros pendentes de sincronização"
-                className={
-                  'ph3 ' +
-                    (!this.props.hasEditedItems
-                      ? 'o-30 cursor-not-allowed'
-                      : '')
-                }
+                className={`ph3 ${
+                  !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
+                }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -124,21 +98,18 @@ class FixedToolbar extends React.Component {
                     name="checkedRowsSlide2"
                     onChange={this.handleStagingFilterClick}
                     disabled={!this.props.hasEditedItems}
-                    checked={isStagingFilterActive}
+                    checked={this.props.isStagingFilterActive}
                   />
                   <label htmlFor="checkedRowsSlide2">
-                    <i className="fa fa-pencil" />
+                    <i className="fa fa-pencil-alt" />
                   </label>
                 </div>
               </section>
               <section
                 title="Exibir somente os registros com erros"
-                className={
-                  'ph3 ' +
-                    (!this.props.hasInvalidItems
-                      ? 'o-30 cursor-not-allowed'
-                      : '')
-                }
+                className={`ph3 ${
+                  !this.props.hasInvalidItems ? 'o-30 cursor-not-allowed' : ''
+                }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -146,7 +117,7 @@ class FixedToolbar extends React.Component {
                     id="checkedRowsSlide3"
                     name="checkedRowsSlide3"
                     onChange={this.handleOnlyWithErrorFilterClick}
-                    checked={isInvalidFilterActive}
+                    checked={this.props.isInvalidFilterActive}
                   />
                   <label htmlFor="checkedRowsSlide3">
                     <i className="fa fa-exclamation" />
@@ -162,12 +133,9 @@ class FixedToolbar extends React.Component {
                 onClick={!this.props.hasCheckedItems ? null : this.handleExport}
               >
                 <i
-                  className={
-                    'fa fa-cloud-download ' +
-                      (!this.props.hasCheckedItems
-                        ? 'o-30 cursor-not-allowed'
-                        : '')
-                  }
+                  className={`fa fa-cloud-download-alt ${
+                    !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
+                  }`}
                 />
               </section>
               <section
@@ -179,12 +147,9 @@ class FixedToolbar extends React.Component {
                 }
               >
                 <i
-                  className={
-                    'fa fa-trash-o ' +
-                      (!this.props.hasCheckedItems
-                        ? 'o-30 cursor-not-allowed'
-                        : '')
-                  }
+                  className={`fa fa-trash ${
+                    !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
+                  }`}
                   aria-hidden="true"
                 />
               </section>
@@ -195,12 +160,9 @@ class FixedToolbar extends React.Component {
                 }
               >
                 <i
-                  className={
-                    'fa fa-undo ' +
-                      (!this.props.hasEditedItems
-                        ? 'o-30 cursor-not-allowed'
-                        : '')
-                  }
+                  className={`fa fa-undo ${
+                    !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
+                  }`}
                 />
               </section>
               <button
@@ -227,15 +189,15 @@ class FixedToolbar extends React.Component {
     return toolBarContent
   }
   handleCheckFilterClick = ev => {
-    Actions.checkedFilter(this.props.context, ev.target.checked)
-  };
+    this.props.onChangeCheckedItemsFilter(ev.target.checked)
+  }
   handleStagingFilterClick = ev => {
-    Actions.stagingFilter(this.props.context, ev.target.checked)
-  };
+    this.props.onChangeInvalidItemsFilter(ev.target.checked)
+  }
 
   handleOnlyWithErrorFilterClick = ev => {
-    Actions.invalidFilter(this.props.context, ev.target.checked)
-  };
+    this.props.onChangeInvalidItemsFilter(ev.target.checked)
+  }
 
   clearSelection() {
     this.setState({
@@ -304,22 +266,24 @@ class FixedToolbar extends React.Component {
 }
 
 FixedToolbar.propTypes = {
-  inputMode: PropTypes.any,
-  inputModeOptions: PropTypes.any,
   context: PropTypes.object,
-  isErrorMode: PropTypes.bool,
-  filters: PropTypes.object,
-  filter: PropTypes.object,
-  filtersActions: PropTypes.any,
   hasEditedItems: PropTypes.bool,
   hasInvalidItems: PropTypes.bool,
   hasCheckedItems: PropTypes.bool,
-  configuration: PropTypes.object,
+  isStagingFilterActive: PropTypes.bool,
+  isInvalidFilterActive: PropTypes.bool,
+  isSelectedFilterActive: PropTypes.bool,
+  UISchema: PropTypes.object,
   onExport: PropTypes.func,
   onSave: PropTypes.func,
   onAdd: PropTypes.func,
   onDeleteCheckedRows: PropTypes.func,
   onCancelStaging: PropTypes.func,
+  onChangeCheckedItemsFilter: PropTypes.func,
+  onChangeStagingFilter: PropTypes.func,
+  onChangeInvalidItemsFilter: PropTypes.func,
+  onViewAllColumns: PropTypes.func,
+  onChangeColumnVisibility: PropTypes.func,
 }
 
 export default FixedToolbar

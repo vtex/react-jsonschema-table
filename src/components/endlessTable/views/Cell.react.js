@@ -34,9 +34,10 @@ class Cell extends React.Component {
   }
 
   render() {
-    const fillHandle = this.props.isFillHandleCell && !this.props.isEditing
-      ? <FillHandle onMouseDown={this.props.onFillHandleDown} />
-      : null
+    const fillHandle =
+      this.props.isFillHandleCell && !this.props.isEditing ? (
+        <FillHandle onMouseDown={this.props.onFillHandleDown} />
+      ) : null
     const sharedProps = {
       show: this.props.isFocus && this.props.validationErrors.length > 0,
       target: () => this.cellControl,
@@ -65,8 +66,8 @@ class Cell extends React.Component {
           (this.props.cell.col === 0
             ? 'relative h-100'
             : 'relative h-100 bl b--moon-gray') +
-            (this.props.isSelected ? ' bg-lightest-blue' : '') +
-            (this.props.isFillHandleSelected ? ' bg-near-white' : '')
+          (this.props.isSelected ? ' bg-lightest-blue' : '') +
+          (this.props.isFillHandleSelected ? ' bg-near-white' : '')
         }
         style={this.getInlineStyle(this.props.width)}
         onMouseDown={this.handleFocus}
@@ -76,7 +77,7 @@ class Cell extends React.Component {
         ref={ref => {
           this.cellControl = ref
         }}
-        id={'row' + this.props.cell.row + 'col' + this.props.cell.col}
+        id={`row${this.props.cell.row}col${this.props.cell.col}`}
       >
         <ControlFactory
           {...this.props}
@@ -99,8 +100,8 @@ class Cell extends React.Component {
   getInlineStyle(width) {
     var style = {}
     if (width) {
-      style.width = width + 'px'
-      style.maxWidth = width + 'px'
+      style.width = `${width}px`
+      style.maxWidth = `${width}px`
     }
 
     return style
@@ -111,7 +112,7 @@ class Cell extends React.Component {
     if (this.props.onFocusCell && !this.props.isFocus) {
       this.props.onFocusCell(this.props.cell)
     }
-  };
+  }
 
   handleKeyPress = e => {
     if (this.props.isEditing) return
@@ -121,7 +122,7 @@ class Cell extends React.Component {
       e.preventDefault()
       this.setState({ userTypedText: str })
     }
-  };
+  }
 
   handleKeyDown = e => {
     if (this.props.isEditing) return
@@ -129,25 +130,25 @@ class Cell extends React.Component {
       e.preventDefault()
       this.setState({ userTypedText: '' })
     }
-  };
+  }
 
   handleMouseEnter = () => {
     if (this.props.onSelectCell) {
       this.props.onSelectCell(this.props.cell)
     }
-  };
+  }
 
   handleEditCell = () => {
     if (!this.props.isEditing && this.props.onEditCell) {
       this.props.onEditCell(this.props.cell)
     }
-  };
+  }
 
   handleExitEditCell = () => {
     if (this.props.onExitEditCell) {
       this.props.onExitEditCell(this.props.cell)
     }
-  };
+  }
 
   getI18nStr(id) {
     return this.context.intl.formatMessage({ id: id })

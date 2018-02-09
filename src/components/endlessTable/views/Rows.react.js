@@ -1,13 +1,13 @@
 import React from 'react'
 import _ from 'underscore'
 import VirtualList from '../views/VirtualList'
-import Store from '../stores/RowsStore.js'
-import Actions from '../actions/Actions.js'
+// import Store from '../stores/RowsStore.js'
+// import Actions from '../actions/Actions.js'
 // import MainActions from '../../../actions/Actions.js'
 import { HotKeys } from 'react-hotkeys'
 import Row from './Row.react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 // import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
 // import { FormattedMessage } from 'react-intl'
 
@@ -116,6 +116,8 @@ class Rows extends React.Component {
         key={`row-${item.virtualID}`}
         onSelectCell={this.handleSelectCell}
         onFocusCell={this.handleFocusCell}
+        onEditCell={this.handleEditCell}
+        onExitEditCell={this.handleExitEditCell}
         onFillHandleDown={this.handleFillHandleDown}
         {...this.props}
       />
@@ -153,6 +155,14 @@ class Rows extends React.Component {
     const isMouseDown = e.type === 'mousedown'
     this.setState({ initSelection: true, isMouseDown: isMouseDown })
   }
+  handleEditCell(cell) {
+    this.props.onEditCell(cell)
+  }
+
+  handleExitEditCell(cell) {
+    this.props.onExitEditCell(cell)
+  }
+
   handleEndSelection() {
     if (this.state.isFillHandleOn) {
       this.OnFillHandleUp()
@@ -169,7 +179,7 @@ class Rows extends React.Component {
     ]
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
+    var selectedCell = this.props.focusedCell
     newSelection.row =
       this.props.items.length - 1 === selectedCell.row
         ? selectedCell.row
@@ -178,20 +188,20 @@ class Rows extends React.Component {
     if (newSelection.row >= LastVisibleItem.virtualID) {
       this.props.onScroll(34)
     }
-    Actions.selectCell(newSelection)
+    this.props.onSelectCell(newSelection)
   }
   onMoveUp(e) {
     var firstVisibleItem = this.virtualList.visibleItems()[0]
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
+    var selectedCell = this.props.focusedCell
     newSelection.row =
       selectedCell.row !== 0 ? selectedCell.row - 1 : selectedCell.row
     newSelection.col = selectedCell.col
     if (newSelection.row <= firstVisibleItem.virtualID) {
       this.props.onScroll(-34)
     }
-    Actions.selectCell(newSelection)
+    this.props.onSelectCell(newSelection)
   }
   onMassSelectDown(e) {
     var LastVisibleItem = this.virtualList.visibleItems()[
@@ -200,8 +210,8 @@ class Rows extends React.Component {
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -222,15 +232,15 @@ class Rows extends React.Component {
     if (newSelectionB.row >= LastVisibleItem.virtualID) {
       this.props.onScroll(34)
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   onMassSelectUp(e) {
     var firstVisibleItem = this.virtualList.visibleItems()[0]
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -249,34 +259,34 @@ class Rows extends React.Component {
     if (newSelectionA.row <= firstVisibleItem.virtualID) {
       this.props.onScroll(-34)
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   onMoveRight(e) {
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
+    var selectedCell = this.props.focusedCell
     newSelection.col =
       selectedCell.col === this.props.columns.length - 1
         ? selectedCell.col
         : selectedCell.col + 1
     newSelection.row = selectedCell.row
-    Actions.selectCell(newSelection)
+    this.props.onSelectCell(newSelection)
   }
   onMoveLeft(e) {
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
+    var selectedCell = this.props.focusedCell
     newSelection.col =
       selectedCell.col !== 0 ? selectedCell.col - 1 : selectedCell.col
     newSelection.row = selectedCell.row
-    Actions.selectCell(newSelection)
+    this.props.onSelectCell(newSelection)
   }
   onMassMoveRight(e) {
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -294,14 +304,14 @@ class Rows extends React.Component {
       newSelectionB.col =
         maxCol === this.props.columns.length - 1 ? maxCol : maxCol + 1
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   onMassMoveLeft(e) {
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -317,7 +327,7 @@ class Rows extends React.Component {
       newSelectionB.row = maxRow
       newSelectionB.col = maxCol
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   isCellInSelectionRange(cell, cellA, cellB) {
     var minRow = Math.min(cellA.row, cellB.row)
@@ -333,25 +343,25 @@ class Rows extends React.Component {
   }
   handleFocusCell = cell => {
     if (this.state && this.state.initSelection) {
-      Actions.selectCellsRange(Store.get().focusedCell, cell)
+      this.props.onSelectCellsRange(this.props.focusedCell, cell)
     } else {
-      Actions.selectCell(cell)
+      this.props.onSelectCell(cell)
     }
   }
   handleSelectCell(cell) {
     if (this.state && this.state.initSelection && this.state.isMouseDown) {
-      Actions.selectCellsRange(Store.get().focusedCell, cell)
+      this.props.onSelectCellsRange(this.props.focusedCell, cell)
     }
     if (
       this.state &&
       this.state.isFillHandleOn &&
       !this.isCellInSelectionRange(
         cell,
-        Store.get().selectionRange.cellA,
-        Store.get().selectionRange.cellB
+        this.props.selectionRange.cellA,
+        this.props.selectionRange.cellB
       )
     ) {
-      var selectionRange = Store.get().selectionRange
+      var selectionRange = this.props.selectionRange
       var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
       var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
       var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -393,7 +403,8 @@ class Rows extends React.Component {
           cellB = { row: maxRow + rowDif, col: maxCol }
         }
       }
-      Actions.selectFillHandleCell(cellA, cellB)
+      this.props.onSelectFillHandleRange(cellA, cellB)
+      // Actions.selectFillHandleCell(cellA, cellB)
     }
   }
   onCopy() {
@@ -404,7 +415,7 @@ class Rows extends React.Component {
     document.execCommand('Copy')
   }
   getSelectedRangeValues() {
-    var selectionRange = Store.get().selectionRange
+    var selectionRange = this.props.selectionRange
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -431,7 +442,7 @@ class Rows extends React.Component {
     this.clipboard.focus()
     document.execCommand('paste')
     // var clipText = this.clipboard.value
-    // var selectionRange = Store.get().selectionRange
+    // var selectionRange = this.props.selectionRange
     // MainActions.pasteData(
     //   this.props.context,
     //   clipText,
@@ -447,8 +458,8 @@ class Rows extends React.Component {
     this.setState({ isFillHandleOn: true })
   }
   OnFillHandleUp() {
-    var selectionRange = Store.get().selectionRange
-    var selectionFillHandleRange = Store.get().selectionFillHandleRange
+    var selectionRange = this.props.selectionRange
+    var selectionFillHandleRange = this.props.selectionFillHandleRange
     var minRow = Math.min(
       Math.min(selectionRange.cellA.row, selectionRange.cellB.row),
       Math.min(
@@ -485,24 +496,26 @@ class Rows extends React.Component {
     //   selectionFillHandleRange,
     //   this.props.columns
     // )
-    Actions.selectCellsRange(cellA, cellB)
+    this.props.onSelectCellsRange(cellA, cellB)
+    // Actions.selectCellsRange(cellA, cellB)
   }
 }
 
 Rows.propTypes = {
   columns: PropTypes.any,
-  context: PropTypes.object,
+  // context: PropTypes.object,
   items: PropTypes.array,
+  focusedCell: PropTypes.object,
+  editingCell: PropTypes.object,
+  selectionRange: PropTypes.object,
+  selectionFillHandleRange: PropTypes.object,
   onScroll: PropTypes.func,
   onGetNotLoadedDocument: PropTypes.func,
+  onSelectCellsRange: PropTypes.func,
+  onSelectFillHandleRange: PropTypes.func,
+  onSelectCell: PropTypes.func,
+  onEditCell: PropTypes.func,
+  onExitEditCell: PropTypes.func,
 }
 
-const mapStateToProps = state => {
-  return {}
-}
-
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Rows)
+export default Rows

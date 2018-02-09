@@ -1,7 +1,6 @@
 import './css/fixedtoolbar.less'
 import React from 'react'
 import _ from 'underscore'
-import Actions from '../../actions/Actions'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
@@ -13,35 +12,30 @@ class ColumnsToShow extends React.Component {
   }
   render() {
     var that = this
-    if (!this.props.configuration) {
+    if (!this.props.UISchema) {
       return <div />
     }
     return (
-      <div
-        className={'submenu-panel' + (this.props.isSelected ? '' : ' hidden')}
-      >
+      <div className={`submenu-panel${this.props.isSelected ? '' : ' hidden'}`}>
         <div className="submenu-button-panel">
           <div className="submenu-button" onClick={this.handleShowAllColumns}>
             <FormattedMessage id="ColumnsToShow.show.all" />
           </div>
         </div>
         <ul className="list">
-          {_.map(this.props.configuration.list, function(field) {
-            var isChecked = !_.contains(
-              that.props.configuration.hiddenFields,
-              field
-            )
+          {_.map(this.props.UISchema.list, function(field) {
+            var isChecked = !_.contains(that.props.hiddenFields, field)
             return (
-              <li key={'showColumn' + field}>
-                <label htmlFor={'showColumn' + field}>
+              <li key={`showColumn${field}`}>
+                <label htmlFor={`showColumn${field}`}>
                   <input
                     type="checkbox"
-                    id={'showColumn' + field}
+                    id={`showColumn${field}`}
                     value={field}
                     checked={isChecked}
                     onChange={that.handleShowHideColumnClick}
                   />
-                  {that.props.configuration.fields[field].label}
+                  {that.props.UISchema.fields[field].label}
                 </label>
               </li>
             )
@@ -51,21 +45,20 @@ class ColumnsToShow extends React.Component {
     )
   }
   handleShowHideColumnClick(ev) {
-    Actions.changeColumnVisibility(
-      this.props.context,
-      ev.target.value,
-      ev.target.checked
-    )
+    this.props.onChangeColumnVisibility(ev.target.value, ev.target.checked)
   }
   handleShowAllColumns() {
-    Actions.showAllColumns(this.props.context)
+    this.props.onViewAllColumns()
   }
 }
 
 ColumnsToShow.propTypes = {
   context: PropTypes.object,
-  configuration: PropTypes.object,
+  hiddenFields: PropTypes.array,
   isSelected: PropTypes.bool,
+  UISchema: PropTypes.object,
+  onChangeColumnVisibility: PropTypes.func,
+  onViewAllColumns: PropTypes.func,
 }
 
 export default ColumnsToShow

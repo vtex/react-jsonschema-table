@@ -50,7 +50,7 @@ export default (state = initialState, action) => {
       })
     }
 
-    case types.SELECT_FILLHANDLE_CELL: {
+    case types.SELECT_FILLHANDLE_CELLS_RANGE: {
       const { cellA, cellB } = action
       return Object.assign({}, state, {
         selectionFillHandleRange: { cellA: cellA, cellB: cellB },

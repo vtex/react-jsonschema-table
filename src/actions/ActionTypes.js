@@ -11,10 +11,9 @@ export const SELECT_CELL = 'SELECT_CELL'
 export const EDIT_CELL = 'EDIT_CELL'
 export const EXIT_EDIT_CELL = 'EXIT_EDIT_CELL'
 export const CLEAN_SELECTION = 'CLEAN_SELECTION'
-export const SELECT_FILLHANDLE_CELL = 'SELECT_FILLHANDLE_CELL'
+export const SELECT_FILLHANDLE_CELLS_RANGE = 'SELECT_FILLHANDLE_CELLS_RANGE'
 export const CLEAN_MASS_SELECTION = 'CLEAN_MASS_SELECTION'
 export const SELECT_CELLS_RANGE = 'SELECT_CELLS_RANGE'
-
 export const EXPORT_CHECKED_ITEMS = 'EXPORT_CHECKED_ITEMS'
 export const ITEM_STAGING = 'ITEM_STAGING'
 export const MARK_ITEM_TO_REMOVE = 'MARK_ITEM_TO_REMOVE'
@@ -32,19 +31,3 @@ export const REDO_CHANGE = 'REDO_CHANGE'
 export const CHANGE_CHECKED_FILTER = 'CHECKED_FILTER_CHANGE'
 export const CHANGE_STAGING_FILTER = 'CHANGE_STAGING_FILTER'
 export const CHANGE_INVALID_ITEMS_FILTER = 'CHANGE_INVALID_ITEMS_FILTER'
-
-// NOT NECESSARY configurationLoad: { asyncResult: true },
-
-// checkedFilter: {},
-// stagingFilter: {},
-// invalidFilter: {},
-// loadingDocuments: {},
-
-// NOT IMPLEMENTED  importDocument: {},
-// NOT NECESSARY addDocumentAndOpen: {},
-// NOT IMPLEMENTED addAttachment: { asyncResult: true },
-// NOT IMPLEMENTED addAttachmentRef: { asyncResult: true },
-// NOT IMPLEMENTED deleteAttachmentRef: { asyncResult: true },
-// NOT IMPLEMENTED cancelImport: {},
-
-// NOT IMPLEMENTED sesChange: {},

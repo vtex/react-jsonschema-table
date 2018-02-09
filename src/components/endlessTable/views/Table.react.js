@@ -1,62 +1,44 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import _ from 'underscore'
 import { HotKeys } from 'react-hotkeys'
 import Rows from './Rows.react'
 import Header from './Header.react'
+import HeaderCell from './HeaderCell.react'
 import PropTypes from 'prop-types'
 import '../css/endless-table.less'
 
 class Table extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleScrollVertically = this.handleScrollVertically.bind(this)
-    this.handleScroll = this.handleScroll.bind(this)
-    this.onFocusCell = this.onFocusCell.bind(this)
-    this.onEditCell = this.onEditCell.bind(this)
-    this.onExitEditCell = this.onExitEditCell.bind(this)
-    this.onFocusCell = this.onFocusCell.bind(this)
-    this.scrollToEnd = this.scrollToEnd.bind(this)
-    this.state = {
-      focusedCell: null,
-      editingCell: null,
-      cellSelectionRange: {
-        rowStart: null,
-        rowEnd: null,
-        colStart: null,
-        colEnd: null,
-      },
-    }
-  }
-
-  handleScroll() {
+  handleScroll = () => {
     var header = ReactDOM.findDOMNode(this.header)
     var scrollDiv = ReactDOM.findDOMNode(this.scrollDiv)
     header.style.left = `-${scrollDiv.scrollLeft}px`
   }
 
-  handleScrollVertically(pixels) {
+  handleScrollVertically = pixels => {
     ReactDOM.findDOMNode(this.scrollDiv).scrollTop += pixels
   }
 
   render() {
     var columns = []
-    if (this.props.children) {
-      this.props.children.map(function(item) {
-        columns.push(_.extend({ fieldName: item.key }, item.props))
-      })
-    }
+
+    Object.keys(this.props.schema.properties).forEach(key => {
+      columns.push(
+        Object.assign({}, { fieldName: key }, this.props.schema.properties[key])
+      )
+    })
+
     return (
       <div>
         <div className="mh4 ph2 overflow-hidden">
           <Header
-            children={this.props.children}
             onCheckRow={this.props.onCheckRow}
             {...this.props}
             ref={ref => {
               this.header = ref
             }}
-          />
+          >
+            {this.getHeader()}
+          </Header>
         </div>
         <div
           className="scroolOverlayInner mh4 ph2"
@@ -68,9 +50,7 @@ class Table extends React.Component {
         >
           <HotKeys className="list">
             <Rows
-              onGetNotLoadedDocument={this.props.onGetNotLoadedDocument}
-              onGetItemOptions={this.props.onGetItemOptions}
-              renderValue={this.props.renderValue}
+              onGetNotLoadedDocument={this.handleFetchItems}
               onScroll={this.handleScrollVertically}
               onCheckRow={this.props.onCheckRow}
               columns={columns}
@@ -81,30 +61,65 @@ class Table extends React.Component {
       </div>
     )
   }
-  onFocusCell(cell) {
-    this.setState({ focusedCell: cell, editingCell: null })
-  }
-  onEditCell(cell) {
-    this.setState({ editingCell: cell })
-  }
-  onExitEditCell(cell) {
-    if (_.isEqual(cell, this.state.editingCell)) {
-      this.setState({ editingCell: null })
-    }
-  }
-  onSelectCell() {}
-  scrollToEnd() {
+
+  scrollToEnd = () => {
     var scrollDiv = this.scrollDiv
     scrollDiv.scrollTop = scrollDiv.scrollHeight
+  }
+
+  handleFetchItems = skip => {
+    this.props.onFetchItems(
+      this.props.context,
+      this.props.UISchema.fields,
+      skip,
+      this.props.fetchSize || 100,
+      this.props.where,
+      this.props.sort
+    )
+  }
+
+  getHeader() {
+    const that = this
+    const header = []
+    const schema = this.props.schema
+    if (schema) {
+      Object.keys(schema.properties).forEach((key, index) => {
+        var fieldDef = schema.properties[key]
+        var label = (
+          <div>
+            {/* <i className={`contenTypeIcon fa fa-${fieldDef.icon}`} /> */}
+            {fieldDef.title || key}
+          </div>
+        )
+        if (!fieldDef.width) {
+          fieldDef.width = 200
+        }
+        header.push(
+          <HeaderCell
+            index={index}
+            key={key}
+            value={label}
+            {...fieldDef}
+            fieldName={key}
+            onHandleSort={that.handleSort}
+          />
+        )
+      })
+    }
+
+    return header
   }
 }
 
 Table.propTypes = {
+  context: PropTypes.object.isRequired,
+  schema: PropTypes.object.isRequired,
+  UISchema: PropTypes.object.isRequired,
   onCheckRow: PropTypes.func,
-  renderValue: PropTypes.func,
-  onGetItemOptions: PropTypes.func,
-  onGetNotLoadedDocument: PropTypes.func,
-  children: PropTypes.any,
+  fetchSize: PropTypes.number,
+  where: PropTypes.string,
+  sort: PropTypes.string,
+  onFetchItems: PropTypes.func.isRequired,
 }
 
 export default Table

@@ -16,13 +16,42 @@ const schema = {
       title: 'Email',
     },
     isActive: {
-      type: 'bool',
+      type: 'boolean',
       title: 'Is Active',
     },
   },
 }
 
-const UIschema = {}
+const UIschema = {
+  fields: {
+    id: {
+      width: 200,
+    },
+    name: {
+      width: 200,
+    },
+    lastName: {
+      width: 300,
+    },
+    email: {
+      width: 300,
+    },
+    isActive: {
+      width: 300,
+    },
+  },
+  list: ['email', 'name', 'lastName', 'isActive'],
+  editor: {
+    settings: {
+      sections: [
+        {
+          name: 'Personal Data',
+          fields: ['name', 'email', 'lastName', 'isActive'],
+        },
+      ],
+    },
+  },
+}
 
 const indexedFields = ['name', 'email']
 
@@ -39,7 +68,7 @@ export default class App extends Component {
 
     return (
       <div>
-        <JsonSchemaTable {...props} />
+        <JsonSchemaTable className="" {...props} />
       </div>
     )
   }

@@ -6,8 +6,8 @@ import TextBox from './TextBox.react'
 import Dropdown from './Dropdown.react'
 import Multioptions from './MultiOptions/Multioptions.react'
 import ObjectControl from './ObjectControl/ObjectControl.react'
-import Attachments from './Attachments/Attachments.react'
-import Link from './Link/Link.react'
+// import Attachments from './Attachments/Attachments.react'
+// import Link from './Link/Link.react'
 import DateTime from './DateTime.react'
 import ArrayControl from './ArrayControl/ArrayControl.react'
 import _ from 'underscore'
@@ -26,21 +26,20 @@ class ControlFactory extends React.Component {
       hasError: this.props.validationErrors.length > 0,
     }
 
-    const errorMessage = this.props.renderType === 'form' && props.hasError
-      ? (<span>
-        {_.map(this.props.validationErrors, error => {
-          return (
-            <p className="red br3 mt2 truncate">
-              {error.message}
-            </p>
-          )
-        })}
-      </span>)
-      : null
+    const errorMessage =
+      this.props.renderType === 'form' && props.hasError ? (
+        <span>
+          {_.map(this.props.validationErrors, error => {
+            return <p className="red br3 mt2 truncate">{error.message}</p>
+          })}
+        </span>
+      ) : null
 
     return (
       <div
-        className={`${this.props.renderType === 'form' ? 'ma3 ' : ''}h-inherit dynamic-control ${controlConfig.style}`}
+        className={`${
+          this.props.renderType === 'form' ? 'ma3 ' : ''
+        }h-inherit dynamic-control ${controlConfig.style}`}
       >
         {React.createElement(
           controlConfig.control,
@@ -102,9 +101,10 @@ class ControlFactory extends React.Component {
           definition.items.properties &&
           definition.items.properties.link
         ) {
-          configuration.control = Link
+          // configuration.control = Link
         } else if (
-          definition.items.type === 'string' && definition.items.media
+          definition.items.type === 'string' &&
+          definition.items.media
         ) {
           configuration.control = Attachments
         } else {
@@ -124,7 +124,7 @@ class ControlFactory extends React.Component {
       value: newValue,
     }
     this.props.setChanges(this.props.id, changes)
-  };
+  }
 
   getI18nStr(id) {
     return this.context.intl.formatMessage({ id: id })
