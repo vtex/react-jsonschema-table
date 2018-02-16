@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import '../css/fillHandle.less'
 
 const FillHandle = function(props) {
@@ -6,7 +7,7 @@ const FillHandle = function(props) {
 }
 
 FillHandle.propTypes = {
-  onMouseDown: React.PropTypes.func,
+  onMouseDown: PropTypes.func,
 }
 
 export default FillHandle
