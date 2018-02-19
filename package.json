@@ -18,7 +18,10 @@
     "start": "rollup -c -w",
     "prepublish": "npm run build",
     "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "setup": "npm i && npm link && cd example && npm i && npm link react-jsonschema-table",
+    "start-example": "cd example && npm start",
+    "start-development": "npm start && npm run-example"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",
