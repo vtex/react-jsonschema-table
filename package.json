@@ -1,6 +1,6 @@
 {
   "name": "react-jsonschema-table",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "",
   "author": "Alejandro Osorio",
   "license": "MIT",
@@ -91,7 +91,12 @@
     "globals": {
       "NODE_ENV": "test"
     },
-    "moduleFileExtensions": ["js", "jsx"]
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ]
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }

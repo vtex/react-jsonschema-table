@@ -21,7 +21,7 @@ export default {
     },
   ],
   external: ['react', 'react-dom', 'prop-types'],
-  // sourcemap: true,
+  sourcemap: true,
   plugins: [
     resolve({
       browser: true,
@@ -37,7 +37,9 @@ export default {
       insert: true,
     }),
     json(),
-    sourcemaps(),
+    sourcemaps({
+      exclude: ['node_modules/**'],
+    }),
     babel({
       exclude: 'node_modules/**',
       runtimeHelpers: true,
