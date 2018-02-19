@@ -188,7 +188,7 @@ class Rows extends React.Component {
     if (newSelection.row >= LastVisibleItem.virtualID) {
       this.props.onScroll(34)
     }
-    this.props.onSelectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMoveUp(e) {
     var firstVisibleItem = this.virtualList.visibleItems()[0]
@@ -201,7 +201,7 @@ class Rows extends React.Component {
     if (newSelection.row <= firstVisibleItem.virtualID) {
       this.props.onScroll(-34)
     }
-    this.props.onSelectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMassSelectDown(e) {
     var LastVisibleItem = this.virtualList.visibleItems()[
@@ -270,7 +270,7 @@ class Rows extends React.Component {
         ? selectedCell.col
         : selectedCell.col + 1
     newSelection.row = selectedCell.row
-    this.props.onSelectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMoveLeft(e) {
     e.preventDefault()
@@ -279,7 +279,7 @@ class Rows extends React.Component {
     newSelection.col =
       selectedCell.col !== 0 ? selectedCell.col - 1 : selectedCell.col
     newSelection.row = selectedCell.row
-    this.props.onSelectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMassMoveRight(e) {
     e.preventDefault()
@@ -345,7 +345,7 @@ class Rows extends React.Component {
     if (this.state && this.state.initSelection) {
       this.props.onSelectCellsRange(this.props.focusedCell, cell)
     } else {
-      this.props.onSelectCell(cell)
+      this.props.onFocusCell(cell)
     }
   }
   handleSelectCell(cell) {
@@ -513,7 +513,7 @@ Rows.propTypes = {
   onGetNotLoadedDocument: PropTypes.func,
   onSelectCellsRange: PropTypes.func,
   onSelectFillHandleRange: PropTypes.func,
-  onSelectCell: PropTypes.func,
+  onFocusCell: PropTypes.func,
   onEditCell: PropTypes.func,
   onExitEditCell: PropTypes.func,
 }

@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(selectFillHandleRange(cellA, cellB))
     },
 
-    onSelectCell: cell => {
+    onFocusCell: cell => {
       dispatch(selectCell(cell))
     },
 

@@ -10,6 +10,8 @@ import facolumns from '@fortawesome/fontawesome-free-solid/faColumns'
 import faDownload from '@fortawesome/fontawesome-free-solid/faCloudDownloadAlt'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
+import { HotKeys } from 'react-hotkeys'
+import keyMap from './KeyMap'
 
 // import Form from './form/Form.react'
 import { SetFetcher } from './actions/FetcherWrapper'
@@ -45,7 +47,7 @@ class JsonSchemaTable extends React.Component {
     return (
       <Provider store={store}>
         <IntlProvider locale="en-US" messages={enUSMessages}>
-          <div>
+          <HotKeys keyMap={keyMap}>
             <ToolBar
               context={this.props.context}
               schema={this.props.schema}
@@ -72,7 +74,7 @@ class JsonSchemaTable extends React.Component {
             this.msg = ref
           }}
         /> */}
-          </div>
+          </HotKeys>
         </IntlProvider>
       </Provider>
     )
