@@ -34,6 +34,26 @@ indexedFields: An array with the fieldNames that can be used to sort the table.
 onSort: function that is called when a sort action is required. Receive the field that trigger the action and the direction to sort.
 onGetItems: function used to load the documents on demand.
 
+## Local setup
+
+Setup project
+
+```bash
+npm run setup
+```
+
+Run example
+
+```bash
+npm run start-example
+```
+
+Develop
+
+```bash
+npm run start-development
+```
+
 ## License
 
 MIT © [Vtex](https://github.com/transitive-bullshit)
