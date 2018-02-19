@@ -34,7 +34,10 @@ export default (state = initialState, action) => {
     }
 
     case types.EXIT_EDIT_CELL: {
-      if (action.cell === state.editingCell) {
+      if (
+        action.cell.row === state.editingCell.row &&
+        action.cell.col === state.editingCell.col
+      ) {
         return Object.assign({}, state, {
           editingCell: null,
         })

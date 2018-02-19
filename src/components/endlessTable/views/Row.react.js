@@ -244,7 +244,7 @@ class Row extends React.Component {
         : [],
       width: column.width,
       cell: { row: item.virtualID, col: colIndex },
-      value: document[column.fieldName],
+      value: item.document[column.fieldName],
       linkedValue: document[`${column.fieldName}_linked`],
       id: item.document.id,
       onSelectCell: this.props.onSelectCell,

@@ -79,8 +79,8 @@ export default (state = initialState, action) => {
     case types.UPDATE_ITEM: {
       const { id, schema, changes, lang } = action
       const newState = Object.assign({}, state)
-      addStaging(newState, id, Status.LOADED, changes, schema, lang)
-      addToHistoryChanges(newState, id, Status.LOADED, changes)
+      addStaging(newState, id, null, changes, schema, lang)
+      addToHistoryChanges(newState, id, null, changes)
       return newState
     }
 
@@ -200,10 +200,10 @@ const addStaging = (newState, id, status, changes, schema, lang) => {
     newStagingDocument
   )
   // If the item has status DELETED, keep that status
-  staging[id].status =
-    staging[id].status && staging[id].status === Status.DELETED
-      ? staging[id].status
-      : status
+  staging[id].status = status || staging[id].status
+  // staging[id].status && staging[id].status === Status.DELETED
+  //  ? staging[id].status
+  //  : status
 
   // Validate the document usign the JSONSchema
 
