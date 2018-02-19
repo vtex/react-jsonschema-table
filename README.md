@@ -54,6 +54,12 @@ Develop
 npm run start-development
 ```
 
+Uninstalling
+
+```bash
+npm unlink react-jsonschema-table
+```
+
 ## License
 
 MIT © [Vtex](https://github.com/transitive-bullshit)
