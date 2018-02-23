@@ -28,7 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     isSelectedFilterActive: state.filter.isSelectedFilterActive,
     isStagingFilterActive: state.filter.isStagingFilterActive,
     isInvalidFilterActive: state.filter.isInvalidFilterActive,
-    UISchema: ownProps.UISchema,
+    UIschema: ownProps.UIschema,
     hiddenFields: state.filter.hiddenFields,
   }
 }
@@ -51,9 +51,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(deleteCheckedItems(uuid.v4(), ownProps.schema, ownProps.lang))
     },
 
-    onCancelStaging: dispatch(
-      discardChanges(uuid.v4(), ownProps.schema, ownProps.lang)
-    ),
+    onCancelStaging: () => {
+      dispatch(discardChanges())
+    },
 
     onChangeCheckedItemsFilter: () => {
       dispatch(changeCheckedItemsFilter())

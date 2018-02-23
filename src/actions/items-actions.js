@@ -53,8 +53,8 @@ export function exportCheckedItems(id, schema, lang) {
   return { type: types.ADD_ITEM, id, schema, lang }
 }
 
-export function checkItem(index) {
-  return { type: types.CHECK_ITEM, index }
+export function checkItemChange(id, checked) {
+  return { type: types.CHECK_ITEM_CHANGE, id, checked }
 }
 
 export function saveChanges(context, fields, skip, size, where, sort) {

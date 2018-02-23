@@ -84,6 +84,14 @@ export default (state = initialState, action) => {
       return newState
     }
 
+    case types.CANCEL_STAGING: {
+      const newState = Object.assign({}, state)
+      newState.staging = {}
+      newState.stagingItems = []
+      newState.invalidItems = []
+      return newState
+    }
+
     case types.SAVE_ITEMS_CHANGES_BEGAN: {
       return Object.assign({}, state, { isFetching: true })
     }
@@ -93,6 +101,23 @@ export default (state = initialState, action) => {
         isFetching: false,
         errors: action.errors,
       })
+    }
+
+    case types.CHECK_ITEM_CHANGE: {
+      const { id, checked } = action
+      const newState = Object.assign({}, state)
+      if (checked && !newState.checkedItems.includes(id)) {
+        newState.checkedItems.push(id)
+      }
+      if (!checked) {
+        if (!id) newState.checkedItems = []
+        else {
+          newState.checkedItems = newState.checkedItems.filter(
+            item => item !== id
+          )
+        }
+      }
+      return newState
     }
 
     case types.SAVE_ITEMS_CHANGES_COMPLETE: {

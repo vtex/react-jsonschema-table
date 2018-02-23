@@ -12,7 +12,7 @@ class ColumnsToShow extends React.Component {
   }
   render() {
     var that = this
-    if (!this.props.UISchema) {
+    if (!this.props.UIschema) {
       return <div />
     }
     return (
@@ -23,7 +23,7 @@ class ColumnsToShow extends React.Component {
           </div>
         </div>
         <ul className="list">
-          {_.map(this.props.UISchema.list, function(field) {
+          {_.map(this.props.UIschema.list, function(field) {
             var isChecked = !_.contains(that.props.hiddenFields, field)
             return (
               <li key={`showColumn${field}`}>
@@ -35,7 +35,7 @@ class ColumnsToShow extends React.Component {
                     checked={isChecked}
                     onChange={that.handleShowHideColumnClick}
                   />
-                  {that.props.UISchema.fields[field].label}
+                  {that.props.UIschema.fields[field].label}
                 </label>
               </li>
             )
@@ -56,7 +56,7 @@ ColumnsToShow.propTypes = {
   context: PropTypes.object,
   hiddenFields: PropTypes.array,
   isSelected: PropTypes.bool,
-  UISchema: PropTypes.object,
+  UIschema: PropTypes.object,
   onChangeColumnVisibility: PropTypes.func,
   onViewAllColumns: PropTypes.func,
 }

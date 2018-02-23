@@ -284,11 +284,7 @@ class Row extends React.Component {
   }
 
   handleCheckRow(ev) {
-    this.props.onCheckRow(
-      this.props.context,
-      this.props.item.document.id,
-      ev.target.checked
-    )
+    this.props.onCheckRowChange(this.props.item.document.id, ev.target.checked)
   }
   handleEdit() {
     this.props.onEdit(this.props.item, this.props.context, this.onFormClose)
@@ -367,17 +363,13 @@ class Row extends React.Component {
   }
   onSpace() {
     var checked = ReactDom.findDOMNode(this.rowCheckBox).checked
-    this.props.onCheckRow(
-      this.props.context,
-      this.props.item.document.id,
-      !checked
-    )
+    this.props.onCheckRowChange(this.props.item.document.id, !checked)
   }
 }
 Row.propTypes = {
   item: PropTypes.object,
   context: PropTypes.object,
-  onCheckRow: PropTypes.func,
+  onCheckRowChange: PropTypes.func,
   onEditCell: PropTypes.func,
   onExitEditCell: PropTypes.func,
   onEdit: PropTypes.func,

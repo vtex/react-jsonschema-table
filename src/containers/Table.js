@@ -11,7 +11,7 @@ import {
 import {
   removeItem,
   fetchItems,
-  checkItem,
+  checkItemChange,
   updateItem,
 } from '../actions/items-actions'
 
@@ -19,26 +19,27 @@ const mapStateToProps = (state, ownProps) => {
   return {
     context: ownProps.context,
     fetchSize: ownProps.fetchSize,
-    UISchema: ownProps.UISchema,
+    UIschema: ownProps.UIschema,
     schema: ownProps.schema,
     where: state.items.where,
     sort: state.items.sort,
-    items: ListITems(state.items),
+    items: ListITems(state),
     focusedCell: state.table.focusedCell,
     editingCell: state.table.editingCell,
     selectionRange: state.table.selectionRange,
     selectionFillHandleRange: state.table.selectionRange,
+    isChecking: state.items.checkedItems && state.items.checkedItems.length > 0,
   }
 }
 
 function ListITems(state) {
   var returnValue = []
-  const items = state.source || []
+  const items = state.items.source || []
   const newItems = []
-  if (state.staging) {
-    Object.keys(state.staging).forEach(id => {
-      if (state.staging[id].status === Status.NEW) {
-        newItems.push(state.staging[id])
+  if (state.items.staging) {
+    Object.keys(state.items.staging).forEach(id => {
+      if (state.items.staging[id].status === Status.NEW) {
+        newItems.push(state.items.staging[id])
       }
     })
   }
@@ -47,26 +48,24 @@ function ListITems(state) {
   allItems.forEach(item => {
     let staging
     if (item.document) {
-      staging = state.staging[item.document.id] || {}
+      staging = state.items.staging[item.document.id] || {}
     } else {
       staging = {}
     }
     var newItem = Object.assign({}, item, staging)
-
-    // if (store.filter.filteredStatus.length > 0) {
-    //   if (
-    //     (_.contains(store.filter.filteredStatus, Status.SELECTED) &&
-    //       !newItem.isChecked) ||
-    //     (_.contains(store.filter.filteredStatus, Status.INVALID) &&
-    //       (newItem.isValid === undefined || newItem.isValid)) ||
-    //     (_.contains(store.filter.filteredStatus, Status.STAGING) &&
-    //       newItem.status !== Status.STAGING &&
-    //       newItem.status !== Status.NEW &&
-    //       newItem.status !== Status.DELETED)
-    //   ) {
-    //     return
-    //   }
-    // }
+    if (state.items.checkedItems.includes(newItem.document.id)) {
+      newItem.isChecked = true
+    }
+    if (
+      (state.filter.isStagingFilterActive &&
+        !state.items.stagingItems.includes(newItem.document.id)) ||
+      (state.filter.isInvalidFilterActive &&
+        !state.items.invalidItems.includes(newItem.document.id)) ||
+      (state.filter.isSelectedFilterActive &&
+        !state.items.checkedItems.includes(newItem.document.id))
+    ) {
+      return
+    }
 
     newItem.virtualID = returnValue.length
     returnValue.push(newItem)
@@ -84,8 +83,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(removeItem(index, ownProps.schema, ownProps.lang))
     },
 
-    onCheckRow: index => {
-      dispatch(checkItem(index))
+    onCheckRowChange: (id, isChecked) => {
+      dispatch(checkItemChange(id, isChecked))
     },
 
     onSelectCellsRange: (cellA, cellB) => {

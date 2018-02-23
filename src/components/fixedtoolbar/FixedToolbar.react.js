@@ -46,7 +46,7 @@ class FixedToolbar extends React.Component {
               <ColumnsToShow
                 isSelected={isColumnsToShowSelected}
                 context={this.props.context}
-                configuration={this.props.UISchema}
+                UIschema={this.props.UIschema}
                 onViewAllColumns={this.props.onViewAllColumns}
                 onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
@@ -129,41 +129,34 @@ class FixedToolbar extends React.Component {
           <div className="flex" style={{ fontSize: '1.2em' }}>
             <div className="ph3">
               <section
-                className={'dib v-mid pointer pv1 ph2 br1'}
+                className={`dib v-mid pointer pv1 ph2 br1 ${
+                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
+                }`}
                 onClick={!this.props.hasCheckedItems ? null : this.handleExport}
               >
-                <i
-                  className={`fa fa-cloud-download-alt ${
-                    !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
-                />
+                <i className="fa fa-cloud-download-alt" />
               </section>
               <section
-                className={'dib v-mid pointer pv1 ph2 br1'}
+                className={`dib v-mid pointer pv1 ph2 br1' ${
+                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
+                }`}
                 onClick={
                   !this.props.hasCheckedItems
                     ? null
                     : this.handleDeleteCheckedRows
                 }
               >
-                <i
-                  className={`fa fa-trash ${
-                    !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
-                  aria-hidden="true"
-                />
+                <i className="fa fa-trash" aria-hidden="true" />
               </section>
               <section
-                className={'dib v-mid pointer pv1 ph2 br1'}
+                className={`dib v-mid pointer pv1 ph2 br1 ${
+                  !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
+                }`}
                 onClick={
                   !this.props.hasEditedItems ? null : this.handleCancelStaging
                 }
               >
-                <i
-                  className={`fa fa-undo ${
-                    !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
-                />
+                <i className="fa fa-undo" />
               </section>
               <button
                 className={
@@ -192,7 +185,7 @@ class FixedToolbar extends React.Component {
     this.props.onChangeCheckedItemsFilter(ev.target.checked)
   }
   handleStagingFilterClick = ev => {
-    this.props.onChangeInvalidItemsFilter(ev.target.checked)
+    this.props.onChangeStagingFilter(ev.target.checked)
   }
 
   handleOnlyWithErrorFilterClick = ev => {
@@ -273,7 +266,7 @@ FixedToolbar.propTypes = {
   isStagingFilterActive: PropTypes.bool,
   isInvalidFilterActive: PropTypes.bool,
   isSelectedFilterActive: PropTypes.bool,
-  UISchema: PropTypes.object,
+  UIschema: PropTypes.object,
   onExport: PropTypes.func,
   onSave: PropTypes.func,
   onAdd: PropTypes.func,

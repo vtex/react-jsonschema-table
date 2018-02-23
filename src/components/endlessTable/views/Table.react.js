@@ -70,7 +70,7 @@ class Table extends React.Component {
   handleFetchItems = skip => {
     this.props.onFetchItems(
       this.props.context,
-      this.props.UISchema.fields,
+      this.props.UIschema.fields,
       skip,
       this.props.fetchSize || 100,
       this.props.where,
@@ -114,7 +114,7 @@ class Table extends React.Component {
 Table.propTypes = {
   context: PropTypes.object.isRequired,
   schema: PropTypes.object.isRequired,
-  UISchema: PropTypes.object.isRequired,
+  UIschema: PropTypes.object.isRequired,
   onCheckRow: PropTypes.func,
   fetchSize: PropTypes.number,
   where: PropTypes.string,

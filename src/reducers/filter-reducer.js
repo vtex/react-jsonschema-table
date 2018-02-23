@@ -32,21 +32,47 @@ export default (state = initialState, action) => {
       })
     }
 
+    case types.CANCEL_STAGING: {
+      const newState = Object.assign({}, state)
+      newState.isSelectedFilterActive = false
+      newState.isStagingFilterActive = false
+      newState.isInvalidFilterActive = false
+      return newState
+    }
+
     case types.CHANGE_CHECKED_FILTER: {
       const newState = Object.assign({}, state)
       newState.isSelectedFilterActive = !state.isSelectedFilterActive
+      newState.isStagingFilterActive = newState.isSelectedFilterActive
+        ? false
+        : newState.isStagingFilterActive
+      newState.isInvalidFilterActive = newState.isSelectedFilterActive
+        ? false
+        : newState.isInvalidFilterActive
       return newState
     }
 
     case types.CHANGE_STAGING_FILTER: {
       const newState = Object.assign({}, state)
       newState.isStagingFilterActive = !state.isStagingFilterActive
+      newState.isSelectedFilterActive = newState.isStagingFilterActive
+        ? false
+        : newState.isSelectedFilterActive
+      newState.isInvalidFilterActive = newState.isStagingFilterActive
+        ? false
+        : newState.isInvalidFilterActive
       return newState
     }
 
     case types.CHANGE_INVALID_ITEMS_FILTER: {
       const newState = Object.assign({}, state)
       newState.isInvalidFilterActive = !state.isInvalidFilterActive
+      newState.isStagingFilterActive = newState.isInvalidFilterActive
+        ? false
+        : newState.isStagingFilterActive
+      newState.isSelectedFilterActive = newState.isInvalidFilterActive
+        ? false
+        : newState.isSelectedFilterActive
       return newState
     }
 
