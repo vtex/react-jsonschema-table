@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import JsonSchemaTable from 'react-jsonschema-table'
+import ReactDOM from 'react-dom'
+import JsonSchemaTable from './index.js'
+
 const schema = {
   properties: {
     name: {
@@ -55,7 +57,7 @@ const UIschema = {
 
 const indexedFields = ['name', 'email']
 
-export default class App extends Component {
+class App extends Component {
   render() {
     const props = {}
     props.items = []
@@ -72,12 +74,9 @@ export default class App extends Component {
       </div>
     )
   }
-
-  handleLoadDocuments(rowStart) {
-    console.log(rowStart)
-  }
-
-  handleSort(fieldName, direction) {
-    console.log('', fieldName, direction)
-  }
 }
+
+ReactDOM.render(<App />, document.getElementById('app'))
+module.hot.accept()
+
+export default App
