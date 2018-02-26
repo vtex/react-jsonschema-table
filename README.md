@@ -34,30 +34,18 @@ indexedFields: An array with the fieldNames that can be used to sort the table.
 onSort: function that is called when a sort action is required. Receive the field that trigger the action and the direction to sort.
 onGetItems: function used to load the documents on demand.
 
-## Local setup
+## Local setup for developing
 
 Setup project
 
 ```bash
-npm run setup
+npm i
 ```
 
 Run example
 
 ```bash
-npm run start-example
-```
-
-Develop
-
-```bash
-npm run start-development
-```
-
-Uninstalling
-
-```bash
-npm unlink react-jsonschema-table
+npm run dev
 ```
 
 ## License
