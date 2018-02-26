@@ -1,0 +1,24 @@
+{
+  "name": "example-using-production-bundle",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Guigs",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vtex/react-jsonschema-table.git"
+  },
+  "main": "prod.html",
+  "module": "prod.js",
+  "jsnext:main": "dist/index.es.js",
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors --config ./webpack.config.js"
+  },
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-jsonschema-table": "file:../",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}
