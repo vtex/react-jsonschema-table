@@ -18,11 +18,7 @@
     "start": "rollup -c -w",
     "dev": "webpack-dev-server --progress --colors --config ./webpack.dev.config.js",
     "prepublish": "npm run build",
-    "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build",
-    "setup": "npm i && npm link && cd example && npm i && npm link react-jsonschema-table",
-    "start-example": "cd example && npm start",
-    "start-development": "concurrently --kill-others \"npm start\" \"npm run start-example\""
+    "predeploy": "cd example && npm install && npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",
