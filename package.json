@@ -18,7 +18,7 @@
     "start": "rollup -c -w",
     "dev": "webpack-dev-server --progress --colors --config ./webpack.dev.config.js",
     "prepublish": "npm run build",
-    "predeploy": "cd example && npm install && npm run build"
+    "predeploy": "npm run prepublish && cd example_production && npm start"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.3",
