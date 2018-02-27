@@ -79,7 +79,7 @@ class JsonSchemaTable extends React.Component {
       </Provider>
     )
   }
-  handleGetNotLoadedDocument = () => {}
+  handleGetNotLoadedDocument = () => { }
 }
 
 JsonSchemaTable.propTypes = {

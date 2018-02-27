@@ -22,6 +22,9 @@ class Table extends React.Component {
     var columns = []
 
     Object.keys(this.props.schema.properties).forEach(key => {
+      if (this.props.hiddenFields.includes(key)) {
+        return
+      }
       columns.push(
         Object.assign({}, { fieldName: key }, this.props.schema.properties[key])
       )
@@ -84,6 +87,9 @@ class Table extends React.Component {
     const schema = this.props.schema
     if (schema) {
       Object.keys(schema.properties).forEach((key, index) => {
+        if (this.props.hiddenFields.includes(key)) {
+          return
+        }
         var fieldDef = schema.properties[key]
         var label = (
           <div>
@@ -120,6 +126,7 @@ Table.propTypes = {
   where: PropTypes.string,
   sort: PropTypes.string,
   onFetchItems: PropTypes.func.isRequired,
+  hiddenFields: PropTypes.array,
 }
 
 export default Table

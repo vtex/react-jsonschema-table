@@ -19,6 +19,7 @@ export default (state = initialState, action) => {
         )
       } else {
         if (!newState.hiddenFields.includes(field)) {
+          newState.hiddenFields = newState.hiddenFields.slice()
           newState.hiddenFields.push(field)
         }
       }
@@ -26,10 +27,9 @@ export default (state = initialState, action) => {
     }
 
     case types.VIEW_ALL_COLUMNS: {
-      return Object.assign({}, state, {
-        isFetching: false,
-        errors: action.errors,
-      })
+      const newState = Object.assign({}, state)
+      newState.hiddenFields = []
+      return newState
     }
 
     case types.CANCEL_STAGING: {

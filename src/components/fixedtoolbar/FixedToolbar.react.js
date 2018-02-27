@@ -44,16 +44,18 @@ class FixedToolbar extends React.Component {
           <div className="flex items-center">
             <div className="ph3">
               <ColumnsToShow
+                hiddenFields={this.props.hiddenFields}
                 isSelected={isColumnsToShowSelected}
                 context={this.props.context}
                 UIschema={this.props.UIschema}
+                schema={this.props.schema}
                 onViewAllColumns={this.props.onViewAllColumns}
                 onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
               <section
                 className={`pointer pv2 br3 ph2${
                   isColumnsToShowSelected ? ' bg-light-gray bn relative' : ''
-                }`}
+                  }`}
                 onClick={this.handleColumnsToShowClick}
               >
                 <i className="fa fa-columns pr2" />&nbsp;
@@ -69,7 +71,7 @@ class FixedToolbar extends React.Component {
                 }
                 className={`ph3 ${
                   !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+                  }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -89,7 +91,7 @@ class FixedToolbar extends React.Component {
                 title="Exibir somente os registros pendentes de sincronização"
                 className={`ph3 ${
                   !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+                  }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -109,7 +111,7 @@ class FixedToolbar extends React.Component {
                 title="Exibir somente os registros com erros"
                 className={`ph3 ${
                   !this.props.hasInvalidItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+                  }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -131,7 +133,7 @@ class FixedToolbar extends React.Component {
               <section
                 className={`dib v-mid pointer pv1 ph2 br1 ${
                   !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+                  }`}
                 onClick={!this.props.hasCheckedItems ? null : this.handleExport}
               >
                 <i className="fa fa-cloud-download-alt" />
@@ -139,7 +141,7 @@ class FixedToolbar extends React.Component {
               <section
                 className={`dib v-mid pointer pv1 ph2 br1' ${
                   !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+                  }`}
                 onClick={
                   !this.props.hasCheckedItems
                     ? null
@@ -151,7 +153,7 @@ class FixedToolbar extends React.Component {
               <section
                 className={`dib v-mid pointer pv1 ph2 br1 ${
                   !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+                  }`}
                 onClick={
                   !this.props.hasEditedItems ? null : this.handleCancelStaging
                 }
@@ -267,6 +269,7 @@ FixedToolbar.propTypes = {
   isInvalidFilterActive: PropTypes.bool,
   isSelectedFilterActive: PropTypes.bool,
   UIschema: PropTypes.object,
+  schema: PropTypes.object,
   onExport: PropTypes.func,
   onSave: PropTypes.func,
   onAdd: PropTypes.func,
@@ -276,6 +279,7 @@ FixedToolbar.propTypes = {
   onChangeStagingFilter: PropTypes.func,
   onChangeInvalidItemsFilter: PropTypes.func,
   onViewAllColumns: PropTypes.func,
+  hiddenFields: PropTypes.array,
   onChangeColumnVisibility: PropTypes.func,
 }
 

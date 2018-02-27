@@ -13,6 +13,6 @@ export function viewAllColumns() {
   return { type: types.VIEW_ALL_COLUMNS }
 }
 
-export function changeColumnVisibility(field) {
-  return { type: types.CHANGE_COLUMN_VISIBILITY, field }
+export function changeColumnVisibility(field, visible) {
+  return { type: types.CHANGE_COLUMN_VISIBILITY, field, visible }
 }

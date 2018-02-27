@@ -29,6 +29,7 @@ const mapStateToProps = (state, ownProps) => {
     isStagingFilterActive: state.filter.isStagingFilterActive,
     isInvalidFilterActive: state.filter.isInvalidFilterActive,
     UIschema: ownProps.UIschema,
+    schema: ownProps.schema,
     hiddenFields: state.filter.hiddenFields,
   }
 }
