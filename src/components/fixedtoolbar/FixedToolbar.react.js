@@ -120,6 +120,7 @@ class FixedToolbar extends React.Component {
                     name="checkedRowsSlide3"
                     onChange={this.handleOnlyWithErrorFilterClick}
                     checked={this.props.isInvalidFilterActive}
+                    disabled={!this.props.hasInvalidItems}
                   />
                   <label htmlFor="checkedRowsSlide3">
                     <i className="fa fa-exclamation" />
