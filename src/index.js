@@ -10,6 +10,9 @@ import facolumns from '@fortawesome/fontawesome-free-solid/faColumns'
 import faDownload from '@fortawesome/fontawesome-free-solid/faCloudDownloadAlt'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
+import faCheckSquare from '@fortawesome/fontawesome-free-solid/faCheckSquare'
+import faSquare from '@fortawesome/fontawesome-free-solid/faSquare'
 import { HotKeys } from 'react-hotkeys'
 import keyMap from './KeyMap'
 
@@ -34,7 +37,10 @@ fontawesome.library.add(
   faExclamation,
   faTrash,
   faDownload,
-  faUndo
+  faUndo,
+  faSearch,
+  faSquare,
+  faCheckSquare
 )
 
 class JsonSchemaTable extends React.Component {
@@ -79,7 +85,7 @@ class JsonSchemaTable extends React.Component {
       </Provider>
     )
   }
-  handleGetNotLoadedDocument = () => { }
+  handleGetNotLoadedDocument = () => {}
 }
 
 JsonSchemaTable.propTypes = {

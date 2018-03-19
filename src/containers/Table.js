@@ -13,6 +13,7 @@ import {
   fetchItems,
   checkItemChange,
   updateItem,
+  copyFromSelectedRange,
 } from '../actions/items-actions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -109,6 +110,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setChanges: (id, changes) => {
       dispatch(updateItem(id, ownProps.schema, changes, ownProps.lang))
+    },
+
+    onCopyFromSelectedRange: changes => {
+      dispatch(copyFromSelectedRange(changes, ownProps.schema, ownProps.lang))
     },
   }
 }

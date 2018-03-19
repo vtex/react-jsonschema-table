@@ -496,8 +496,68 @@ class Rows extends React.Component {
     //   selectionFillHandleRange,
     //   this.props.columns
     // )
+    this.props.onCopyFromSelectedRange(this.props.columns)
     this.props.onSelectCellsRange(cellA, cellB)
     // Actions.selectCellsRange(cellA, cellB)
+  }
+
+  copyFromSelectedRange() {
+    const {
+      columns,
+      selectionRange,
+      selectionFillHandleRange,
+      items,
+    } = this.props
+    const documentChanges = []
+    const minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
+    const maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
+    const minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
+    const maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
+    const minFHRow = Math.min(
+      selectionFillHandleRange.cellA.row,
+      selectionFillHandleRange.cellB.row
+    )
+    const maxFHRow = Math.max(
+      selectionFillHandleRange.cellA.row,
+      selectionFillHandleRange.cellB.row
+    )
+    const minFHCol = Math.min(
+      selectionFillHandleRange.cellA.col,
+      selectionFillHandleRange.cellB.col
+    )
+    const maxFHCol = Math.max(
+      selectionFillHandleRange.cellA.col,
+      selectionFillHandleRange.cellB.col
+    )
+    const fhRowsLenght = maxFHRow - minFHRow + 1
+    const fhColsLenght = maxFHCol - minFHCol + 1
+    const rowsLength = maxRow - minRow + 1
+    const colsLenght = maxCol - minCol + 1
+    const toUp = maxFHRow < minRow
+    const toLeft = maxFHCol < minCol
+    for (let i = 0; i < fhRowsLenght; i++) {
+      // let colQuotient = Math.floor((maxCol - minCol + 1) / clipRows[0].length)
+      const toRowIndex = toUp ? maxFHRow - i : i + minFHRow
+      const rowQuotient = Math.floor(i / rowsLength)
+      const fromRowIndex = toUp
+        ? maxRow - (i - rowQuotient * rowsLength)
+        : i - rowQuotient * rowsLength + minRow
+      const documentToCopy = items[fromRowIndex].document
+      const changes = {}
+      for (let j = 0; j < fhColsLenght; j++) {
+        const toColIndex = toLeft ? maxFHCol - j : j + minFHCol
+        const colQuotient = Math.floor(j / colsLenght)
+        const fromColIndex = toLeft
+          ? maxCol - (j - colQuotient * colsLenght)
+          : j - colQuotient * colsLenght + minCol
+        const fieldNameTo = columns[toColIndex].fieldName
+        const filedNameFrom = columns[fromColIndex].fieldName
+        const valueToCopy = documentToCopy[filedNameFrom]
+        changes[fieldNameTo] = { value: valueToCopy }
+      }
+      documentChanges.push({ id: items[toRowIndex].document.id, changes })
+    }
+    this.props.onCopyFromSelectedRange(documentChanges)
   }
 }
 
@@ -513,6 +573,7 @@ Rows.propTypes = {
   onGetNotLoadedDocument: PropTypes.func,
   onSelectCellsRange: PropTypes.func,
   onSelectFillHandleRange: PropTypes.func,
+  onCopyFromSelectedRange: PropTypes.func,
   onFocusCell: PropTypes.func,
   onEditCell: PropTypes.func,
   onExitEditCell: PropTypes.func,

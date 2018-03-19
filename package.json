@@ -16,7 +16,8 @@
     "test:watch": "npm test -- --watch",
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "dev": "webpack-dev-server --progress --colors --config ./webpack.dev.config.js",
+    "dev":
+      "webpack-dev-server --progress --colors --config ./webpack.dev.config.js",
     "prepublish": "npm run build",
     "predeploy": "npm run prepublish && cd example_production && npm start"
   },
@@ -33,6 +34,7 @@
     "react-dropzone": "^3.13.4",
     "react-hotkeys": "^0.10.0",
     "react-intl": "^2.3.0",
+    "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.6",
     "react-slick": "^0.15.0",
     "react-widgets": "^4.0.0",
@@ -98,11 +100,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "babel": {
-    "presets": [
-      "env",
-      "react",
-      "stage-2"
-    ]
+    "presets": ["env", "react", "stage-2"]
   },
   "jest": {
     "verbose": true,
@@ -112,12 +110,7 @@
     "globals": {
       "NODE_ENV": "test"
     },
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ]
+    "moduleFileExtensions": ["js", "jsx"]
   },
-  "files": [
-    "dist"
-  ]
+  "files": ["dist"]
 }

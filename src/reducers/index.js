@@ -2,12 +2,17 @@ import items from './items-reducer'
 import table from './table-reducer'
 import filter from './filter-reducer'
 
-import { combineReducers } from 'redux'
-
-const rootReducer = combineReducers({
-  items,
-  table,
-  filter,
-})
+const rootReducer = (state = {}, action) => {
+  const { selectionRange, selectionFillHandleRange } = state.table || {}
+  return {
+    items: items(state.items, {
+      ...action,
+      selectionRange,
+      selectionFillHandleRange,
+    }),
+    table: table(state.table, action),
+    filter: filter(state.filter, action),
+  }
+}
 
 export default rootReducer

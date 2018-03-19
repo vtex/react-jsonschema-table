@@ -36,7 +36,8 @@ class CheckBox extends React.Component {
             : `w-100 h-100 tc ${
               this.props.isEditing
                 ? `bw1 ba ${borderColor} h-100 pt05`
-                : viewMode}`
+                : viewMode
+            }`
         }
         handlers={handlers}
       >
@@ -45,9 +46,9 @@ class CheckBox extends React.Component {
           className={
             this.props.value
               ? this.props.isEditing
-                ? 'fa fa-check-square-o pointer'
+                ? 'far fa-check-square pointer'
                 : 'fa fa-check pointer'
-              : this.props.isEditing ? 'fa fa-square-o pointer' : ''
+              : this.props.isEditing ? 'far fa-square pointer' : ''
           }
         />
       </HotKeys>
@@ -61,7 +62,7 @@ class CheckBox extends React.Component {
     if (this.props.isEditing) {
       this.props.setChange(!this.props.value)
     }
-  };
+  }
 }
 
 CheckBox.propTypes = {

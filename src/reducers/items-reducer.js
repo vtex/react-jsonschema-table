@@ -182,6 +182,26 @@ export default (state = initialState, action) => {
       return newState
     }
 
+    case types.COPY_FROM_SELECTED_RANGE: {
+      const { changes, schema, lang } = action
+      const newState = Object.assign({}, state)
+
+      changes.forEach(change => {
+        this.addStaging(newState, change.id, null, change.changes, schema, lang)
+      })
+      return newState
+    }
+    case types.PASTE_DATA: {
+      return state
+    }
+
+    case types.UNDO_CHANGE: {
+      return state
+    }
+    case types.REDO_CHANGE: {
+      return state
+    }
+
     default:
       return state
   }

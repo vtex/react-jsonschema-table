@@ -106,3 +106,7 @@ export function fetchItems(context, fields, skip, size, where, sort) {
       .catch(ex => dispatch(fetchItemsFailure(ex)))
   }
 }
+
+export function copyFromSelectedRange(fields) {
+  return { type: types.COPY_FROM_SELECTED_RANGE, fields }
+}

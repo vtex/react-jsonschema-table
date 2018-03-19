@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
+// import Toggle from 'react-toggle'
 
 class ColumnsToShow extends React.Component {
   render() {
@@ -30,19 +31,24 @@ class ColumnsToShow extends React.Component {
     })
 
     return (
-      <div className={`submenu-panel absolute mt4 z-999 br3 bg-white pa2 f6 shadow-1 ${this.props.isSelected ? 'dib' : 'dn'}`}>
+      <div
+        className={`submenu-panel absolute mt4 z-999 br3 bg-white pa2 f6 shadow-1 ${
+          this.props.isSelected ? 'dib' : 'dn'
+        }`}
+      >
         <div className="db w-100 mv2">
-          <div className="pointer di ba bw-1 pa2 br3 bg-blue b--blue white dim" onClick={this.handleShowAllColumns}>
+          <div
+            className="pointer di ba bw-1 pa2 br3 bg-blue b--blue white dim"
+            onClick={this.handleShowAllColumns}
+          >
             <FormattedMessage id="ColumnsToShow.show.all" />
           </div>
         </div>
-        <ul className="list pl1">
-          {columns}
-        </ul>
+        <ul className="list pl1">{columns}</ul>
       </div>
     )
   }
-  handleShowHideColumnClick = (ev) => {
+  handleShowHideColumnClick = ev => {
     this.props.onChangeColumnVisibility(ev.target.value, ev.target.checked)
   }
   handleShowAllColumns = () => {

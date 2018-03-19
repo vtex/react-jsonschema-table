@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import ConfirmAlert from '../alert/ConfirmAlert.react.js'
 import SaveButton from './SaveButton.react'
 import { FormattedMessage } from 'react-intl'
+import Search from './search/Search.react'
 
 class FixedToolbar extends React.Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class FixedToolbar extends React.Component {
               <section
                 className={`pointer pv2 br3 ph2${
                   isColumnsToShowSelected ? ' bg-light-gray bn relative' : ''
-                  }`}
+                }`}
                 onClick={this.handleColumnsToShowClick}
               >
                 <i className="fa fa-columns pr2" />&nbsp;
@@ -71,7 +72,7 @@ class FixedToolbar extends React.Component {
                 }
                 className={`ph3 ${
                   !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
+                }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -91,7 +92,7 @@ class FixedToolbar extends React.Component {
                 title="Exibir somente os registros pendentes de sincronização"
                 className={`ph3 ${
                   !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
+                }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -111,7 +112,7 @@ class FixedToolbar extends React.Component {
                 title="Exibir somente os registros com erros"
                 className={`ph3 ${
                   !this.props.hasInvalidItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
+                }`}
               >
                 <div className="ph2 slideTwo">
                   <input
@@ -129,12 +130,13 @@ class FixedToolbar extends React.Component {
               </section>
             </div>
           </div>
+          <Search />
           <div className="flex" style={{ fontSize: '1.2em' }}>
             <div className="ph3">
               <section
                 className={`dib v-mid pointer pv1 ph2 br1 ${
                   !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
+                }`}
                 onClick={!this.props.hasCheckedItems ? null : this.handleExport}
               >
                 <i className="fa fa-cloud-download-alt" />
@@ -142,7 +144,7 @@ class FixedToolbar extends React.Component {
               <section
                 className={`dib v-mid pointer pv1 ph2 br1' ${
                   !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
+                }`}
                 onClick={
                   !this.props.hasCheckedItems
                     ? null
@@ -154,7 +156,7 @@ class FixedToolbar extends React.Component {
               <section
                 className={`dib v-mid pointer pv1 ph2 br1 ${
                   !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                  }`}
+                }`}
                 onClick={
                   !this.props.hasEditedItems ? null : this.handleCancelStaging
                 }

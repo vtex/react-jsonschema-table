@@ -111,7 +111,7 @@ class Search extends React.Component {
       }
     })
     return newFields
-  };
+  }
 
   parseFieldsLabels = (fields, parentFieldName) => {
     let fieldsLabels = []
@@ -120,20 +120,20 @@ class Search extends React.Component {
         const nestedLabels = this.parseFieldsLabels(
           field.properties,
           parentFieldName
-            ? parentFieldName + '.' + (field.title || field.label || fieldName)
+            ? `${parentFieldName}.${field.title || field.label || fieldName}`
             : field.title || field.label || fieldName
         )
         fieldsLabels = fieldsLabels.concat(nestedLabels)
       } else {
         fieldsLabels.push(
           parentFieldName
-            ? parentFieldName + '.' + (field.title || field.label || fieldName)
+            ? `${parentFieldName}.${field.title || field.label || fieldName}`
             : field.title || field.label || fieldName
         )
       }
     })
     return fieldsLabels
-  };
+  }
 
   handleAddFilter(filter, index) {
     const filters = this.state.filters
@@ -191,18 +191,19 @@ class Search extends React.Component {
     }
   }
   handleMoveLeft() {
-    const selectedIndex = this.state.selectedIndex > 0
-      ? this.state.selectedIndex - 1
-      : this.state.selectedIndex
+    const selectedIndex =
+      this.state.selectedIndex > 0
+        ? this.state.selectedIndex - 1
+        : this.state.selectedIndex
     this.setState({ selectedIndex: selectedIndex })
-    console.log('moveLeft:index:' + selectedIndex)
+    console.log(`moveLeft:index:${selectedIndex}`)
   }
 
   handleMoveRight() {
-    const selectedIndex = this.state.selectedIndex <
-      this.state.filters.length - 1
-      ? this.state.selectedIndex + 1
-      : this.state.selectedIndex
+    const selectedIndex =
+      this.state.selectedIndex < this.state.filters.length - 1
+        ? this.state.selectedIndex + 1
+        : this.state.selectedIndex
     this.setState({ selectedIndex: selectedIndex })
   }
 
@@ -236,7 +237,10 @@ class Search extends React.Component {
       { name: '!=', label: '!=' },
       { name: '<', label: '<' },
       { name: '>', label: '>' },
-      { name: 'between', label: this.getI18nStr('ComparisonOperator.contains') },
+      {
+        name: 'between',
+        label: this.getI18nStr('ComparisonOperator.contains'),
+      },
     ]
   }
 
@@ -284,8 +288,12 @@ class Search extends React.Component {
 
   parseFilterToSearchString(filter) {
     const logicalOp = filter.logicalOp
-      ? _.find(this.state.logicalOperators, op => op.label === filter.logicalOp)
-          .name + ' '
+      ? `${
+        _.find(
+          this.state.logicalOperators,
+          op => op.label === filter.logicalOp
+        ).name
+      } `
       : ''
     const field = this.parseFilterField(filter)
     const comparisonOp = _.find(
@@ -293,9 +301,9 @@ class Search extends React.Component {
       op => op.label === filter.comparisonOp
     ).name
     if (comparisonOp === 'contains') {
-      return logicalOp + field + '=*' + filter.value + '* '
+      return `${logicalOp + field}=*${filter.value}* `
     }
-    return logicalOp + field + comparisonOp + filter.value + ' '
+    return `${logicalOp + field + comparisonOp + filter.value} `
   }
 
   getI18nStr(id) {

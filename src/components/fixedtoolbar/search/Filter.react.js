@@ -10,13 +10,9 @@ class Filter extends React.Component {
     return (
       <div className="dtc nowrap w1">
         <div className="pv1 ph3 br3 bg-blue white mr3">
-          {this.props.filter.logicalOp +
-            ' ' +
-            this.props.filter.field +
-            ' ' +
-            this.props.filter.comparisonOp +
-            ' ' +
-            this.props.filter.value}
+          {`${this.props.filter.logicalOp} ${this.props.filter.field} ${
+            this.props.filter.comparisonOp
+          } ${this.props.filter.value}`}
           <div className="pl3 dib">
             <i
               className="fa fa-times pointer"
