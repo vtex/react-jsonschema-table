@@ -245,6 +245,8 @@ const addStaging = (newState, id, status, changes, schema, lang) => {
 
   if (staging[id].validationErrors) {
     newState.invalidItems.push(id)
+  } else {
+    newState.invalidItems = newState.invalidItems.filter(item => item !== id)
   }
 }
 
