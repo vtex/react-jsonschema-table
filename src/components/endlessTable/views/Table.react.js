@@ -44,7 +44,7 @@ class Table extends React.Component {
           </Header>
         </div>
         <div
-          className="scroolOverlayInner mh4 ph2"
+          className="scroolOverlayInner mh4 ph2 mt5 pt1"
           id="listContainer"
           onScroll={this.handleScroll}
           ref={div => {
