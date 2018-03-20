@@ -1,5 +1,6 @@
 import React from 'react'
 import ColumnsToShow from './ColumnsToShow.react'
+import Filters from './Filters.react'
 import PropTypes from 'prop-types'
 import ConfirmAlert from '../alert/ConfirmAlert.react.js'
 import SaveButton from './SaveButton.react'
@@ -10,8 +11,6 @@ class FixedToolbar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.handleCheckFilterClick = this.handleCheckFilterClick.bind(this)
-    this.handleStagingFilterClick = this.handleStagingFilterClick.bind(this)
     this.clearSelection = this.clearSelection.bind(this)
     this.handleColumnsToShowClick = this.handleColumnsToShowClick.bind(this)
     this.handleFiltersClick = this.handleFiltersClick.bind(this)
@@ -28,7 +27,13 @@ class FixedToolbar extends React.Component {
   }
 
   render() {
-    var isColumnsToShowSelected = this.state.isColumnsToShowSelected
+    const { isColumnsToShowSelected } = this.state
+    const areAnyColumnsHidden = (this.props.hiddenFields.length > 0)
+    const areAnyfilterselected = (
+      this.props.isSelectedFilterActive ||
+      this.props.isInvalidFilterActive ||
+      this.props.isStagingFilterActive
+    )
     var toolBarContent = null
 
     if (this.state.isImport) {
@@ -53,81 +58,40 @@ class FixedToolbar extends React.Component {
                 onViewAllColumns={this.props.onViewAllColumns}
                 onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
-              <section
-                className={`pointer pv2 br3 ph2${
-                  isColumnsToShowSelected ? ' bg-light-gray bn relative' : ''
+              <div
+                className={`pointer pv2 br3 ph2 inline-flex nowrap ${
+                  isColumnsToShowSelected ? 'bg-light-gray bn relative' : ''
+                } ${
+                  areAnyColumnsHidden ? 'blue' : 'black'
                 }`}
                 onClick={this.handleColumnsToShowClick}
               >
-                <i className="fa fa-columns pr2" />&nbsp;
+                <i className="fa fa-columns pr1" />
                 <FormattedMessage id="FixedToolbar.ColumnsToShow.columns" />
-              </section>
+              </div>
             </div>
-            <div className="flex items-center pl5 pr4 v-mid mb2">
-              <section
-                title={
-                  this.props.hasCheckedItems
-                    ? 'Exibir somente os registros selecionados'
-                    : 'Selecione um ou mais registros para ativar esse fitro'
-                }
-                className={`ph3 ${
-                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
+            <div className="flex items-center ph3 v-mid mb2">
+              <Filters
+                isSelected={this.state.isFilterSelected}
+                hasCheckedItems={this.props.hasCheckedItems}
+                hasEditedItems={this.props.hasEditedItems}
+                hasInvalidItems={this.props.hasInvalidItems}
+                isSelectedFilterActive={this.props.isSelectedFilterActive}
+                isInvalidFilterActive={this.props.isInvalidFilterActive}
+                isStagingFilterActive={this.props.isStagingFilterActive}
+                onChangeCheckedItemsFilter={this.props.onChangeCheckedItemsFilter}
+                onChangeStagingFilter={this.props.onChangeStagingFilter}
+                onChangeInvalidItemsFilter={this.props.onChangeInvalidItemsFilter}
+                onHandleFiltersClick={this.handleFiltersClick} />
+                <div
+                className={`pointer pv2 br3 ph2 inline-flex nowrap ${
+                  this.state.isFilterSelected ? 'bg-light-gray bn relative' : ''
+                } ${areAnyfilterselected ? 'blue' : ''}`}
+                onClick={this.handleFiltersClick}
               >
-                <div className="ph2 slideTwo">
-                  <input
-                    type="checkbox"
-                    id="checkedRowsSlide1"
-                    name="checkedRowsSlide1"
-                    onChange={this.handleCheckFilterClick}
-                    disabled={!this.props.hasCheckedItems}
-                    checked={this.props.isSelectedFilterActive}
-                  />
-                  <label htmlFor="checkedRowsSlide1">
-                    <i className="fa fa-check" />
-                  </label>
-                </div>
-              </section>
-              <section
-                title="Exibir somente os registros pendentes de sincronização"
-                className={`ph3 ${
-                  !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
-              >
-                <div className="ph2 slideTwo">
-                  <input
-                    type="checkbox"
-                    id="checkedRowsSlide2"
-                    name="checkedRowsSlide2"
-                    onChange={this.handleStagingFilterClick}
-                    disabled={!this.props.hasEditedItems}
-                    checked={this.props.isStagingFilterActive}
-                  />
-                  <label htmlFor="checkedRowsSlide2">
-                    <i className="fa fa-pencil-alt" />
-                  </label>
-                </div>
-              </section>
-              <section
-                title="Exibir somente os registros com erros"
-                className={`ph3 ${
-                  !this.props.hasInvalidItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
-              >
-                <div className="ph2 slideTwo">
-                  <input
-                    type="checkbox"
-                    id="checkedRowsSlide3"
-                    name="checkedRowsSlide3"
-                    onChange={this.handleOnlyWithErrorFilterClick}
-                    checked={this.props.isInvalidFilterActive}
-                    disabled={!this.props.hasInvalidItems}
-                  />
-                  <label htmlFor="checkedRowsSlide3">
-                    <i className="fa fa-exclamation" />
-                  </label>
-                </div>
-              </section>
+                <i className="fa fa-filter pr2" />
+                <FormattedMessage id="FixedToolbar.StateFilters.filters" />
+              </div>
             </div>
           </div>
           <Search />
@@ -185,16 +149,6 @@ class FixedToolbar extends React.Component {
     }
 
     return toolBarContent
-  }
-  handleCheckFilterClick = ev => {
-    this.props.onChangeCheckedItemsFilter(ev.target.checked)
-  }
-  handleStagingFilterClick = ev => {
-    this.props.onChangeStagingFilter(ev.target.checked)
-  }
-
-  handleOnlyWithErrorFilterClick = ev => {
-    this.props.onChangeInvalidItemsFilter(ev.target.checked)
   }
 
   clearSelection() {
