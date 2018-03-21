@@ -82,20 +82,18 @@ class Search extends React.Component {
       exitEdit: this.handleEscape,
     }
     return (
-      <div className="search w-100 mv4">
-        <div className="h-inherit">
-          <HotKeys
-            handlers={handlers}
-            className={
-              this.state.selectedIndex !== null
-                ? 'relative ba b--black-10 bw1 br4  items-center flex flex-row flex-wrap justify-start z-999 bg-white pt3'
-                : 'ba b--black-10 bw1 br4  items-center flex flex-row nowrap overflow-hidden justify-start z-999 bg-white pt3 pr3'
-            }
-            onClick={this.handleClick}
-          >
-            {this.renderFilters()}
-          </HotKeys>
-        </div>
+      <div className="search w-100 w-30-l">
+        <HotKeys
+          handlers={handlers}
+          className={
+            this.state.selectedIndex !== null
+              ? 'relative flex-row flex-wrap justify-start z-999 bg-white pt3'
+              : 'flex-row nowrap overflow-hidden justify-start z-999 bg-white pt3'
+          }
+          onClick={this.handleClick}
+        >
+          {this.renderFilters()}
+        </HotKeys>
       </div>
     )
   }

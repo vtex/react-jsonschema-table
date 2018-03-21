@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 class ColumnsToShow extends React.Component {
   render() {
     if (!this.props.UIschema) {
-      return <div />
+      return null
     }
 
     const columns = []
@@ -36,6 +36,7 @@ class ColumnsToShow extends React.Component {
           this.props.isSelected ? 'dib' : 'dn'
         }`}
       >
+        <ul className="list pl1">{columns}</ul>
         <div className="db w-100 mv2">
           <div
             className="pointer di ba bw-1 pa2 br3 bg-blue b--blue white dim"
@@ -44,7 +45,6 @@ class ColumnsToShow extends React.Component {
             <FormattedMessage id="ColumnsToShow.show.all" />
           </div>
         </div>
-        <ul className="list pl1">{columns}</ul>
       </div>
     )
   }
