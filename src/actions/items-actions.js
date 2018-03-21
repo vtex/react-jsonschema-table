@@ -107,6 +107,6 @@ export function fetchItems(context, fields, skip, size, where, sort) {
   }
 }
 
-export function copyFromSelectedRange(fields) {
-  return { type: types.COPY_FROM_SELECTED_RANGE, fields }
+export function copyFromSelectedRange(changes, schema, lang) {
+  return { type: types.COPY_FROM_SELECTED_RANGE, changes, schema, lang }
 }

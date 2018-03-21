@@ -248,8 +248,8 @@ class Row extends React.Component {
       linkedValue: document[`${column.fieldName}_linked`],
       id: item.document.id,
       onSelectCell: this.props.onSelectCell,
-      // onFillHandleDown: this.props.onFillHandleDown,
-      // onFillHandleUp: this.props.onFillHandleUp,
+      onFillHandleDown: this.props.onFillHandleDown,
+      onFillHandleUp: this.props.onFillHandleUp,
       onExitEditCell: this.onExitEditCell,
       onFocusCell: this.onFocusCell,
       onEditCell: this.props.onEditCell,
@@ -384,6 +384,8 @@ Row.propTypes = {
   editingCell: PropTypes.object,
   selectionRange: PropTypes.object,
   selectionFillHandleRange: PropTypes.object,
+  onFillHandleDown: PropTypes.func,
+  onFillHandleUp: PropTypes.func,
 }
 
 export default Row

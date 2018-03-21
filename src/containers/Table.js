@@ -28,7 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     focusedCell: state.table.focusedCell,
     editingCell: state.table.editingCell,
     selectionRange: state.table.selectionRange,
-    selectionFillHandleRange: state.table.selectionRange,
+    selectionFillHandleRange: state.table.selectionFillHandleRange,
     isChecking: state.items.checkedItems && state.items.checkedItems.length > 0,
     hiddenFields: state.filter.hiddenFields,
   }

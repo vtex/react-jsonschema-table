@@ -496,7 +496,7 @@ class Rows extends React.Component {
     //   selectionFillHandleRange,
     //   this.props.columns
     // )
-    this.props.onCopyFromSelectedRange(this.props.columns)
+    this.copyFromSelectedRange(this.props.columns)
     this.props.onSelectCellsRange(cellA, cellB)
     // Actions.selectCellsRange(cellA, cellB)
   }

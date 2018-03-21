@@ -187,7 +187,7 @@ export default (state = initialState, action) => {
       const newState = Object.assign({}, state)
 
       changes.forEach(change => {
-        this.addStaging(newState, change.id, null, change.changes, schema, lang)
+        addStaging(newState, change.id, null, change.changes, schema, lang)
       })
       return newState
     }
