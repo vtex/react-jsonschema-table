@@ -21,18 +21,24 @@ class SaveButton extends React.Component {
       ? 'FixedToolbar.saving'
       : 'FixedToolbar.save'
     return (
-      <button
-        className={`ml3 dib v-mid pa3 ph4 br1 ba bw1 b--blue bg-blue white w5 ${
+      <div
+        className={`pv2 br3 ph2 inline-flex nowrap ${
           this.props.disabled || this.state.isSaving
             ? 'cursor-not-allowed o-30 '
-            : ''
+            : 'pointer'
         }`}
-        onClick={this.handleClick}
+        onClick={() => {
+          if (this.props.disabled || this.state.isSaving) {
+            return
+          }
+          this.handleClick()
+        }}
       >
-        <span className="f4">
+        <i className="fa fa-save pr2" />
+        <div className="dn di-l">
           <FormattedMessage id={textKey} />
-        </span>
-      </button>
+        </div>
+      </div>
     )
   }
 

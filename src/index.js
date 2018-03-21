@@ -14,6 +14,8 @@ import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
 import faCheckSquare from '@fortawesome/fontawesome-free-solid/faCheckSquare'
 import faSquare from '@fortawesome/fontawesome-free-solid/faSquare'
 import faFilter from '@fortawesome/fontawesome-free-solid/faFilter'
+import faPlusSquare from '@fortawesome/fontawesome-free-solid/faPlusSquare'
+import faSave from '@fortawesome/fontawesome-free-solid/faSave'
 import { HotKeys } from 'react-hotkeys'
 import keyMap from './KeyMap'
 
@@ -43,6 +45,8 @@ fontawesome.library.add(
   faSquare,
   faCheckSquare,
   faFilter,
+  faPlusSquare,
+  faSave,
 )
 
 class JsonSchemaTable extends React.Component {

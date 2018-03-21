@@ -46,7 +46,7 @@ class FixedToolbar extends React.Component {
       )
     } else {
       toolBarContent = (
-        <div className="flex justify-between items-center mb3">
+        <div className="flex items-center mb3">
           <div className="flex items-center">
             <div className="ph3">
               <ColumnsToShow
@@ -59,7 +59,7 @@ class FixedToolbar extends React.Component {
                 onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
               <div
-                className={`pointer pv2 br3 ph2 inline-flex nowrap ${
+                className={`pointer ph2 inline-flex nowrap ${
                   isColumnsToShowSelected ? 'bg-light-gray bn relative' : ''
                 } ${
                   areAnyColumnsHidden ? 'blue' : 'black'
@@ -67,10 +67,12 @@ class FixedToolbar extends React.Component {
                 onClick={this.handleColumnsToShowClick}
               >
                 <i className="fa fa-columns pr1" />
-                <FormattedMessage id="FixedToolbar.ColumnsToShow.columns" />
+                <div className="dn di-l">
+                  <FormattedMessage id="FixedToolbar.ColumnsToShow.columns" />
+                </div>
               </div>
             </div>
-            <div className="flex items-center ph3 v-mid mb2">
+            <div className="ph3">
               <Filters
                 isSelected={this.state.isFilterSelected}
                 hasCheckedItems={this.props.hasCheckedItems}
@@ -84,64 +86,82 @@ class FixedToolbar extends React.Component {
                 onChangeInvalidItemsFilter={this.props.onChangeInvalidItemsFilter}
                 onHandleFiltersClick={this.handleFiltersClick} />
                 <div
-                className={`pointer pv2 br3 ph2 inline-flex nowrap ${
-                  this.state.isFilterSelected ? 'bg-light-gray bn relative' : ''
-                } ${areAnyfilterselected ? 'blue' : ''}`}
-                onClick={this.handleFiltersClick}
-              >
-                <i className="fa fa-filter pr2" />
-                <FormattedMessage id="FixedToolbar.StateFilters.filters" />
+                  className={`pointer ph2 inline-flex nowrap ${
+                    this.state.isFilterSelected ? 'bg-light-gray bn relative' : ''
+                  } ${areAnyfilterselected ? 'blue' : ''}`}
+                  onClick={this.handleFiltersClick}
+                >
+                  <i className="fa fa-filter pr2" />
+                  <div className="dn di-l">
+                    <FormattedMessage id="FixedToolbar.StateFilters.filters" />
+                  </div>
               </div>
             </div>
           </div>
           <Search />
-          <div className="flex" style={{ fontSize: '1.2em' }}>
-            <div className="ph3">
-              <section
-                className={`dib v-mid pointer pv1 ph2 br1 ${
-                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
-                onClick={!this.props.hasCheckedItems ? null : this.handleExport}
-              >
-                <i className="fa fa-cloud-download-alt" />
-              </section>
-              <section
-                className={`dib v-mid pointer pv1 ph2 br1' ${
-                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
-                onClick={
-                  !this.props.hasCheckedItems
-                    ? null
-                    : this.handleDeleteCheckedRows
-                }
-              >
-                <i className="fa fa-trash" aria-hidden="true" />
-              </section>
-              <section
-                className={`dib v-mid pointer pv1 ph2 br1 ${
-                  !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-                }`}
-                onClick={
-                  !this.props.hasEditedItems ? null : this.handleCancelStaging
-                }
-              >
-                <i className="fa fa-undo" />
-              </section>
-              <button
-                className={
-                  'ml3 dib v-mid pointer pa3 br1 bg-white blue bw1 ba b--blue br2'
-                }
-                onClick={this.props.onAdd}
-              >
-                <span className="f4">
-                  <FormattedMessage id="FixedToolbar.new.line" />
-                </span>
-              </button>
-              <SaveButton
-                onClick={this.handleSaveAll}
-                disabled={!this.props.hasEditedItems}
-              />
+          <div className="ph3">
+            <div
+              className={
+                'pointer ph2 inline-flex nowrap'
+              }
+              onClick={this.props.onAdd}
+            >
+              <i className="fa fa-plus-square pr2" />
+              <div className="dn di-l">
+                <FormattedMessage id="FixedToolbar.new.line" />
+              </div>
             </div>
+          </div>
+          <div className="ph3">
+            <section
+              className={`ph2 inline-flex nowrap ${
+                !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : 'pointer'
+              }`}
+              onClick={!this.props.hasCheckedItems ? null : this.handleExport}
+            >
+              <i className="fa fa-cloud-download-alt pr2" />
+              <div className="dn di-l">
+                <FormattedMessage id="FixedToolbar.download" />
+              </div>
+            </section>
+          </div>
+          <div className="ph3">
+            <section
+              className={`ph2 inline-flex nowrap ${
+                !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : 'pointer'
+              }`}
+              onClick={
+                !this.props.hasCheckedItems
+                  ? null
+                  : this.handleDeleteCheckedRows
+              }
+            >
+              <i className="fa fa-trash pr2" aria-hidden="true" />
+              <div className="dn di-l">
+                <FormattedMessage id="FixedToolbar.deleteChecked" />
+              </div>
+            </section>
+          </div>
+          <div className="ph3">
+            <section
+              className={`ph2 inline-flex nowrap ${
+                !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : 'pointer'
+              }`}
+              onClick={
+                !this.props.hasEditedItems ? null : this.handleCancelStaging
+              }
+            >
+              <i className="fa fa-undo pr2" />
+              <div className="dn di-l">
+                <FormattedMessage id="FixedToolbar.undo" />
+              </div>
+            </section>
+          </div>
+          <div className="ph3">
+            <SaveButton
+              onClick={this.handleSaveAll}
+              disabled={!this.props.hasEditedItems}
+            />
           </div>
           {this.renderCancelStagingConfirmation()}
         </div>

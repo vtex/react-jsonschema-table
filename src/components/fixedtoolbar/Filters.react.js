@@ -104,7 +104,7 @@ class Filters extends Component {
   render() {
     return (
       <div
-        className={`submenu-panel absolute top-1 mt5 z-999 br3 bg-white pa2 f6 shadow-1 w4 ${
+        className={`submenu-panel absolute top-1 mt4 z-999 br3 bg-white pa2 f6 shadow-1 w4 ${
           this.props.isSelected ? 'dib' : 'dn'
         }`}
       >
