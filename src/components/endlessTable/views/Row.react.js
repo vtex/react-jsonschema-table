@@ -54,6 +54,8 @@ class Row extends React.Component {
     }
     if (
       (nextProps.selectionRange &&
+        nextProps.selectionRange.cellA &&
+        nextProps.selectionRange.cellB &&
         this.isRowInSelectionRange(
           this.props.item.virtualID,
           nextProps.selectionRange.cellA.row,
@@ -70,12 +72,16 @@ class Row extends React.Component {
     }
     if (
       (nextProps.selectionFillHandleRange &&
+        nextProps.selectionFillHandleRange.cellA &&
+        nextProps.selectionFillHandleRange.cellB &&
         this.isRowInSelectionRange(
           this.props.item.virtualID,
           nextProps.selectionFillHandleRange.cellA.row,
           nextProps.selectionFillHandleRange.cellB.row
         )) ||
       (this.props.selectionFillHandleRange &&
+        nextProps.selectionFillHandleRange.cellA &&
+        nextProps.selectionFillHandleRange.cellB &&
         this.isRowInSelectionRange(
           this.props.item.virtualID,
           this.props.selectionFillHandleRange.cellA.row,

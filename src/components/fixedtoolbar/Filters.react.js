@@ -60,6 +60,7 @@ class Filters extends Component {
                 type="checkbox"
                 id="checkedRowsSlide2"
                 name="checkedRowsSlide2"
+                onChange={() => {/* TODO: understand y this is not triggered */}}
                 disabled={!this.props.hasEditedItems}
                 checked={this.props.isStagingFilterActive}
               />
@@ -85,6 +86,7 @@ class Filters extends Component {
                 type="checkbox"
                 id="checkedRowsSlide3"
                 name="checkedRowsSlide3"
+                onChange={() => {/* TODO: understand y this is not triggered */}}
                 checked={this.props.isInvalidFilterActive}
                 disabled={!this.props.hasInvalidItems}
               />
