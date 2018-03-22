@@ -66,7 +66,7 @@ class FixedToolbar extends React.Component {
                 }`}
                 onClick={this.handleColumnsToShowClick}
               >
-                <i className="fa fa-columns pr1" />
+                <i className="fa fa-columns pr2" />
                 <div className="dn di-l">
                   <FormattedMessage id="FixedToolbar.ColumnsToShow.columns" />
                 </div>

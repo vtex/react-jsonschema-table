@@ -59,8 +59,6 @@ class Rows extends React.Component {
       copy: this.onCopy,
     }
 
-    const listContainer = document.getElementById('listContainer')
-
     return (
       // <ContextMenuTrigger id="contextMenuRows">
       <HotKeys
@@ -77,7 +75,7 @@ class Rows extends React.Component {
           }}
           items={this.props.items}
           className="list-body"
-          container={listContainer}
+          container={this.props.listContainer}
           itemHeight={34}
           renderItem={this.renderItem}
           tagName="div"
@@ -562,6 +560,7 @@ class Rows extends React.Component {
 }
 
 Rows.propTypes = {
+  listContainer: PropTypes.any,
   columns: PropTypes.any,
   // context: PropTypes.object,
   items: PropTypes.array,

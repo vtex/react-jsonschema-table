@@ -23,7 +23,8 @@ import keyMap from './KeyMap'
 import { SetFetcher } from './actions/FetcherWrapper'
 // import NotificationSystem from 'react-notification-system'
 import { Provider } from 'react-redux'
-import store from './stores/configureStore'
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from './stores/configureStore'
 import ToolBar from './containers/ToolBar'
 import Table from './containers/Table'
 import { IntlProvider } from 'react-intl'
@@ -49,6 +50,8 @@ fontawesome.library.add(
   faSave,
 )
 
+const { store, persistor } = configureStore()
+
 class JsonSchemaTable extends React.Component {
   constructor(props) {
     super(props)
@@ -58,36 +61,38 @@ class JsonSchemaTable extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <IntlProvider locale="en-US" messages={enUSMessages}>
-          <HotKeys keyMap={keyMap}>
-            <ToolBar
-              context={this.props.context}
-              schema={this.props.schema}
-              UIschema={this.props.UIschema}
-              lang="en"
-            />
-            <Table
-              ref={ref => {
-                this.table = ref
-              }}
-              context={this.props.context}
-              UIschema={this.props.UIschema}
-              schema={this.props.schema}
-              fetchSize={this.props.fetchSize}
-              lang="en"
-            />
-            {/* <Form
-          onOpenLink={this.handleOpenLink}
-          setChanges={this.onChangeValue}
-          onAddDocument={this.handleAddRowAndOpen}
-        /> */}
-            {/* <NotificationSystem
-          ref={ref => {
-            this.msg = ref
-          }}
-        /> */}
-          </HotKeys>
-        </IntlProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <IntlProvider locale="en-US" messages={enUSMessages}>
+            <HotKeys keyMap={keyMap}>
+              <ToolBar
+                context={this.props.context}
+                schema={this.props.schema}
+                UIschema={this.props.UIschema}
+                lang="en"
+              />
+              <Table
+                ref={ref => {
+                  this.table = ref
+                }}
+                context={this.props.context}
+                UIschema={this.props.UIschema}
+                schema={this.props.schema}
+                fetchSize={this.props.fetchSize}
+                lang="en"
+              />
+              {/* <Form
+            onOpenLink={this.handleOpenLink}
+            setChanges={this.onChangeValue}
+            onAddDocument={this.handleAddRowAndOpen}
+          /> */}
+              {/* <NotificationSystem
+            ref={ref => {
+              this.msg = ref
+            }}
+          /> */}
+            </HotKeys>
+          </IntlProvider>
+        </PersistGate>
       </Provider>
     )
   }

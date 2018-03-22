@@ -8,6 +8,13 @@ import PropTypes from 'prop-types'
 import '../css/endless-table.less'
 
 class Table extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      scrollDiv: null,
+    }
+  }
+
   handleScroll = () => {
     var header = ReactDOM.findDOMNode(this.header)
     var scrollDiv = ReactDOM.findDOMNode(this.scrollDiv)
@@ -49,17 +56,22 @@ class Table extends React.Component {
           onScroll={this.handleScroll}
           ref={div => {
             this.scrollDiv = div
+            !this.state.scrollDiv && this.setState({scrollDiv: div})
           }}
         >
-          <HotKeys className="list">
-            <Rows
-              onGetNotLoadedDocument={this.handleFetchItems}
-              onScroll={this.handleScrollVertically}
-              onCheckRow={this.props.onCheckRow}
-              columns={columns}
-              {...this.props}
-            />
-          </HotKeys>
+          {this.state.scrollDiv
+            ? <HotKeys className="list">
+                <Rows
+                  onGetNotLoadedDocument={this.handleFetchItems}
+                  onScroll={this.handleScrollVertically}
+                  onCheckRow={this.props.onCheckRow}
+                  columns={columns}
+                  listContainer={this.state.scrollDiv}
+                  {...this.props}
+                />
+              </HotKeys>
+            : null //loader
+          }
         </div>
       </div>
     )
