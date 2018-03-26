@@ -15,6 +15,7 @@ import {
   updateItem,
   copyFromSelectedRange,
 } from '../actions/items-actions'
+import { showFormModal } from '../actions/form-actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -77,6 +78,10 @@ function ListITems(state) {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    onEditItem: (doc) => {
+      dispatch(showFormModal(doc))
+    },
+
     onFetchItems: (context, fields, skip, size, where, sort) => {
       dispatch(fetchItems(context, fields, skip, size, where, sort))
     },

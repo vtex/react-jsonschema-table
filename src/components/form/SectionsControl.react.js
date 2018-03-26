@@ -8,10 +8,10 @@ const SectionsControl = function(props) {
   var labels = props.labels
   var sections = []
   var count = 1
-  configuration.editor.settings.sections.forEach(function(section) {
+  props.UIschema.editor.settings.sections.forEach(function(section) {
     sections.push(
       <SectionControl
-        key={section.name + '-formsection-' + count++}
+        key={section + '-formsection-' + count++}
         section={section}
         labels={labels}
         item={item}
@@ -29,6 +29,8 @@ const SectionsControl = function(props) {
 }
 
 SectionsControl.propTypes = {
+  schema: PropTypes.any,
+  UIschema: PropTypes.any,
   configuration: PropTypes.object,
   item: PropTypes.object,
   labels: PropTypes.object,

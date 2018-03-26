@@ -21,7 +21,7 @@ class SectionControl extends React.Component {
           path={`.${control}`}
           fieldName={control}
           label={label}
-          {...that.props.configuration.fields[control]}
+          {...that.props.schema.properties[control]}
           isEditing
           value={value}
           linkedValue={item[`${control}_linked`]}
@@ -56,7 +56,8 @@ class SectionControl extends React.Component {
 }
 
 SectionControl.propTypes = {
-  section: PropTypes.object,
+  schema: PropTypes.any,
+  UIschema: PropTypes.any,
   item: PropTypes.object,
   labels: PropTypes.any,
   onOpenLink: PropTypes.func,

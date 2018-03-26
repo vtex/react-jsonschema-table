@@ -1,9 +1,9 @@
-import './css/form.less'
+// import './css/form.less'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import _ from 'underscore'
 import SectionsControl from './SectionsControl.react'
-import VTableStore from '../stores/VTableStore'
+// import VTableStore from '../stores/VTableStore'
 import { HotKeys } from 'react-hotkeys'
 import { FormattedMessage } from 'react-intl'
 import PropTypes from 'prop-types'
@@ -11,9 +11,12 @@ import PropTypes from 'prop-types'
 class Form extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { showModal: false }
+    this.state = {
+      showModal: this.props.showModal
+    }
   }
   handleCloseModal = () => {
+    this.props.hideFormModal()
     // carregar do store o state anterior para mostrar outro dopcumento
     var storeConf = VTableStore.getPreviousState()
     if (storeConf) {
@@ -27,7 +30,8 @@ class Form extends React.Component {
         showModal: true,
       })
     } else {
-      this.setState({ showModal: false })
+      // this.setState({ showModal: false })
+      this.props.hideFormModal()
       // TODO Não esta sendo chamada essa função no onExited do modal, por enquanto deixar no onHide
       // mas não tem garantia que vai entregar o foco para o item anterior
       if (this.state.callback) {
@@ -81,27 +85,28 @@ class Form extends React.Component {
     this.props.setChanges(id, changes, this.state.context)
   };
   render() {
-    if (!this.state.showModal) {
+    const { showModal, selectedItem, schema, UIschema } = this.props
+    if (!showModal || !selectedItem) {
       return null
     }
 
-    var item = this.state.document
+    var item = selectedItem.document
     const validationErrors = this.state.validationErrors
-    var config = this.state.configuration
+    var config = this.state.configuration || {}
     var labels = {}
-    var that = this
-    _.map(config.editor.settings.sections, function(section) {
-      _.map(section.fields, function(fieldName) {
-        labels[fieldName] = that.getLabel(fieldName)
-      })
-    })
+    // var that = this
+    // _.map(config.editor.settings.sections, function(section) {
+    //   _.map(section.fields, function(fieldName) {
+    //     labels[fieldName] = that.getLabel(fieldName)
+    //   })
+    // })
     const handlers = {
       closeForm: this.closeModal,
     }
     return (
       <HotKeys handlers={handlers}>
         <Modal
-          show={this.state.showModal}
+          show={showModal}
           dialogClassName="form-modal"
           autoFocus
           onHide={this.handleCloseModal}
@@ -110,7 +115,7 @@ class Form extends React.Component {
           <div className="header">
             <div className="edit-header-container">
               <h4 className="edit-header">
-                {`${this.state.configuration.label}: {${this.state.document.id}}`}
+                {/* {`${this.state.configuration.label}: {${this.state.document.id}}`} */}
               </h4>
             </div>
             <div className="history-header-container">
@@ -152,6 +157,13 @@ class Form extends React.Component {
 }
 Form.propTypes = {
   setChanges: PropTypes.func,
+  schema: PropTypes.any,
+  UIschema: PropTypes.any,
+  selectedItem: PropTypes.any,
+  validationErrors: PropTypes.any,
+  showModal: PropTypes.bool,
+  showFormModal: PropTypes.func,
+  hideFormModal: PropTypes.func,
 }
 
 export default Form

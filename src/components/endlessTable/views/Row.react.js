@@ -14,7 +14,7 @@ class Row extends React.Component {
     super(props)
 
     this.handleCheckRow = this.handleCheckRow.bind(this)
-    this.handleEdit = this.handleEdit.bind(this)
+    // this.handleEdit = this.handleEdit.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
     this.onFocusCell = this.onFocusCell.bind(this)
     this.onEditCell = this.onEditCell.bind(this)
@@ -206,8 +206,8 @@ class Row extends React.Component {
             {new Intl.NumberFormat().format(virtualID + 1)}
           </div>
         </div>
-        <div className="row-options">
-          <i className="fa fa-pencil-alt" onClick={this.handleEdit} />
+        <div className="row-options" onClick={this.handleEdit}>
+          <i className="fa fa-pencil-alt" />
         </div>
         {columns.map((column, colIndex) => {
           const props = this.createPropsObject(
@@ -292,8 +292,9 @@ class Row extends React.Component {
   handleCheckRow(ev) {
     this.props.onCheckRowChange(this.props.item.document.id, ev.target.checked)
   }
-  handleEdit() {
-    this.props.onEdit(this.props.item, this.props.context, this.onFormClose)
+  handleEdit = () => {
+    this.props.onEditItem(this.props.item)
+    // this.props.onEdit(this.props.item, this.props.context, this.onFormClose)
   }
   handleRemove() {
     this.props.onRemove(this.props.item, this.props.context, this.onFormClose)
@@ -379,6 +380,7 @@ Row.propTypes = {
   onEditCell: PropTypes.func,
   onExitEditCell: PropTypes.func,
   onEdit: PropTypes.func,
+  onEditItem: PropTypes.func,
   onSelectCell: PropTypes.func,
   onFocusCell: PropTypes.func,
   onRemove: PropTypes.func,

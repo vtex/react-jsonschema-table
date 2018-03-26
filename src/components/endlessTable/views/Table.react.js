@@ -130,6 +130,7 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
+  onEditItem: PropTypes.func,
   context: PropTypes.object.isRequired,
   schema: PropTypes.object.isRequired,
   UIschema: PropTypes.object.isRequired,
