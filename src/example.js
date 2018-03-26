@@ -21,6 +21,24 @@ const schema = {
       format: 'email',
       title: 'Email',
     },
+    address: {
+      type: 'object',
+      title: 'Address',
+      properties: {
+        street: {
+          type: 'string',
+          title: 'Street',
+        },
+        postalcode: {
+          type: 'string',
+          title: 'PostalCode',
+        },
+        number: {
+          type: 'number',
+          title: 'Number',
+        },
+      }
+    },
     isActive: {
       type: 'boolean',
       title: 'Is Active',
@@ -31,7 +49,7 @@ const schema = {
 const UIschema = {
   fields: {
     id: {
-      width: 200,
+      width: 100,
     },
     name: {
       width: 200,
@@ -46,13 +64,13 @@ const UIschema = {
       width: 300,
     },
   },
-  list: ['email', 'name', 'lastName', 'isActive'],
+  list: ['id','email', 'name', 'lastName', 'address', 'isActive'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['name', 'email', 'lastName', 'isActive'],
+          fields: ['id', 'name', 'email', 'lastName', 'address', 'isActive'],
         },
       ],
     },
@@ -63,14 +81,15 @@ const indexedFields = ['name', 'email']
 
 class App extends Component {
   render() {
-    const props = {}
-    props.items = []
-    props.UIschema = UIschema
-    props.schema = schema
-    props.onGetItems = this.handleLoadDocuments
-    props.indexedFields = [indexedFields]
-    props.onSort = this.handleSort
-    props.context = {}
+    const props = {
+      items: [],
+      UIschema,
+      schema,
+      onGetItems: this.handleLoadDocuments,
+      indexedFields: [ indexedFields ],
+      onSort: this.handleSort,
+      context: {},
+    }
 
     return (
       <div>
