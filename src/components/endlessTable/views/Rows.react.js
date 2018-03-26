@@ -1,15 +1,10 @@
 import React from 'react'
 import _ from 'underscore'
 import VirtualList from '../views/VirtualList'
-// import Store from '../stores/RowsStore.js'
-// import Actions from '../actions/Actions.js'
-// import MainActions from '../../../actions/Actions.js'
 import { HotKeys } from 'react-hotkeys'
 import Row from './Row.react'
 import PropTypes from 'prop-types'
-// import { connect } from 'react-redux'
-// import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
-// import { FormattedMessage } from 'react-intl'
+import uuid from 'uuid'
 
 class Rows extends React.Component {
   constructor(props) {
@@ -35,6 +30,7 @@ class Rows extends React.Component {
     this.OnFillHandleUp = this.OnFillHandleUp.bind(this)
     this.isCellInSelectionRange = this.isCellInSelectionRange.bind(this)
     this.getSelectedRangeValues = this.getSelectedRangeValues.bind(this)
+    document.body.onpaste = this.handlePaste
   }
   render() {
     if (
@@ -60,7 +56,6 @@ class Rows extends React.Component {
     }
 
     return (
-      // <ContextMenuTrigger id="contextMenuRows">
       <HotKeys
         handlers={handlers}
         onMouseUp={this.handleEndSelection}
@@ -95,15 +90,6 @@ class Rows extends React.Component {
           />
         </div>
       </HotKeys>
-      // <ContextMenu id="contextMenuRows">
-      //   <MenuItem onClick={() => this.onCopy()}>
-      //     <FormattedMessage id="Contextualmenu.copy" />
-      //   </MenuItem>
-      //   <MenuItem onClick={() => this.handlePaste()}>
-      //     <FormattedMessage id="Contextualmenu.paste" />
-      //   </MenuItem>
-      // </ContextMenu>
-      // </ContextMenuTrigger>
     )
   }
   renderItem(item) {
@@ -402,7 +388,6 @@ class Rows extends React.Component {
         }
       }
       this.props.onSelectFillHandleRange(cellA, cellB)
-      // Actions.selectFillHandleCell(cellA, cellB)
     }
   }
   onCopy() {
@@ -438,17 +423,95 @@ class Rows extends React.Component {
   }
   handlePaste() {
     this.clipboard.focus()
-    document.execCommand('paste')
-    // var clipText = this.clipboard.value
-    // var selectionRange = this.props.selectionRange
-    // MainActions.pasteData(
-    //   this.props.context,
-    //   clipText,
-    //   selectionRange.cellA,
-    //   selectionRange.cellB,
-    //   this.props.columns
-    // )
+    // document.execCommand('paste')
+    var text = this.clipboard.value
+    var selectionRange = this.props.selectionRange
+    var documentChanges = []
+
+    const minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
+    const maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
+    const minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
+    const maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
+    const clipRows = this.extractTextFromClipBoard(text)
+    const finalSelectedCell = {}
+    let rowQuotient = Math.floor((maxRow - minRow + 1) / clipRows.length)
+    let colQuotient = Math.floor((maxCol - minCol + 1) / clipRows[0].length)
+    rowQuotient = rowQuotient === 0 ? 0 : rowQuotient - 1
+    colQuotient = colQuotient === 0 ? 0 : colQuotient - 1
+    var documents = this.props.items
+    var documentsCount = documents.length - 1
+
+    for (let i = 0; i <= rowQuotient; i++) {
+      for (let ii = 0; ii < clipRows.length; ii++) {
+        const changes = {}
+        const rowIndex = minRow + ii + i * clipRows.length
+        finalSelectedCell.row = rowIndex
+        for (let j = 0; j <= colQuotient; j++) {
+          for (let jj = 0; jj < clipRows[0].length; jj++) {
+            const colIndex = minCol + jj + j * clipRows[0].length
+            finalSelectedCell.col = colIndex
+            const value = clipRows[ii][jj]
+            if (colIndex > (this.props.columns.length - 1)) {
+              break
+            }
+            const fieldName = this.props.columns[colIndex].fieldName
+            const parsedValue = this.parseValue(this.props.columns[colIndex].type, value)
+            changes[fieldName] = { value: parsedValue }
+          }
+        }
+
+        if (rowIndex > documentsCount) {
+          var newId = changes.id ? changes.id.value : uuid.v4()
+          changes.id = { value: newId }
+          documentChanges.push({ id: newId, changes })
+        } else {
+          documentChanges.push({ id: this.props.items[rowIndex].document.id, changes })
+        }
+      }
+    }
+    this.props.onCopyFromSelectedRange(documentChanges)
   }
+
+  parseValue(type, value) {
+    var parsedValue = value
+    switch (type) {
+      case 'boolean':
+        parsedValue = JSON.parse(value !== null ? value.toLowerCase() : value)
+        break
+      case 'text':
+        break
+      case 'string':
+        break
+      case 'number':
+        parsedValue = JSON.parse(value)
+        break
+      case 'integer':
+        parsedValue = JSON.parse(value)
+        break
+      case 'array':
+        parsedValue = value.split(',')
+        break
+      case 'object':
+        parsedValue = JSON.parse(value)
+        break
+    }
+    return parsedValue
+  }
+
+  extractTextFromClipBoard(text) {
+    // Cada linha é separada por "\n" CarriageReturn.
+    var clipRows = text.split('\n')
+    // tira o caracter de NewLine "\n"
+    // clipRows = _.map(clipRows, clipRow =>
+    // clipRow.replace(String.fromCharCode(10), '')
+    // )
+    // Apaga as linhas sem valor
+    clipRows = _.compact(clipRows)
+    // cada valor na linha esta separado por "tab", faz split para criar um array em cada linha
+    clipRows = _.map(clipRows, clipRow => clipRow.split('\t'))
+    return clipRows
+  }
+
   handleFillHandleDown(e) {
     e.preventDefault()
     e.stopPropagation()
@@ -488,15 +551,8 @@ class Rows extends React.Component {
     )
     var cellA = { row: minRow, col: minCol }
     var cellB = { row: maxRow, col: maxCol }
-    // MainActions.copyFromSelectedRange(
-    //   this.props.context,
-    //   selectionRange,
-    //   selectionFillHandleRange,
-    //   this.props.columns
-    // )
     this.copyFromSelectedRange(this.props.columns)
     this.props.onSelectCellsRange(cellA, cellB)
-    // Actions.selectCellsRange(cellA, cellB)
   }
 
   copyFromSelectedRange() {
@@ -562,7 +618,6 @@ class Rows extends React.Component {
 Rows.propTypes = {
   listContainer: PropTypes.any,
   columns: PropTypes.any,
-  // context: PropTypes.object,
   items: PropTypes.array,
   focusedCell: PropTypes.object,
   editingCell: PropTypes.object,
