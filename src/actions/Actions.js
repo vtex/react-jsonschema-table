@@ -1,7 +1,7 @@
 import Reflux from 'reflux'
 import _ from 'underscore'
 // import API from './api/Gateway'
-import Status from '../stores/Status'
+import Status from '../constants/Status'
 import json2csv from 'json2csv'
 import PromisePool from 'es6-promise-pool'
 

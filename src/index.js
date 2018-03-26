@@ -16,10 +16,10 @@ import faSquare from '@fortawesome/fontawesome-free-solid/faSquare'
 import faFilter from '@fortawesome/fontawesome-free-solid/faFilter'
 import faPlusSquare from '@fortawesome/fontawesome-free-solid/faPlusSquare'
 import faSave from '@fortawesome/fontawesome-free-solid/faSave'
+import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 import { HotKeys } from 'react-hotkeys'
 import keyMap from './KeyMap'
 
-// import Form from './form/Form.react'
 import { SetFetcher } from './actions/FetcherWrapper'
 // import NotificationSystem from 'react-notification-system'
 import { Provider } from 'react-redux'
@@ -27,6 +27,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './stores/configureStore'
 import ToolBar from './containers/ToolBar'
 import Table from './containers/Table'
+import Form from './containers/Form'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
 // import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
@@ -48,6 +49,7 @@ fontawesome.library.add(
   faFilter,
   faPlusSquare,
   faSave,
+  faTimes,
 )
 
 const { store, persistor } = configureStore()
@@ -80,11 +82,13 @@ class JsonSchemaTable extends React.Component {
                 fetchSize={this.props.fetchSize}
                 lang="en"
               />
-              {/* <Form
-            onOpenLink={this.handleOpenLink}
-            setChanges={this.onChangeValue}
-            onAddDocument={this.handleAddRowAndOpen}
-          /> */}
+              <Form
+                schema={this.props.schema}
+                UIschema={this.props.UIschema}
+                onOpenLink={this.handleOpenLink}
+                setChanges={this.onChangeValue}
+                onAddDocument={this.handleAddRowAndOpen}
+              />
               {/* <NotificationSystem
             ref={ref => {
               this.msg = ref
