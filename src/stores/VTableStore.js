@@ -107,22 +107,22 @@ function getStore(context) {
 
   return _store[`${context.appName}-${context.entityId}-${context.tableId}`]
 }
-function updateLinkedFieldValue(linkSpec, linkValue, linkedValue) {
-  if (linkedValue) {
-    var linkedDocumentId = linkedValue.id
-    var relatedStore = getStore({
-      appName: linkSpec.relatedApp,
-      entityId: linkSpec.link.split('/')[5],
-      tableId: linkSpec.relatedTable,
-    })
-    var linkedDocumentStaging = relatedStore.staging[linkedDocumentId]
-    if (linkedDocumentStaging && linkedDocumentStaging.document[linkSpec.linked_field] && linkedDocumentStaging.status === Status.NEW) {
-      Object.keys(linkedValue).forEach(key => {
-        linkedValue[key] = linkedDocumentStaging.document[key]
-      })
-    }
-  }
-}
+// function updateLinkedFieldValue(linkSpec, linkValue, linkedValue) {
+//   if (linkedValue) {
+//     var linkedDocumentId = linkedValue.id
+//     var relatedStore = getStore({
+//       appName: linkSpec.relatedApp,
+//       entityId: linkSpec.link.split('/')[5],
+//       tableId: linkSpec.relatedTable,
+//     })
+//     var linkedDocumentStaging = relatedStore.staging[linkedDocumentId]
+//     if (linkedDocumentStaging && linkedDocumentStaging.document[linkSpec.linked_field] && linkedDocumentStaging.status === Status.NEW) {
+//       Object.keys(linkedValue).forEach(key => {
+//         linkedValue[key] = linkedDocumentStaging.document[key]
+//       })
+//     }
+//   }
+// }
 // Armazena um STORE para uma entidade de dados
 // function setStore(context, store) {
 // _store.entities[context.entityId].tables[context.tableId] = store

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import Store from '../../stores/SavingStore'
+// import Store from '../../stores/SavingStore'
 
 class SaveButton extends React.Component {
   constructor(props) {
@@ -9,11 +9,11 @@ class SaveButton extends React.Component {
     this.state = { isSaving: false }
   }
   componentDidMount() {
-    this.unsubscribe = Store.listen(this.onStoreChange)
+    // this.unsubscribe = Store.listen(this.onStoreChange)
   }
 
   componentWillUnmount() {
-    this.unsubscribe()
+    // this.unsubscribe()
   }
 
   render() {
@@ -21,19 +21,24 @@ class SaveButton extends React.Component {
       ? 'FixedToolbar.saving'
       : 'FixedToolbar.save'
     return (
-      <button
-        className={
-          'ml3 dib v-mid pa3 ph4 br1 ba bw1 b--blue bg-blue white w5 ' +
-            (this.props.disabled || this.state.isSaving
-              ? 'cursor-not-allowed o-30 '
-              : '')
-        }
-        onClick={this.handleClick}
+      <div
+        className={`pv2 br3 ph2 inline-flex nowrap ${
+          this.props.disabled || this.state.isSaving
+            ? 'cursor-not-allowed o-30 '
+            : 'pointer'
+        }`}
+        onClick={() => {
+          if (this.props.disabled || this.state.isSaving) {
+            return
+          }
+          this.handleClick()
+        }}
       >
-        <span className="f4">
+        <i className="fa fa-save pr2" />
+        <div className="dn di-l">
           <FormattedMessage id={textKey} />
-        </span>
-      </button>
+        </div>
+      </div>
     )
   }
 
@@ -42,18 +47,18 @@ class SaveButton extends React.Component {
   }
 
   onStoreChange = () => {
-    const store = Store.get()
-    this.setState({
-      isSaving: store.isSaving,
-    })
-  };
+    // const store = Store.get()
+    // this.setState({
+    // isSaving: store.isSaving,
+    // })
+  }
 
   handleClick = () => {
     if (this.props.disabled || this.state.isSaving) {
       return
     }
     this.props.onClick()
-  };
+  }
 }
 
 SaveButton.propTypes = {

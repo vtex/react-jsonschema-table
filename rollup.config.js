@@ -4,6 +4,7 @@ import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
 import less from 'rollup-plugin-less'
 import json from 'rollup-plugin-json'
+import sourcemaps from 'rollup-plugin-sourcemaps'
 
 import pkg from './package.json'
 
@@ -20,6 +21,7 @@ export default {
     },
   ],
   external: ['react', 'react-dom', 'prop-types'],
+  sourcemap: true,
   plugins: [
     resolve({
       browser: true,
@@ -35,6 +37,9 @@ export default {
       insert: true,
     }),
     json(),
+    sourcemaps({
+      exclude: ['node_modules/**'],
+    }),
     babel({
       exclude: 'node_modules/**',
       runtimeHelpers: true,

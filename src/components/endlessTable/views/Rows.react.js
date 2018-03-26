@@ -1,12 +1,13 @@
 import React from 'react'
 import _ from 'underscore'
 import VirtualList from '../views/VirtualList'
-import Store from '../stores/RowsStore.js'
-import Actions from '../actions/Actions.js'
+// import Store from '../stores/RowsStore.js'
+// import Actions from '../actions/Actions.js'
 // import MainActions from '../../../actions/Actions.js'
 import { HotKeys } from 'react-hotkeys'
 import Row from './Row.react'
 import PropTypes from 'prop-types'
+// import { connect } from 'react-redux'
 // import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu'
 // import { FormattedMessage } from 'react-intl'
 
@@ -58,46 +59,42 @@ class Rows extends React.Component {
       copy: this.onCopy,
     }
 
-    const listContainer = document.getElementById('listContainer')
-
     return (
       // <ContextMenuTrigger id="contextMenuRows">
-      (
-        <HotKeys
-          handlers={handlers}
-          onMouseUp={this.handleEndSelection}
-          onMouseDown={this.handleInitSelection}
-          ref={ref => {
-            this.rows = ref
+      <HotKeys
+        handlers={handlers}
+        onMouseUp={this.handleEndSelection}
+        onMouseDown={this.handleInitSelection}
+        ref={ref => {
+          this.rows = ref
+        }}
+      >
+        <VirtualList
+          ref={div => {
+            this.virtualList = div
           }}
+          items={this.props.items}
+          className="list-body"
+          container={this.props.listContainer}
+          itemHeight={34}
+          renderItem={this.renderItem}
+          tagName="div"
+          scrollDelay={0}
+        />
+        <div
+          ref={ref => {
+            this.clipboardContainer = ref
+          }}
+          className="clipboard-container"
         >
-          <VirtualList
-            ref={div => {
-              this.virtualList = div
-            }}
-            items={this.props.items}
-            className="list-body"
-            container={listContainer}
-            itemHeight={34}
-            renderItem={this.renderItem}
-            tagName="div"
-            scrollDelay={0}
-          />
-          <div
+          <textarea
             ref={ref => {
-              this.clipboardContainer = ref
+              this.clipboard = ref
             }}
-            className="clipboard-container"
-          >
-            <textarea
-              ref={ref => {
-                this.clipboard = ref
-              }}
-              className="clipboard"
-            />
-          </div>
-        </HotKeys>
-      )
+            className="clipboard"
+          />
+        </div>
+      </HotKeys>
       // <ContextMenu id="contextMenuRows">
       //   <MenuItem onClick={() => this.onCopy()}>
       //     <FormattedMessage id="Contextualmenu.copy" />
@@ -117,6 +114,8 @@ class Rows extends React.Component {
         key={`row-${item.virtualID}`}
         onSelectCell={this.handleSelectCell}
         onFocusCell={this.handleFocusCell}
+        onEditCell={this.handleEditCell}
+        onExitEditCell={this.handleExitEditCell}
         onFillHandleDown={this.handleFillHandleDown}
         {...this.props}
       />
@@ -154,6 +153,14 @@ class Rows extends React.Component {
     const isMouseDown = e.type === 'mousedown'
     this.setState({ initSelection: true, isMouseDown: isMouseDown })
   }
+  handleEditCell(cell) {
+    this.props.onEditCell(cell)
+  }
+
+  handleExitEditCell(cell) {
+    this.props.onExitEditCell(cell)
+  }
+
   handleEndSelection() {
     if (this.state.isFillHandleOn) {
       this.OnFillHandleUp()
@@ -170,29 +177,29 @@ class Rows extends React.Component {
     ]
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
-    newSelection.row = this.props.items.length - 1 === selectedCell.row
-      ? selectedCell.row
-      : selectedCell.row + 1
+    var selectedCell = this.props.focusedCell
+    newSelection.row =
+      this.props.items.length - 1 === selectedCell.row
+        ? selectedCell.row
+        : selectedCell.row + 1
     newSelection.col = selectedCell.col
     if (newSelection.row >= LastVisibleItem.virtualID) {
       this.props.onScroll(34)
     }
-    Actions.selectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMoveUp(e) {
     var firstVisibleItem = this.virtualList.visibleItems()[0]
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
-    newSelection.row = selectedCell.row !== 0
-      ? selectedCell.row - 1
-      : selectedCell.row
+    var selectedCell = this.props.focusedCell
+    newSelection.row =
+      selectedCell.row !== 0 ? selectedCell.row - 1 : selectedCell.row
     newSelection.col = selectedCell.col
     if (newSelection.row <= firstVisibleItem.virtualID) {
       this.props.onScroll(-34)
     }
-    Actions.selectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMassSelectDown(e) {
     var LastVisibleItem = this.virtualList.visibleItems()[
@@ -201,39 +208,37 @@ class Rows extends React.Component {
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
     var maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
     if (minRow < focusedCell.row) {
       newSelectionA.col = minCol
-      newSelectionA.row = this.props.items.length - 1 === minRow
-        ? minRow
-        : minRow + 1
+      newSelectionA.row =
+        this.props.items.length - 1 === minRow ? minRow : minRow + 1
       newSelectionB.row = maxRow
       newSelectionB.col = maxCol
     } else {
       newSelectionA.col = minCol
       newSelectionA.row = minRow
-      newSelectionB.row = this.props.items.length - 1 === maxRow
-        ? maxRow
-        : maxRow + 1
+      newSelectionB.row =
+        this.props.items.length - 1 === maxRow ? maxRow : maxRow + 1
       newSelectionB.col = maxCol
     }
     if (newSelectionB.row >= LastVisibleItem.virtualID) {
       this.props.onScroll(34)
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   onMassSelectUp(e) {
     var firstVisibleItem = this.virtualList.visibleItems()[0]
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -252,42 +257,41 @@ class Rows extends React.Component {
     if (newSelectionA.row <= firstVisibleItem.virtualID) {
       this.props.onScroll(-34)
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   onMoveRight(e) {
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
-    newSelection.col = selectedCell.col === this.props.columns.length - 1
-      ? selectedCell.col
-      : selectedCell.col + 1
+    var selectedCell = this.props.focusedCell
+    newSelection.col =
+      selectedCell.col === this.props.columns.length - 1
+        ? selectedCell.col
+        : selectedCell.col + 1
     newSelection.row = selectedCell.row
-    Actions.selectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMoveLeft(e) {
     e.preventDefault()
     var newSelection = {}
-    var selectedCell = Store.get().focusedCell
-    newSelection.col = selectedCell.col !== 0
-      ? selectedCell.col - 1
-      : selectedCell.col
+    var selectedCell = this.props.focusedCell
+    newSelection.col =
+      selectedCell.col !== 0 ? selectedCell.col - 1 : selectedCell.col
     newSelection.row = selectedCell.row
-    Actions.selectCell(newSelection)
+    this.props.onFocusCell(newSelection)
   }
   onMassMoveRight(e) {
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
     var maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
     if (minCol < focusedCell.col) {
-      newSelectionA.col = minCol === this.props.columns.length - 1
-        ? minCol
-        : minCol + 1
+      newSelectionA.col =
+        minCol === this.props.columns.length - 1 ? minCol : minCol + 1
       newSelectionA.row = minRow
       newSelectionB.row = maxRow
       newSelectionB.col = maxCol
@@ -295,18 +299,17 @@ class Rows extends React.Component {
       newSelectionA.col = minCol
       newSelectionA.row = minRow
       newSelectionB.row = maxRow
-      newSelectionB.col = maxCol === this.props.columns.length - 1
-        ? maxCol
-        : maxCol + 1
+      newSelectionB.col =
+        maxCol === this.props.columns.length - 1 ? maxCol : maxCol + 1
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   onMassMoveLeft(e) {
     e.preventDefault()
     var newSelectionA = {}
     var newSelectionB = {}
-    var selectionRange = Store.get().selectionRange
-    var focusedCell = Store.get().focusedCell
+    var selectionRange = this.props.selectionRange
+    var focusedCell = this.props.focusedCell
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -322,7 +325,7 @@ class Rows extends React.Component {
       newSelectionB.row = maxRow
       newSelectionB.col = maxCol
     }
-    Actions.selectCellsRange(newSelectionA, newSelectionB)
+    this.props.onSelectCellsRange(newSelectionA, newSelectionB)
   }
   isCellInSelectionRange(cell, cellA, cellB) {
     var minRow = Math.min(cellA.row, cellB.row)
@@ -338,25 +341,25 @@ class Rows extends React.Component {
   }
   handleFocusCell = cell => {
     if (this.state && this.state.initSelection) {
-      Actions.selectCellsRange(Store.get().focusedCell, cell)
+      this.props.onSelectCellsRange(this.props.focusedCell, cell)
     } else {
-      Actions.selectCell(cell)
+      this.props.onFocusCell(cell)
     }
-  };
+  }
   handleSelectCell(cell) {
     if (this.state && this.state.initSelection && this.state.isMouseDown) {
-      Actions.selectCellsRange(Store.get().focusedCell, cell)
+      this.props.onSelectCellsRange(this.props.focusedCell, cell)
     }
     if (
       this.state &&
       this.state.isFillHandleOn &&
       !this.isCellInSelectionRange(
         cell,
-        Store.get().selectionRange.cellA,
-        Store.get().selectionRange.cellB
+        this.props.selectionRange.cellA,
+        this.props.selectionRange.cellB
       )
     ) {
-      var selectionRange = Store.get().selectionRange
+      var selectionRange = this.props.selectionRange
       var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
       var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
       var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -398,7 +401,8 @@ class Rows extends React.Component {
           cellB = { row: maxRow + rowDif, col: maxCol }
         }
       }
-      Actions.selectFillHandleCell(cellA, cellB)
+      this.props.onSelectFillHandleRange(cellA, cellB)
+      // Actions.selectFillHandleCell(cellA, cellB)
     }
   }
   onCopy() {
@@ -409,7 +413,7 @@ class Rows extends React.Component {
     document.execCommand('Copy')
   }
   getSelectedRangeValues() {
-    var selectionRange = Store.get().selectionRange
+    var selectionRange = this.props.selectionRange
     var minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
     var maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
     var minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
@@ -436,7 +440,7 @@ class Rows extends React.Component {
     this.clipboard.focus()
     document.execCommand('paste')
     // var clipText = this.clipboard.value
-    // var selectionRange = Store.get().selectionRange
+    // var selectionRange = this.props.selectionRange
     // MainActions.pasteData(
     //   this.props.context,
     //   clipText,
@@ -452,8 +456,8 @@ class Rows extends React.Component {
     this.setState({ isFillHandleOn: true })
   }
   OnFillHandleUp() {
-    var selectionRange = Store.get().selectionRange
-    var selectionFillHandleRange = Store.get().selectionFillHandleRange
+    var selectionRange = this.props.selectionRange
+    var selectionFillHandleRange = this.props.selectionFillHandleRange
     var minRow = Math.min(
       Math.min(selectionRange.cellA.row, selectionRange.cellB.row),
       Math.min(
@@ -490,16 +494,88 @@ class Rows extends React.Component {
     //   selectionFillHandleRange,
     //   this.props.columns
     // )
-    Actions.selectCellsRange(cellA, cellB)
+    this.copyFromSelectedRange(this.props.columns)
+    this.props.onSelectCellsRange(cellA, cellB)
+    // Actions.selectCellsRange(cellA, cellB)
+  }
+
+  copyFromSelectedRange() {
+    const {
+      columns,
+      selectionRange,
+      selectionFillHandleRange,
+      items,
+    } = this.props
+    const documentChanges = []
+    const minRow = Math.min(selectionRange.cellA.row, selectionRange.cellB.row)
+    const maxRow = Math.max(selectionRange.cellA.row, selectionRange.cellB.row)
+    const minCol = Math.min(selectionRange.cellA.col, selectionRange.cellB.col)
+    const maxCol = Math.max(selectionRange.cellA.col, selectionRange.cellB.col)
+    const minFHRow = Math.min(
+      selectionFillHandleRange.cellA.row,
+      selectionFillHandleRange.cellB.row
+    )
+    const maxFHRow = Math.max(
+      selectionFillHandleRange.cellA.row,
+      selectionFillHandleRange.cellB.row
+    )
+    const minFHCol = Math.min(
+      selectionFillHandleRange.cellA.col,
+      selectionFillHandleRange.cellB.col
+    )
+    const maxFHCol = Math.max(
+      selectionFillHandleRange.cellA.col,
+      selectionFillHandleRange.cellB.col
+    )
+    const fhRowsLenght = maxFHRow - minFHRow + 1
+    const fhColsLenght = maxFHCol - minFHCol + 1
+    const rowsLength = maxRow - minRow + 1
+    const colsLenght = maxCol - minCol + 1
+    const toUp = maxFHRow < minRow
+    const toLeft = maxFHCol < minCol
+    for (let i = 0; i < fhRowsLenght; i++) {
+      // let colQuotient = Math.floor((maxCol - minCol + 1) / clipRows[0].length)
+      const toRowIndex = toUp ? maxFHRow - i : i + minFHRow
+      const rowQuotient = Math.floor(i / rowsLength)
+      const fromRowIndex = toUp
+        ? maxRow - (i - rowQuotient * rowsLength)
+        : i - rowQuotient * rowsLength + minRow
+      const documentToCopy = items[fromRowIndex].document
+      const changes = {}
+      for (let j = 0; j < fhColsLenght; j++) {
+        const toColIndex = toLeft ? maxFHCol - j : j + minFHCol
+        const colQuotient = Math.floor(j / colsLenght)
+        const fromColIndex = toLeft
+          ? maxCol - (j - colQuotient * colsLenght)
+          : j - colQuotient * colsLenght + minCol
+        const fieldNameTo = columns[toColIndex].fieldName
+        const filedNameFrom = columns[fromColIndex].fieldName
+        const valueToCopy = documentToCopy[filedNameFrom]
+        changes[fieldNameTo] = { value: valueToCopy }
+      }
+      documentChanges.push({ id: items[toRowIndex].document.id, changes })
+    }
+    this.props.onCopyFromSelectedRange(documentChanges)
   }
 }
 
 Rows.propTypes = {
+  listContainer: PropTypes.any,
   columns: PropTypes.any,
-  context: PropTypes.object,
+  // context: PropTypes.object,
   items: PropTypes.array,
+  focusedCell: PropTypes.object,
+  editingCell: PropTypes.object,
+  selectionRange: PropTypes.object,
+  selectionFillHandleRange: PropTypes.object,
   onScroll: PropTypes.func,
   onGetNotLoadedDocument: PropTypes.func,
+  onSelectCellsRange: PropTypes.func,
+  onSelectFillHandleRange: PropTypes.func,
+  onCopyFromSelectedRange: PropTypes.func,
+  onFocusCell: PropTypes.func,
+  onEditCell: PropTypes.func,
+  onExitEditCell: PropTypes.func,
 }
 
 export default Rows

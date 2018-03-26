@@ -14,7 +14,7 @@ class Form extends React.Component {
     this.state = { showModal: false }
   }
   handleCloseModal = () => {
-    // carregar do store o state anterior para mostrar outro documento
+    // carregar do store o state anterior para mostrar outro dopcumento
     var storeConf = VTableStore.getPreviousState()
     if (storeConf) {
       var configuration = VTableStore.getAppConfiguration(storeConf.context)

@@ -37,14 +37,16 @@ class Header extends React.Component {
       <div className="list-header" style={this.getInlineStyle()}>
         <div className="list-row-header">
           <div className="first-cell flex items-center justify-center">
-            {this.props.isChecking
-              ? <input
+            {this.props.isChecking ? (
+              <input
                 type="checkbox"
                 title="Limpar seleção"
                 checked={this.props.isChecking}
                 onChange={this.handleClearCheckedRows}
               />
-              : ''}
+            ) : (
+              ''
+            )}
           </div>
           <div className="row-menu-button" />
           {this.props.children}
@@ -54,7 +56,7 @@ class Header extends React.Component {
   }
 
   handleClearCheckedRows() {
-    this.props.onCheckRow(this.props.context, null, false)
+    this.props.onCheckRowChange(null, false)
   }
 
   getInlineStyle() {
@@ -68,7 +70,7 @@ class Header extends React.Component {
 }
 Header.propTypes = {
   context: PropTypes.object,
-  onCheckRow: PropTypes.func,
+  onCheckRowChange: PropTypes.func,
   scrollLeft: PropTypes.number,
   isChecking: PropTypes.bool,
   children: PropTypes.any,

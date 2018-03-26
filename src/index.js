@@ -1,15 +1,58 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import 'vtex-tachyons'
-import Table from './endlessTable/views/Table.react'
-import FixedToolbar from './components/fixedtoolbar/FixedToolbar.react'
-import HeaderCell from './endlessTable/views/HeaderCell.react'
-import Form from './form/Form.react'
-import { SetFetcher } from './actions/FetcherWrapper'
-import NotificationSystem from 'react-notification-system'
-// import _ from 'underscore'
+import '../src/app.less'
+import fontawesome from '@fortawesome/fontawesome'
+import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
+import faExclamation from '@fortawesome/fontawesome-free-solid/faExclamation'
+import faPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt'
+import facolumns from '@fortawesome/fontawesome-free-solid/faColumns'
+import faDownload from '@fortawesome/fontawesome-free-solid/faCloudDownloadAlt'
+import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
+import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
+import faCheckSquare from '@fortawesome/fontawesome-free-solid/faCheckSquare'
+import faSquare from '@fortawesome/fontawesome-free-solid/faSquare'
+import faFilter from '@fortawesome/fontawesome-free-solid/faFilter'
+import faPlusSquare from '@fortawesome/fontawesome-free-solid/faPlusSquare'
+import faSave from '@fortawesome/fontawesome-free-solid/faSave'
+import { HotKeys } from 'react-hotkeys'
+import keyMap from './KeyMap'
 
-export default class JsonSchemaTable extends React.Component {
+// import Form from './form/Form.react'
+import { SetFetcher } from './actions/FetcherWrapper'
+// import NotificationSystem from 'react-notification-system'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from './stores/configureStore'
+import ToolBar from './containers/ToolBar'
+import Table from './containers/Table'
+import { IntlProvider } from 'react-intl'
+import enUSMessages from './i18n/en-US_messages.json'
+// import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
+// import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
+
+// addLocaleData([...en, ...es, ...pt])
+
+fontawesome.library.add(
+  facolumns,
+  faCheck,
+  faPencil,
+  faExclamation,
+  faTrash,
+  faDownload,
+  faUndo,
+  faSearch,
+  faSquare,
+  faCheckSquare,
+  faFilter,
+  faPlusSquare,
+  faSave,
+)
+
+const { store, persistor } = configureStore()
+
+class JsonSchemaTable extends React.Component {
   constructor(props) {
     super(props)
     SetFetcher(props.fetcher)
@@ -17,89 +60,52 @@ export default class JsonSchemaTable extends React.Component {
   }
   render() {
     return (
-      <div>
-        <FixedToolbar
-          context={this.props.context}
-          onAdd={this.handleAddRow}
-          onDeleteCheckedRows={this.handleDeleteCheckedRows}
-          onCancelStaging={this.handleCancelStaging}
-          onExport={this.handleExportCheckedItems}
-          onSave={this.handleSaveAll}
-          {...this.state}
-          configuration={this.state.configuration}
-        />
-        <Table
-          ref={ref => {
-            this.table = ref
-          }}
-          context={this.props.context}
-          items={this.props.items}
-          onGetNotLoadedDocument={this.handleGetNotLoadedDocument}
-          onEdit={this.handleEdit}
-          onRemove={this.handleRemove}
-          onGetItemOptions={this.handleGetItemOptions}
-          onCheckRow={this.handleDocumentCheck}
-          renderValue={this.renderControlFactory}
-          isChecking={false}
-        >
-          {this.getHeader()}
-        </Table>
-        <Form
-          onOpenLink={this.handleOpenLink}
-          setChanges={this.onChangeValue}
-          onAddDocument={this.handleAddRowAndOpen}
-        />
-        <NotificationSystem
-          ref={ref => {
-            this.msg = ref
-          }}
-        />
-      </div>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <IntlProvider locale="en-US" messages={enUSMessages}>
+            <HotKeys keyMap={keyMap}>
+              <ToolBar
+                context={this.props.context}
+                schema={this.props.schema}
+                UIschema={this.props.UIschema}
+                lang="en"
+              />
+              <Table
+                ref={ref => {
+                  this.table = ref
+                }}
+                context={this.props.context}
+                UIschema={this.props.UIschema}
+                schema={this.props.schema}
+                fetchSize={this.props.fetchSize}
+                lang="en"
+              />
+              {/* <Form
+            onOpenLink={this.handleOpenLink}
+            setChanges={this.onChangeValue}
+            onAddDocument={this.handleAddRowAndOpen}
+          /> */}
+              {/* <NotificationSystem
+            ref={ref => {
+              this.msg = ref
+            }}
+          /> */}
+            </HotKeys>
+          </IntlProvider>
+        </PersistGate>
+      </Provider>
     )
   }
-
-  getHeader() {
-    const that = this
-    const header = []
-    const schema = this.props.schema
-    if (schema) {
-      Object.keys(schema.properties).forEach((key, index) => {
-        var fieldDef = schema.properties[key]
-        var label = (
-          <div>
-            {/* <i className={`contenTypeIcon fa fa-${fieldDef.icon}`} /> */}
-            {fieldDef.title || key}
-          </div>
-        )
-        if (!fieldDef.width) {
-          fieldDef.width = 200
-        }
-        header.push(
-          <HeaderCell
-            index={index}
-            key={key}
-            value={label}
-            {...fieldDef}
-            fieldName={key}
-            onHandleSort={that.handleSort}
-          />
-        )
-      })
-    }
-
-    return header
-  }
-
-  handleGetNotLoadedDocument = () => {};
+  handleGetNotLoadedDocument = () => {}
 }
 
 JsonSchemaTable.propTypes = {
   fetcher: PropTypes.object,
-  items: PropTypes.array,
   UIschema: PropTypes.object,
   schema: PropTypes.object,
   context: PropTypes.object,
-  onGetitems: PropTypes.func,
-  indexedFields: PropTypes.array,
-  onSort: PropTypes.func,
+  fetchSize: PropTypes.number,
+  lang: PropTypes.string,
 }
+
+export default JsonSchemaTable

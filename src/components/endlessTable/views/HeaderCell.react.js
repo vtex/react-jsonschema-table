@@ -15,29 +15,34 @@ class HeaderCell extends React.Component {
   render() {
     return (
       <div
-        className={`ph2 pv2 h-100${this.props.index === 0 ? '' : ' bl b--moon-gray'}`}
+        className={`ph2 pv2 h-100${
+          this.props.index === 0 ? '' : ' bl b--moon-gray'
+        }`}
         style={this._getInlineStyle()}
       >
-        <div className="fl w-90">
-          {this.props.value}
-        </div>
-        {this.props.isIndex && this.props.type !== 'object'
-          ? this.state.inactive
-            ? <div className="fl w-10 tc lh-solid">
+        <div className="fl w-90">{this.props.value}</div>
+        {this.props.isIndex && this.props.type !== 'object' ? (
+          this.state.inactive ? (
+            <div className="fl w-10 tc lh-solid">
               <div className="center relative">
                 <i
-                  className={`${'fa fa-sort-asc' + ' pointer fa-lg '}${this.state.inactive ? 'o-70' : ''}`}
+                  className={`${'fa fa-sort-asc' + ' pointer fa-lg '}${
+                    this.state.inactive ? 'o-70' : ''
+                  }`}
                   onClick={this.handleSortAsc}
                 />
               </div>
               <div className="center relative mt2 bottom-1">
                 <i
-                  className={`${'fa fa-sort-desc' + ' pointer fa-lg '}${this.state.inactive ? 'o-70' : ''}`}
+                  className={`${'fa fa-sort-desc' + ' pointer fa-lg '}${
+                    this.state.inactive ? 'o-70' : ''
+                  }`}
                   onClick={this.handleSortDesc}
                 />
               </div>
             </div>
-            : <div className="center relative">
+          ) : (
+            <div className="center relative">
               <i
                 className={
                   this.state.sort === 'ASC'
@@ -47,7 +52,8 @@ class HeaderCell extends React.Component {
                 onClick={this.handleSort}
               />
             </div>
-          : null}
+          )
+        ) : null}
       </div>
     )
   }
