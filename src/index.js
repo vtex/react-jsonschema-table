@@ -30,6 +30,7 @@ import Table from './containers/Table'
 import Form from './containers/Form'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
+// import { undo, redo } from './actions/items-actions'
 // import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
 // import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
 
@@ -49,7 +50,7 @@ fontawesome.library.add(
   faFilter,
   faPlusSquare,
   faSave,
-  faTimes,
+  faTimes
 )
 
 const { store, persistor } = configureStore()
@@ -60,12 +61,17 @@ class JsonSchemaTable extends React.Component {
     SetFetcher(props.fetcher)
     // Call action for initial items load
   }
+
   render() {
+    const handlers = {
+      undo: this.handleUndo,
+      redo: this.handleRedo,
+    }
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <IntlProvider locale="en-US" messages={enUSMessages}>
-            <HotKeys keyMap={keyMap}>
+            <HotKeys keyMap={keyMap} handlers={handlers}>
               <ToolBar
                 context={this.props.context}
                 schema={this.props.schema}
@@ -90,6 +96,7 @@ class JsonSchemaTable extends React.Component {
                 onAddDocument={this.handleAddRowAndOpen}
               />
               {/* <NotificationSystem
+
             ref={ref => {
               this.msg = ref
             }}
@@ -99,6 +106,13 @@ class JsonSchemaTable extends React.Component {
         </PersistGate>
       </Provider>
     )
+  }
+  handleUndo = () => {
+    // this.context.store.dispatch(undo(this.props.schema, this.props.lang))
+  }
+
+  handleRedo = () => {
+    // this.context.store.dispatch(redo(this.props.schema, this.props.lang))
   }
   handleGetNotLoadedDocument = () => {}
 }
@@ -110,6 +124,10 @@ JsonSchemaTable.propTypes = {
   context: PropTypes.object,
   fetchSize: PropTypes.number,
   lang: PropTypes.string,
+}
+
+JsonSchemaTable.contextTypes = {
+  store: PropTypes.object,
 }
 
 export default JsonSchemaTable

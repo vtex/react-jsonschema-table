@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 import rootReducer from '../reducers/index'
 import logger from 'redux-logger'
 
- export default (initialState) => {
+export default initialState => {
   const persistConfig = {
     key: 'root',
     storage,

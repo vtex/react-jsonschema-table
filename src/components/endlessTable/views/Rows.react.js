@@ -107,6 +107,7 @@ class Rows extends React.Component {
       />
     )
   }
+
   checkPageRange(virtualID) {
     var items = this.props.items
     var index = _.findIndex(items, function(item) {

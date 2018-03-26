@@ -805,6 +805,10 @@ a:focus {
 .h-4 {
   height: 8rem;
 }
+:focus {
+  outline: 0;
+  outline: none;
+}
 .app-header {
   margin-right: 2.5%;
   margin-left: 2.5%;
@@ -858,7 +862,7 @@ a:focus {
   margin-right: 2.5%;
   margin-left: 2.5%;
 }
-/* .slideTwo */
+/* .Co */
 .slideTwo {
   margin-top: 5px;
   width: 35px;
@@ -897,6 +901,12 @@ a:focus {
   left: 18px;
   color: white;
   background: #357edd;
+}
+.fillHandle {
+  cursor: crosshair;
+  width: 6px;
+  height: 6px;
+  left: 100%;
 }
 /* end .slideTwo */
 .cursor-not-allowed {
@@ -1032,6 +1042,20 @@ a:focus {
 .carousel-modal .slick-prev:before {
   color: black;
 }
+.search {
+  height: 4rem;
+}
+.filter-edit-error {
+  -webkit-text-decoration-line: underline;
+  -moz-text-decoration-line: underline;
+  -ms-text-decoration-line: underline;
+  text-decoration-line: underline;
+  -webkit-text-decoration-style: dotted;
+  -moz-text-decoration-style: dotted;
+  -ms-text-decoration-style: dotted;
+  text-decoration-style: dotted;
+  text-decoration-color: red;
+}
 .row-options + div {
   margin-left: 28px;
 }
@@ -1080,7 +1104,7 @@ a:focus {
   position: fixed;
   top: 110px;
   bottom: 0px;
-  width: 95%;
+  width: 100%;
   overflow: scroll;
 }
 .list {
