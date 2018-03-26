@@ -4,3 +4,7 @@ example/
 test/
 rollup.config.*
 .*
+devdist/
+example_production/
+src/example.js
+webpack.*
