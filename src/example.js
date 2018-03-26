@@ -4,6 +4,10 @@ import JsonSchemaTable from './index.js'
 
 const schema = {
   properties: {
+    id: {
+      type: 'string',
+      title: 'Id',
+    },
     name: {
       type: 'string',
       title: 'Name',
