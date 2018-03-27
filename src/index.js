@@ -102,7 +102,6 @@ class JsonSchemaTable extends React.Component {
                 schema={this.props.schema}
                 UIschema={this.props.UIschema}
                 onOpenLink={this.handleOpenLink}
-                setChanges={this.onChangeValue}
                 onAddDocument={this.handleAddRowAndOpen}
               />
               {/* <NotificationSystem
