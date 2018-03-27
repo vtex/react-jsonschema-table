@@ -14,6 +14,7 @@ class Form extends React.Component {
       showModal: this.props.showModal
     }
   }
+
   handleCloseModal = () => {
     this.props.hideFormModal()
     // carregar do store o state anterior para mostrar outro dopcumento
@@ -45,35 +46,13 @@ class Form extends React.Component {
     }
   };
 
-  componentDidMount() {
-    // this.unsubscribe = VTableStore.listen(this.onStoreChange)
-  }
-  componentWillUnmount() {
-    // this.unsubscribe()
-  }
-  onStoreChange = () => {
-    var storeConf = VTableStore.getFormStore()
-    if (storeConf.document && storeConf.document.document) {
-      var configuration = VTableStore.getAppConfiguration(storeConf.context)
-      this.setState({
-        context: storeConf.context,
-        document: storeConf.document.document,
-        validationErrors: storeConf.document.validationErrors,
-        configuration: configuration,
-        showModal: true,
-        title: storeConf.title,
-        virtualID: storeConf.document.virtualID,
-        callback: storeConf.callback,
-      })
-    }
-  };
   getLabel = fieldName => {
     const { schema, UIschema } = this.props
     var fieldDefinition = schema.properties[fieldName]
     return (
       <div>
         {/* <i className={`contenTypeIcon fa fa-${fieldDefinition.icon}`} /> */}
-        {`${fieldDefinition.title || fieldDefinition.label} - (${fieldDefinition.type})`}
+        {`${fieldDefinition.title || fieldDefinition.label}: {${fieldDefinition.type}}`}
       </div>
     )
   };
@@ -103,30 +82,37 @@ class Form extends React.Component {
     }
     return (
       <HotKeys handlers={handlers}>
-        <Modal.Dialog
+        <Modal
           show={showModal}
-          dialogClassName="z-9999 bg-white tc"
+          dialogClassName="absolute z-9999 top-2 left-2 w-70 overflow-y-auto bg-white ba b--moon-gray br3 bw1"
           autoFocus
           onHide={this.handleCloseModal}
           onExited={this.handleModalExited}
         >
-          <Modal.Header className="header">
-            {/* <div className="edit-header-container">
-              <h4 className="edit-header">
-                {`${this.state.configuration.label}: {${this.state.document.id}}`}
+          <div className="bb b--near-white">
+            <div className="dib br b--near-white w-60">
+              <h4 className="pa3">
+                {/* {`${this.state.configuration.label}: {${this.state.document.id}}`} */}
+                {`${config.title}: {${item.id}}`}
               </h4>
             </div>
-            <div className="history-header-container">
-              <h4 className="history-header">
+            <div className="dib w-30">
+              <h4 className="pa3">
                 <FormattedMessage id="Form.historic" />
               </h4>
-            </div> */}
-            <a className="tl" onClick={this.handleCloseModal}>
+            </div>
+            <a className="f2 mid-gray pointer o-90 v-mid" onClick={this.handleCloseModal}>
               <i className="fa fa-times" />
             </a>
-          </Modal.Header>
-          <Modal.Body className="form">
-            <div className="edit-panel">
+          </div>
+          <div className="pa2">
+            <div
+              ref={div => {
+                if (div) {
+                  setTimeout(() => div.scrollTo(0,0), 10)
+                }
+              }}
+              className="dib w-60 br pt1 overflow-y-scroll vh-75">
               <SectionsControl
                 item={item}
                 labels={labels}
@@ -137,8 +123,8 @@ class Form extends React.Component {
                 setChanges={this.setChanges}
               />
             </div>
-            <div className="history-panel">
-              <div className="comments-panel" />
+            <div className="w-30 h-inherit pt1 overflow-y-scroll flex-column">
+              <div className="h-inherit pt1 overflow-y-scroll" />
               {/* <div className="action-panel">
                 <img
                   src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=33"
@@ -147,8 +133,8 @@ class Form extends React.Component {
                 <input type="text" />
               </div>*/}
             </div>
-          </Modal.Body>
-        </Modal.Dialog>
+          </div>
+        </Modal>
       </HotKeys>
     )
   }

@@ -47,6 +47,7 @@ const schema = {
 }
 
 const UIschema = {
+  title: 'Users',
   fields: {
     id: {
       width: 100,

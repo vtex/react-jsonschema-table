@@ -38,7 +38,7 @@ class Table extends React.Component {
     })
 
     return (
-      <div>
+      <div className={this.props.form.showModal ? 'z-0' : ''}>
         <div className="mh4 ph2 overflow-hidden">
           <Header
             onCheckRow={this.props.onCheckRow}

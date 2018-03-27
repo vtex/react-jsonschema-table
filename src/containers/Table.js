@@ -19,6 +19,7 @@ import { showFormModal } from '../actions/form-actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    form: state.form,
     context: ownProps.context,
     fetchSize: ownProps.fetchSize,
     UIschema: ownProps.UIschema,
