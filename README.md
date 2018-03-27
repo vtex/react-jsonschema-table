@@ -13,7 +13,7 @@
 npm install --save react-modern-library-boilerplate
 ```
 
-## Usage
+## Simple Usage
 
 ```js
 import React, { Component } from 'react'
@@ -28,13 +28,17 @@ class Example extends Component {
   }
 }
 ```
-## Properties
+## API
 
 **schema:** Is the JSONSchema that contains the estructure and validation rules of the rendered data.
+
 **UIschema:** Schema that describe some properties for UI.
-indexedFields: An array with the fieldNames that can be used to sort the table.
-onSort: function that is called when a sort action is required. Receive the field that trigger the action and the direction to sort.
-onGetItems: function used to load the documents on demand.
+
+**indexedFields**: An array with the fieldNames that can be used to sort the table.
+
+**onSort**: function that is called when a sort action is required. Receive the field that trigger the action and the direction to sort.
+
+**onGetItems**: function used to load the documents on demand.
 
 ## Local setup for developing
 
@@ -52,4 +56,4 @@ npm run dev
 
 ## License
 
-MIT © [Vtex](https://github.com/transitive-bullshit)
+MIT © [Vtex](https://github.com/vtex)
