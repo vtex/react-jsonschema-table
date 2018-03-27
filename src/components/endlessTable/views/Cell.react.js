@@ -108,7 +108,6 @@ class Cell extends React.Component {
   }
 
   handleFocus = () => {
-    console.log('mouseDown')
     if (this.props.onFocusCell && !this.props.isFocus) {
       this.props.onFocusCell(this.props.cell)
     }

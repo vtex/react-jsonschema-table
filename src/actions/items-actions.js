@@ -82,6 +82,13 @@ export function discardChanges() {
   return { type: types.CANCEL_STAGING }
 }
 
+export function undo(schema, lang) {
+  return { type: types.UNDO_CHANGE, schema, lang }
+}
+export function redo(schema, lang) {
+  return { type: types.REDO_CHANGE, schema, lang }
+}
+
 export function deleteCheckedItems() {
   return { type: types.DELETE_CHECKED_ITEMS }
 }

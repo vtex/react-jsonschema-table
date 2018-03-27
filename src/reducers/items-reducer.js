@@ -203,10 +203,52 @@ export default (state = initialState, action) => {
     }
 
     case types.UNDO_CHANGE: {
-      return state
+      const newState = Object.assign({}, state)
+      const { schema, lang } = action
+
+      newState.staging = {}
+
+      if (newState.historyIndex === 0) {
+        return
+      }
+
+      newState.historyIndex--
+
+      if (newState.historyIndex === 0) {
+        newState.stagingItems = []
+        newState.invalidItems = []
+      }
+
+      for (let i = 0; i < newState.historyIndex; i++) {
+        addStaging(
+          newState,
+          newState.historyChanges[i].id,
+          newState.historyChanges[i].status,
+          newState.historyChanges[i].changes,
+          schema,
+          lang
+        )
+      }
+      return newState
     }
     case types.REDO_CHANGE: {
-      return state
+      const newState = Object.assign({}, state)
+      const { schema, lang } = action
+
+      if (newState.historyIndex === newState.historyChanges.length) {
+        return
+      }
+
+      addStaging(
+        newState,
+        newState.historyChanges[newState.historyIndex].id,
+        newState.historyChanges[newState.historyIndex].status,
+        newState.historyChanges[newState.historyIndex].changes,
+        schema,
+        lang
+      )
+      newState.historyIndex++
+      return newState
     }
 
     default:
