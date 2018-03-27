@@ -30,7 +30,7 @@ import Table from './containers/Table'
 import Form from './containers/Form'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
-// import { undo, redo } from './actions/items-actions'
+import { undo, redo } from './actions/items-actions'
 // import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
 // import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
 
@@ -63,9 +63,19 @@ class JsonSchemaTable extends React.Component {
   }
 
   render() {
+    const { schema } = this.props
+    const lang = 'en'
+
+    const handleUndo = () => {
+      store.dispatch(undo(schema, lang))
+    }
+  
+    const handleRedo = () => {
+      store.dispatch(redo(schema, lang))
+    }
     const handlers = {
-      undo: this.handleUndo,
-      redo: this.handleRedo,
+      undo: handleUndo,
+      redo: handleRedo,
     }
     return (
       <Provider store={store}>
@@ -76,7 +86,7 @@ class JsonSchemaTable extends React.Component {
                 context={this.props.context}
                 schema={this.props.schema}
                 UIschema={this.props.UIschema}
-                lang="en"
+                lang={lang}
               />
               <Table
                 ref={ref => {
@@ -86,7 +96,7 @@ class JsonSchemaTable extends React.Component {
                 UIschema={this.props.UIschema}
                 schema={this.props.schema}
                 fetchSize={this.props.fetchSize}
-                lang="en"
+                lang={lang}
               />
               <Form
                 schema={this.props.schema}
@@ -106,13 +116,6 @@ class JsonSchemaTable extends React.Component {
         </PersistGate>
       </Provider>
     )
-  }
-  handleUndo = () => {
-    // this.context.store.dispatch(undo(this.props.schema, this.props.lang))
-  }
-
-  handleRedo = () => {
-    // this.context.store.dispatch(redo(this.props.schema, this.props.lang))
   }
   handleGetNotLoadedDocument = () => {}
 }
