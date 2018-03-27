@@ -35,7 +35,6 @@
     "react-intl": "^2.3.0",
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.6",
-    "react-slick": "^0.15.0",
     "react-widgets": "^4.0.0",
     "react-widgets-moment": "^4.0.0",
     "redux": "^3.7.2",

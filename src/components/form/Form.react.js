@@ -1,4 +1,3 @@
-// import './css/form.less'
 import React from 'react'
 import { Modal } from 'react-bootstrap'
 import _ from 'underscore'
@@ -18,26 +17,25 @@ class Form extends React.Component {
   handleCloseModal = () => {
     this.props.hideFormModal()
     // carregar do store o state anterior para mostrar outro dopcumento
-    var storeConf = VTableStore.getPreviousState()
-    if (storeConf) {
-      var configuration = VTableStore.getAppConfiguration(storeConf.context)
-      this.setState({
-        context: storeConf.context,
-        document: storeConf.document.document,
-        virtualID: storeConf.document.virtualID,
-        configuration: configuration,
-        title: storeConf.title,
-        showModal: true,
-      })
-    } else {
+    // var storeConf = VTableStore.getPreviousState()
+    // if (storeConf) {
+    //   var configuration = VTableStore.getAppConfiguration(storeConf.context)
+    //   this.setState({
+    //     context: storeConf.context,
+    //     document: storeConf.document.document,
+    //     virtualID: storeConf.document.virtualID,
+    //     configuration: configuration,
+    //     title: storeConf.title,
+    //     showModal: true,
+    //   })
+    // } else {
       // this.setState({ showModal: false })
-      this.props.hideFormModal()
       // TODO Não esta sendo chamada essa função no onExited do modal, por enquanto deixar no onHide
       // mas não tem garantia que vai entregar o foco para o item anterior
       if (this.state.callback) {
         this.state.callback()
       }
-    }
+    // }
   };
 
   handleModalExited = () => {
@@ -70,11 +68,12 @@ class Form extends React.Component {
     }
   };
   getLabel = fieldName => {
-    var fieldDefinition = this.state.configuration.fields[fieldName]
+    const { schema, UIschema } = this.props
+    var fieldDefinition = schema.properties[fieldName]
     return (
       <div>
-        <i className={`contenTypeIcon fa fa-${fieldDefinition.icon}`} />
-        {fieldDefinition.title || fieldDefinition.label}
+        {/* <i className={`contenTypeIcon fa fa-${fieldDefinition.icon}`} /> */}
+        {`${fieldDefinition.title || fieldDefinition.label} - (${fieldDefinition.type})`}
       </div>
     )
   };
@@ -92,42 +91,41 @@ class Form extends React.Component {
 
     var item = selectedItem.document
     const validationErrors = this.state.validationErrors
-    var config = this.state.configuration || {}
+    var config = UIschema
     var labels = {}
-    // var that = this
-    // _.map(config.editor.settings.sections, function(section) {
-    //   _.map(section.fields, function(fieldName) {
-    //     labels[fieldName] = that.getLabel(fieldName)
-    //   })
-    // })
+    config.editor.settings.sections.forEach(section => {
+      section.fields.forEach(fieldName => {
+        labels[fieldName] = this.getLabel(fieldName)
+      })
+    })
     const handlers = {
       closeForm: this.closeModal,
     }
     return (
       <HotKeys handlers={handlers}>
-        <Modal
+        <Modal.Dialog
           show={showModal}
-          dialogClassName="form-modal"
+          dialogClassName="z-9999 bg-white tc"
           autoFocus
           onHide={this.handleCloseModal}
           onExited={this.handleModalExited}
         >
-          <div className="header">
-            <div className="edit-header-container">
+          <Modal.Header className="header">
+            {/* <div className="edit-header-container">
               <h4 className="edit-header">
-                {/* {`${this.state.configuration.label}: {${this.state.document.id}}`} */}
+                {`${this.state.configuration.label}: {${this.state.document.id}}`}
               </h4>
             </div>
             <div className="history-header-container">
               <h4 className="history-header">
                 <FormattedMessage id="Form.historic" />
               </h4>
-            </div>
-            <a className="close-button" onClick={this.handleCloseModal}>
+            </div> */}
+            <a className="tl" onClick={this.handleCloseModal}>
               <i className="fa fa-times" />
             </a>
-          </div>
-          <div className="form">
+          </Modal.Header>
+          <Modal.Body className="form">
             <div className="edit-panel">
               <SectionsControl
                 item={item}
@@ -149,8 +147,8 @@ class Form extends React.Component {
                 <input type="text" />
               </div>*/}
             </div>
-          </div>
-        </Modal>
+          </Modal.Body>
+        </Modal.Dialog>
       </HotKeys>
     )
   }
