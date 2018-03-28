@@ -79,8 +79,19 @@ export default (state = initialState, action) => {
     case types.UPDATE_ITEM: {
       const { id, schema, changes, lang } = action
       const newState = Object.assign({}, state)
-      addStaging(newState, id, null, changes, schema, lang)
-      addToHistoryChanges(newState, id, null, changes)
+      const changesKey = Object.keys(changes)[0]
+      let hydratedChanges = changes
+      if (typeof changes[changesKey].value === 'object' && state.staging[id].document[changesKey]) {
+        // TO DO: make deep merge if field is object inside object inside object...
+        hydratedChanges[changesKey] = {
+          value: {
+            ...state.staging[id].document[changesKey],
+            ...changes[changesKey].value,
+          }
+        }
+      }
+      addStaging(newState, id, null, hydratedChanges, schema, lang)
+      addToHistoryChanges(newState, id, null, hydratedChanges)
       return newState
     }
 
