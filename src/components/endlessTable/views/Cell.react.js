@@ -50,13 +50,31 @@ class Cell extends React.Component {
         }
       >
         <Popover
-          id="popover-basic"
-          title={this.getI18nStr('Cell.validation.error')}
-          className="z-999"
+          id="cell-popover"
+          className="db"
+          title={
+            <div className="tc pv1 ph2 b bb b--light-gay br2 bg-light-gray">
+              {this.getI18nStr('Cell.validation.error')}
+            </div>
+          }
+          className="absolute mw5 z-999 db bg-white br2 ba b--white-20 shadow-2"
         >
-          {this.props.validationErrors.length > 0
-            ? this.props.validationErrors[0].message
-            : ''}
+          <div>
+            <div
+              className="absolute db w0 h0 ba bw2 b--transparent"
+              style={{
+                borderRightColor: '#fff',
+                borderLeftWidth: 0,
+                left: '-21px',
+                top: '30%',
+                borderWidth: '10px',
+              }} />
+            <div className="pv1 ph2 tc">
+              {this.props.validationErrors.length > 0
+                ? this.props.validationErrors[0].message
+                : ''}
+            </div>
+          </div>
         </Popover>
       </Overlay>
     )
