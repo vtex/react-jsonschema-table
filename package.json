@@ -1,7 +1,7 @@
 {
   "name": "@vtex/react-jsonschema-table",
   "version": "0.0.1",
-  "description": "",
+  "description": "Simple usage react component stylesheet table with inifnite scroll for massive data consumption",
   "author": "Alejandro Osorio",
   "contributors": [
     "Alejandro Osorio",
