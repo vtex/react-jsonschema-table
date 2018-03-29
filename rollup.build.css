@@ -798,6 +798,9 @@ fieldset[disabled] .rw-multiselect-tag {
   box-shadow: none;
   cursor: not-allowed;
 }
+h3 {
+  margin: 0px;
+}
 a:hover,
 a:focus {
   text-decoration: none;
@@ -1266,7 +1269,7 @@ a:focus {
   font-weight: 100;
 }
 .list-row-selected .row-options {
-  display: block;
+  display: none;
   border: none;
   background-color: transparent;
 }
