@@ -64,6 +64,9 @@ class JsonSchemaTable extends React.Component {
 
   render() {
     const { schema } = this.props
+    if (!schema || Object.keys(schema).length === 0) {
+      return <div>jsonschema table cannot render without a jsonschema!</div>
+    }
     const lang = 'en'
 
     const handleUndo = () => {
