@@ -1,8 +1,12 @@
 {
-  "name": "react-jsonschema-table",
+  "name": "@vtex/react-jsonschema-table",
   "version": "0.0.1",
   "description": "",
   "author": "Alejandro Osorio",
+  "contributors": [
+    "Alejandro Osorio",
+    "Guilherme Freitas"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
