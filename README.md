@@ -1,9 +1,9 @@
 
 # react-jsonschema-table
 
-### Work In Progress !
+> Simple usage react component stylesheet table with inifnite scroll for massive data consumption and line editing using JSONSchema as data structure.
 
-> Easy to use component for generate an infinite scroll table with inline editing that use JSONSchema to define the structure of data.
+### Work In Progress !
 
 [![NPM](https://img.shields.io/npm/v/react-modern-library-boilerplate.svg)](https://www.npmjs.com/package/react-modern-library-boilerplate) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
