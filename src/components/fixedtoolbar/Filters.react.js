@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl, intlShape } from 'react-intl'
+import Toggle from '@vtex/styleguide/lib/Toggle'
 
 class Filters extends Component {
   handleCheckFilterClick = ev => {
@@ -15,102 +16,48 @@ class Filters extends Component {
     this.props.onChangeInvalidItemsFilter(ev.target.checked)
   }
 
-  renderFilters = () => {
-    return (
-      <div>
-        <div className="flex flex-inline nowrap dib">
-          <section
-            title={
-              this.props.hasCheckedItems
-                ? 'Exibir somente os registros selecionados'
-                : 'Selecione um ou mais registros para ativar esse fitro'
-            }
-            className={`pa2 ${
-              !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : ''
-            }`}
-          >
-            <div className="ph2 slideTwo">
-              <input
-                type="checkbox"
-                id="checkedRowsSlide1"
-                name="checkedRowsSlide1"
-                onChange={this.handleCheckFilterClick}
-                disabled={!this.props.hasCheckedItems}
-                checked={this.props.isSelectedFilterActive}
-              />
-              <label htmlFor="checkedRowsSlide1">
-                <i className="fa fa-check" />
-              </label>
-            </div>
-          </section>
-          <div className="self-center">
-            <FormattedMessage id="FixedToolbar.StateFilters.checked" />
-          </div>
-        </div>
-        <div className="flex flex-inline nowrap dib">
-          <section
-            title="Exibir somente os registros pendentes de sincronização"
-            className={`pa2 ${
-              !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : ''
-            }`}
-            onClick={this.handleStagingFilterClick}
-          >
-            <div className="ph2 slideTwo">
-              <input
-                type="checkbox"
-                id="checkedRowsSlide2"
-                name="checkedRowsSlide2"
-                onChange={() => {/* TODO: understand y this is not triggered */}}
-                disabled={!this.props.hasEditedItems}
-                checked={this.props.isStagingFilterActive}
-              />
-              <label htmlFor="checkedRowsSlide2 nowrap">
-                <i className="fa fa-pencil-alt" />
-              </label>
-            </div>
-          </section>
-          <div className="self-center">
-            <FormattedMessage id="FixedToolbar.StateFilters.edited" />
-          </div>
-        </div>
-        <div className="flex flex-inline nowrap dib">
-          <section
-            title="Exibir somente os registros com erros"
-            className={`pa2 ${
-              !this.props.hasInvalidItems ? 'o-30 cursor-not-allowed' : ''
-            }`}
-            onClick={this.handleOnlyWithErrorFilterClick}
-          >
-            <div className="ph2 slideTwo">
-              <input
-                type="checkbox"
-                id="checkedRowsSlide3"
-                name="checkedRowsSlide3"
-                onChange={() => {/* TODO: understand y this is not triggered */}}
-                checked={this.props.isInvalidFilterActive}
-                disabled={!this.props.hasInvalidItems}
-              />
-              <label htmlFor="checkedRowsSlide3 nowrap">
-                <i className="fa fa-exclamation" />
-              </label>
-            </div>
-          </section>
-          <div className="self-center">
-            <FormattedMessage id="FixedToolbar.StateFilters.invalid" />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   render() {
+    const {
+      intl,
+      isSelected,
+      isSelectedFilterActive,
+      hasCheckedItems,
+      isStagingFilterActive,
+      hasEditedItems,
+      isInvalidFilterActive,
+      hasInvalidItems,
+    } = this.props
     return (
       <div
-        className={`submenu-panel absolute top-1 mt4 z-999 br3 bg-white pa2 f6 shadow-1 w4 ${
-          this.props.isSelected ? 'dib' : 'dn'
+        className={`submenu-panel absolute top-1 mt7 z-999 br3 bg-white pa2 f6 shadow-1 w-auto ${
+          isSelected ? 'dib' : 'dn'
         }`}
       >
-        <ul className="list pl1 w-100">{this.renderFilters()}</ul>
+        <div>
+          <div className="dib pa4">
+            <Toggle
+              label={intl.formatMessage({ id: 'FixedToolbar.StateFilters.checked' })}
+              disabled={!hasCheckedItems}
+              checked={isSelectedFilterActive}
+              onClick={this.handleCheckFilterClick} />
+          </div>
+          <br />
+          <div className="dib pa4">
+            <Toggle
+              label={intl.formatMessage({ id: 'FixedToolbar.StateFilters.edited' })}
+              disabled={!hasEditedItems}
+              checked={isStagingFilterActive}
+              onClick={this.handleStagingFilterClick} />
+          </div>
+          <br />
+          <div className="dib pa4">
+            <Toggle
+              label={intl.formatMessage({ id: 'FixedToolbar.StateFilters.invalid' })}
+              disabled={!hasInvalidItems}
+              checked={isInvalidFilterActive}
+              onClick={this.handleOnlyWithErrorFilterClick} />
+          </div>
+        </div>
       </div>
     )
   }
@@ -127,6 +74,7 @@ Filters.propTypes = {
   onChangeCheckedItemsFilter: PropTypes.func,
   onChangeStagingFilter: PropTypes.func,
   onChangeInvalidItemsFilter: PropTypes.func,
+  intl: intlShape.isRequired,
 }
 
-export default Filters
+export default injectIntl(Filters)

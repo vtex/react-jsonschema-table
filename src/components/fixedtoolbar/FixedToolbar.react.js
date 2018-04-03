@@ -59,7 +59,7 @@ class FixedToolbar extends React.Component {
                 onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
               <div
-                className={`pointer ph2 inline-flex nowrap ${
+                className={`pointer ph2 inline-flex nowrap pa2 br2 ${
                   isColumnsToShowSelected ? 'bg-light-gray bn relative' : ''
                 } ${
                   areAnyColumnsHidden ? 'blue' : 'black'
@@ -86,7 +86,7 @@ class FixedToolbar extends React.Component {
                 onChangeInvalidItemsFilter={this.props.onChangeInvalidItemsFilter}
                 onHandleFiltersClick={this.handleFiltersClick} />
                 <div
-                  className={`pointer ph2 inline-flex nowrap ${
+                  className={`pointer ph2 inline-flex nowrap pa2 br2 ${
                     this.state.isFilterSelected ? 'bg-light-gray bn relative' : ''
                   } ${areAnyfilterselected ? 'blue' : ''}`}
                   onClick={this.handleFiltersClick}

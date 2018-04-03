@@ -32,7 +32,7 @@ class ColumnsToShow extends React.Component {
 
     return (
       <div
-        className={`submenu-panel absolute mt4 z-999 br3 bg-white pa2 f6 shadow-1 ${
+        className={`submenu-panel absolute mt7 z-999 br3 bg-white pa2 f6 shadow-1 ${
           this.props.isSelected ? 'dib' : 'dn'
         }`}
       >
