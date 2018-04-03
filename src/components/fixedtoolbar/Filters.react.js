@@ -29,7 +29,7 @@ class Filters extends Component {
     } = this.props
     return (
       <div
-        className={`submenu-panel absolute top-1 mt7 z-999 br3 bg-white pa2 f6 shadow-1 w-auto ${
+        className={`absolute top-1 mt7 z-999 br3 bg-white pa2 f6 shadow-1 w-auto ${
           isSelected ? 'dib' : 'dn'
         }`}
       >
