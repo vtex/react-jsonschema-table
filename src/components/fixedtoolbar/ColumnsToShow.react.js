@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-// import Toggle from 'react-toggle'
 
 class ColumnsToShow extends React.Component {
   render() {
@@ -32,7 +31,7 @@ class ColumnsToShow extends React.Component {
 
     return (
       <div
-        className={`submenu-panel absolute mt7 z-999 br3 bg-white pa2 f6 shadow-1 ${
+        className={`absolute mt7 z-999 br3 bg-white pa2 f6 shadow-1 ${
           this.props.isSelected ? 'dib' : 'dn'
         }`}
       >
