@@ -13,7 +13,7 @@ class ColumnsToShow extends React.Component {
     this.props.UIschema.list.forEach(field => {
       var isChecked = !this.props.hiddenFields.includes(field)
       columns.push(
-        <li key={`showColumn${field}`}>
+        <li key={`showColumn${field}`} className="pb3">
           <label htmlFor={`showColumn${field}`} className="pointer">
             <input
               className="pointer mr2"
@@ -31,18 +31,16 @@ class ColumnsToShow extends React.Component {
 
     return (
       <div
-        className={`absolute mt7 z-999 br3 bg-white pa2 f6 shadow-1 ${
-          this.props.isSelected ? 'dib' : 'dn'
+        className={`absolute mt7 z-999 br3 bg-white pv2 ph5 f6 shadow-1 w-auto ${
+          this.props.isSelected ? 'flex flex-column' : 'dn'
         }`}
       >
-        <ul className="list pl1">{columns}</ul>
-        <div className="db w-100 mv2">
-          <div
-            className="pointer di ba bw-1 pa2 br3 bg-blue b--blue white dim"
-            onClick={this.handleShowAllColumns}
-          >
-            <FormattedMessage id="ColumnsToShow.show.all" />
-          </div>
+        <ul className="list pl1 mt3 mb2">{columns}</ul>
+        <div
+          className="pointer tc ba bw-1 mb3 pa2 br2 bg-blue b--blue white dim w-100"
+          onClick={this.handleShowAllColumns}
+        >
+          <FormattedMessage id="ColumnsToShow.show.all" />
         </div>
       </div>
     )

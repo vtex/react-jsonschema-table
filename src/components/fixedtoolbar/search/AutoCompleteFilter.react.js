@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { HotKeys } from 'react-hotkeys'
 import _ from 'underscore'
 import AutoCompleteOption from './AutoCompleteOption.react'
-import './css/search.less'
+import Input from '@vtex/styleguide/lib/Input'
 
 class AutoCompleteFilter extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class AutoCompleteFilter extends React.Component {
 
   componentDidMount() {
     if (this.props.isSelected) {
-      this.addFilter.focus()
+      // this.addFilter.focus()
     }
   }
   componentDidUpdate() {
@@ -50,7 +50,7 @@ class AutoCompleteFilter extends React.Component {
       this.state.isEditing &&
       document.activeElement !== this.addFilter
     ) {
-      this.addFilter.focus()
+      // this.addFilter.focus()
     }
     if (this.props.isSelected && !this.state.isEditing) {
       ReactDom.findDOMNode(this.editFilter).focus()
@@ -114,7 +114,18 @@ class AutoCompleteFilter extends React.Component {
         >
         <div className="flex pv1 ph3 w-100">
           <i className="fa fa-search mr3 self-center" aria-hidden="true" />
-          <input
+          <Input
+            long
+            label={null}
+            error={!this.state.isValid}
+            placeholder="Value Filters"
+            onChange={this.handleFilterChange}
+            value={this.state.value}
+            ref={input => {
+              this.addFilter = input
+            }}
+          />
+          {/* <input
             type="text"
             className={
                 'bn w-100 f4' +
@@ -126,7 +137,7 @@ class AutoCompleteFilter extends React.Component {
             }}
             onChange={this.handleFilterChange}
             value={this.state.value}
-            />
+            /> */}
         </div>
         {this.props.isSelected ? this.renderAutoCompleteOptions() : null}
       </HotKeys>
@@ -287,7 +298,8 @@ class AutoCompleteFilter extends React.Component {
 
     if (
       completionState !== 'value' &&
-      (!autoCompleteOptions || autoCompleteOptions.length === 0)
+      (!autoCompleteOptions || autoCompleteOptions.length === 0) &&
+      ev.target.value !== ''
     ) {
       isValid = false
     }
@@ -347,7 +359,7 @@ class AutoCompleteFilter extends React.Component {
       isValid: isValid,
       isComplete: isComplete,
     })
-    this.addFilter.focus()
+    // this.addFilter.focus()
   }
 
   parseStringFilter(value) {
@@ -441,24 +453,23 @@ class AutoCompleteFilter extends React.Component {
 
   renderAutoCompleteOptions() {
     var listRender = []
-    const autoCompleteOptions = this.state.autoCompleteOptions
-    if (!autoCompleteOptions || !this.state.showAutoComplete) {
+    const { autoCompleteOptions, showAutoComplete, autCompOptIdx } = this.state
+    if (!autoCompleteOptions || !showAutoComplete) {
       return
     }
     for (var i = 0; i < autoCompleteOptions.length; i++) {
-      var selected = i === this.state.autCompOptIdx
       listRender.push(
         <AutoCompleteOption
           value={autoCompleteOptions[i]}
           onSelect={this.handleSelectOption}
-          selected={selected}
+          selected={i === autCompOptIdx}
           key={'option' + i}
         />
       )
     }
     if (listRender.length > 0) {
       return (
-        <div className="absolute br3 bg-black-80 z-999 pa1 w-100 left-0">
+        <div className="absolute br2 bg-light-silver z-999 pa1 w-80 left-2">
           {listRender}
         </div>
       )

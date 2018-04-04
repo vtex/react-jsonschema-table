@@ -51,7 +51,7 @@ class Table extends React.Component {
           </Header>
         </div>
         <div
-          className="scroolOverlayInner mh4 ph2 pt1"
+          className="fixed overflow-scroll h-100 w-100 mh4 mb7 ph2"
           id="listContainer"
           onScroll={this.handleScroll}
           ref={div => {

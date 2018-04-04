@@ -1,4 +1,3 @@
-import './css/search.less'
 import React from 'react'
 import PropTypes from 'prop-types'
 import AutoCompleteFilter from './AutoCompleteFilter.react'
@@ -13,7 +12,7 @@ class Search extends React.Component {
     //   props.fields[key].name = key
     //   return props.fields[key]
     // })
-    const fields = this.addFieldNameProperty(props.fields)
+    const fields = this.deleteNotIndexedFields(props.fields)
     const logicalOperators = this.getLogicalOperators()
     const stringComparisonOperators = this.getStringComparisonOperator()
     const numberComparisonOperators = this.getNumberComparisonOperator()
@@ -22,7 +21,7 @@ class Search extends React.Component {
       numberComparisonOperators
     )
     let fieldsLabels = []
-    fieldsLabels = this.parseFieldsLabels(props.fields)
+    fieldsLabels = this.parseFieldsLabels(fields)
     // _.mapObject(props.fields, field => {
     //   if (field.type === 'object') {
     //     _.mapObject(field.properties, (childField, chieldFieldName) => {
@@ -82,13 +81,13 @@ class Search extends React.Component {
       exitEdit: this.handleEscape,
     }
     return (
-      <div className="search w-100 w-30-l">
+      <div className="w-100 w-30-l">
         <HotKeys
           handlers={handlers}
           className={
             this.state.selectedIndex !== null
-              ? 'relative flex-row flex-wrap justify-start z-999 bg-white pt3'
-              : 'flex-row nowrap overflow-hidden justify-start z-999 bg-white pt3'
+              ? 'relative flex-row flex-wrap justify-start z-999 bg-white'
+              : 'flex-row nowrap overflow-hidden justify-start z-999 bg-white'
           }
           onClick={this.handleClick}
         >
@@ -98,16 +97,14 @@ class Search extends React.Component {
     )
   }
 
-  addFieldNameProperty = fields => {
+  deleteNotIndexedFields = fields => {
     const newFields = { ...fields }
     Object.keys(newFields).map(key => {
-      newFields[key].name = key
-      if (newFields[key].type === 'object') {
-        newFields[key].properties = this.addFieldNameProperty(
-          newFields[key].properties
-        )
+      if (!this.props.indexedFields.includes(key)) {
+        delete newFields[key]
       }
     })
+    console.log('RETURNING NEW FIELDS', newFields)
     return newFields
   }
 
@@ -337,6 +334,7 @@ class Search extends React.Component {
 Search.propTypes = {
   fields: PropTypes.object,
   onSearch: PropTypes.func,
+  indexedFields: PropTypes.array,
 }
 Search.contextTypes = {
   intl: PropTypes.object.isRequired,
