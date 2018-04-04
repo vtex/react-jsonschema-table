@@ -89,6 +89,7 @@ class JsonSchemaTable extends React.Component {
                 context={this.props.context}
                 schema={this.props.schema}
                 UIschema={this.props.UIschema}
+                indexedFields={this.props.indexedFields}
                 lang={lang}
               />
               <Table

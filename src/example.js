@@ -87,7 +87,7 @@ class App extends Component {
       UIschema,
       schema,
       onGetItems: this.handleLoadDocuments,
-      indexedFields: [ indexedFields ],
+      indexedFields,
       onSort: this.handleSort,
       context: {},
     }

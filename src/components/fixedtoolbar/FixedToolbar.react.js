@@ -6,6 +6,7 @@ import ConfirmAlert from '../alert/ConfirmAlert.react.js'
 import SaveButton from './SaveButton.react'
 import { FormattedMessage } from 'react-intl'
 import Search from './search/Search.react'
+import _ from 'underscore'
 
 class FixedToolbar extends React.Component {
   constructor(props) {
@@ -98,7 +99,10 @@ class FixedToolbar extends React.Component {
               </div>
             </div>
           </div>
-          <Search />
+          <Search
+            indexedFields={this.props.indexedFields}
+            fields={this.props.schema.properties}
+            onSearch={this.handleSearch} />
           <div className="ph3">
             <div
               className={
@@ -171,6 +175,9 @@ class FixedToolbar extends React.Component {
     return toolBarContent
   }
 
+  handleSearch(searchString) {
+    console.log('searching for ', searchString)
+  }
   clearSelection() {
     this.setState({
       isColumnsToShowSelected: false,
@@ -258,6 +265,7 @@ FixedToolbar.propTypes = {
   onViewAllColumns: PropTypes.func,
   hiddenFields: PropTypes.array,
   onChangeColumnVisibility: PropTypes.func,
+  indexedFields: PropTypes.array,
 }
 
 export default FixedToolbar
