@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const SelectedItem = function(props) {
   return (
-    <span className="cursor-default mr1">
+    <span className="mr1">
       {props.item}
     </span>
   )

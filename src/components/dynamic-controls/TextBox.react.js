@@ -114,7 +114,7 @@ class TextBox extends React.Component {
           }
         >
           <input
-            className={'w-100 bn pl05'}
+            className={'w-100 bn pl05 outline-0'}
             type={this.state.type}
             value={this.state.maskedValue}
             ref={ref => {
@@ -131,7 +131,7 @@ class TextBox extends React.Component {
       control = (
         <div
           className={
-            `flex items-center w-100 h-inherit ${
+            `flex items-center w-100 h-inherit outline-0 ${
               this.props.isFocus
                 ? `bw1 ba ${borderColor} bg-lightest-blue pl05 `
                 : this.props.hasError ? 'bw1 ba b--red pl05' : 'pl2'}`

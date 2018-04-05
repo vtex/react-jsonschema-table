@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import 'vtex-tachyons'
-import '../src/app.less'
 import fontawesome from '@fortawesome/fontawesome'
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faExclamation from '@fortawesome/fontawesome-free-solid/faExclamation'
@@ -21,7 +20,6 @@ import { HotKeys } from 'react-hotkeys'
 import keyMap from './KeyMap'
 
 import { SetFetcher } from './actions/FetcherWrapper'
-// import NotificationSystem from 'react-notification-system'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './stores/configureStore'
@@ -84,7 +82,7 @@ class JsonSchemaTable extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <IntlProvider locale="en-US" messages={enUSMessages}>
-            <HotKeys keyMap={keyMap} handlers={handlers}>
+            <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
               <ToolBar
                 context={this.props.context}
                 schema={this.props.schema}

@@ -5,7 +5,7 @@ import Rows from './Rows.react'
 import Header from './Header.react'
 import HeaderCell from './HeaderCell.react'
 import PropTypes from 'prop-types'
-import '../css/endless-table.less'
+// import '../css/endless-table.less'
 
 class Table extends React.Component {
   constructor(props) {

@@ -43,7 +43,7 @@ class SectionControl extends React.Component {
     })
 
     return (
-      <div className="section">
+      <div className="outline-0">
         <h2>{sectionDef.name}</h2>
         {controls}
       </div>

@@ -56,8 +56,8 @@ class TextArea extends React.Component {
             value={this.state.value}
             className={
               this.props.renderType === 'cell'
-                ? `relative z-3 w-100 h5 mt0 bw1 ba ${borderColor}`
-                : `w-100 h5 mt0 z-3 ba br3 pa3 ${formBorderColor}`
+                ? `outline-0 relative z-3 w-100 h5 mt0 bw1 ba ${borderColor}`
+                : `outline-0 w-100 h5 mt0 z-3 ba br3 pa3 ${formBorderColor}`
             }
             ref={ref => {
               this.refTextArea = ref
@@ -69,14 +69,14 @@ class TextArea extends React.Component {
     } else {
       control = (
         <div
-          className={`flex items-center w-100 h-inherit ${this.props.isFocus ? `bw1 ba ${borderColor} bg-lightest-blue pl05 ` : this.props.hasError ? 'bw1 ba b--red pl05' : 'pl2'}`}
+          className={`flex items-center w-100 h-inherit outline-0 ${this.props.isFocus ? `bw1 ba ${borderColor} bg-lightest-blue pl05 ` : this.props.hasError ? 'bw1 ba b--red pl05' : 'pl2'}`}
           ref={ref => {
             this.refTextArea = ref
           }}
           onDoubleClick={this.props.onEditCell}
           onKeyDown={this.handleKeyDown}
         >
-          <div className="relative h-auto truncate clamp2">
+          <div className="relative h-auto truncate">
             {this.state.value}
           </div>
         </div>
