@@ -1,5 +1,6 @@
 import React from 'react'
-import { Modal } from 'react-bootstrap'
+// import { Modal } from 'react-bootstrap'
+import Modal from '@vtex/styleguide/lib/Modal'
 import _ from 'underscore'
 import SectionsControl from './SectionsControl.react'
 // import VTableStore from '../stores/VTableStore'
@@ -83,27 +84,27 @@ class Form extends React.Component {
     return (
       <HotKeys handlers={handlers}>
         <Modal
-          show={showModal}
-          dialogClassName="absolute z-9999 top-2 left-2 w-70 overflow-y-auto bg-white ba b--moon-gray br3 bw1"
-          autoFocus
-          onHide={this.handleCloseModal}
-          onExited={this.handleModalExited}
+          isOpen={showModal}
+          // dialogClassName="absolute z-9999 top-2 left-2 w-70 overflow-y-auto bg-white ba b--moon-gray br3 bw1"
+          // centered
+          onClose={this.handleCloseModal}
+          // onExited={this.handleModalExited}
         >
-          <div className="bb b--near-white">
-            <div className="dib br b--near-white w-60">
+          <div className="w-100">
+            <div className="dib w-100">
               <h4 className="pa3">
                 {/* {`${this.state.configuration.label}: {${this.state.document.id}}`} */}
                 {`${config.title}: {${item.id}}`}
               </h4>
             </div>
-            <div className="dib w-30">
+            {/* <div className="dib w-30">
               <h4 className="pa3">
                 <FormattedMessage id="Form.historic" />
               </h4>
             </div>
             <a className="f2 mid-gray pointer o-90 v-mid" onClick={this.handleCloseModal}>
               <i className="fa fa-times" />
-            </a>
+            </a> */}
           </div>
           <div className="pa2">
             <div
@@ -112,7 +113,7 @@ class Form extends React.Component {
                   setTimeout(() => div.scrollTo(0,0), 10)
                 }
               }}
-              className="dib w-60 br pt1 overflow-y-scroll vh-75">
+              className="dib w-100 pt1 overflow-y-scroll vh-75">
               <SectionsControl
                 item={item}
                 labels={labels}
