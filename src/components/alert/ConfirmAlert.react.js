@@ -1,7 +1,8 @@
 import './css/confirmAlert.less'
 
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import Modal from '@vtex/styleguide/lib/Modal'
+import Button from '@vtex/styleguide/lib/Button'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
@@ -21,29 +22,27 @@ class ConfirmAlert extends React.Component {
   render() {
     return (
       <Modal
-        show={this.state.show}
-        bsStyle="warning"
-        autoFocus
-        bsSize="sm"
-        dialogClassName="absolute z-9999 left-2 w-30 overflow-auto bg-white ba b--moon-gray br3 bw1"
-        onHide={this.handleHideDialog}
+        centered
+        isOpen={this.state.show}
+        onClose={this.handleHideDialog}
       >
-        <div className="tc pa3">
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">
-              <FormattedMessage id="ConfirmAlert.title" />
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>{this.props.message}</Modal.Body>
-          <Modal.Footer>
-            <Button bsStyle="danger" onClick={this.props.onConfirm}>
-              <FormattedMessage id="ConfirmAlert.footer.yes" />
-            </Button>
-            <FormattedMessage id="ConfirmAlert.footer.or" />
-            <Button onClick={this.handleHideDialog}>
-              <FormattedMessage id="ConfirmAlert.footer.no" />
-            </Button>
-          </Modal.Footer>
+        <div className="flex flex-column tc pa3">
+          <div className="f3">
+            <FormattedMessage id="ConfirmAlert.title" />
+          </div>
+          <div>{this.props.message}</div>
+          <div class="tr">
+            <span className="mr4">
+              <Button primary onClick={this.props.onConfirm}>
+                <FormattedMessage id="ConfirmAlert.footer.yes" />
+              </Button>
+            </span>
+            <span>
+              <Button secondary onClick={this.handleHideDialog}>
+                <FormattedMessage id="ConfirmAlert.footer.no" />
+              </Button>
+            </span>
+          </div>
         </div>
       </Modal>
     )
