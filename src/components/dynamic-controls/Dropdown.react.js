@@ -71,8 +71,8 @@ class Dropdown extends React.Component {
           }}
           className={
             this.props.hasError
-              ? 'flex items-center w-100 h-inherit truncate ba bw1 b--red pl05'
-              : 'flex items-center w-100 h-inherit truncate pl3'
+              ? 'flex items-center w-100 h-inherit truncate outline-0 ba bw1 b--red pl05'
+              : 'flex items-center w-100 h-inherit truncate outline-0 pl3'
           }
         >
           {this.props.value}

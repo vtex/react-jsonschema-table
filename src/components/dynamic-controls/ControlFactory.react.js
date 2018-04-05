@@ -39,7 +39,7 @@ class ControlFactory extends React.Component {
       <div
         className={`${
           this.props.renderType === 'form' ? 'ma3 ' : ''
-        }h-inherit dynamic-control ${controlConfig.style}`}
+        }h-inherit ${controlConfig.style}`}
       >
         {React.createElement(
           controlConfig.control,
@@ -57,7 +57,6 @@ class ControlFactory extends React.Component {
     const controlName = configuration.control.name
       ? configuration.control.name
       : configuration.control.displayName
-    configuration.style = `dynamic-control-${controlName.toLowerCase()}`
     return configuration
   }
 

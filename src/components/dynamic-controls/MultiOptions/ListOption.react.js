@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const ListOption = function(props) {
   return (
-    <span className="cursor-default">
+    <span className="">
       {props.item}
     </span>
   )

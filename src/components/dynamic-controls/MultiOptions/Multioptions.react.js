@@ -36,7 +36,7 @@ class MultiOptions extends React.Component {
         <HotKeys
           className={
             `${border
-            }flex items-center bg-white w-100 relative selected-view-mode`
+            }flex items-center bg-white w-100 relative`
           }
           handlers={multiSelectHandlers}
           onClick={this.handleClick}
@@ -61,8 +61,8 @@ class MultiOptions extends React.Component {
         <div
           className={
             this.props.hasError
-              ? 'flex items-center w-100 h-inherit truncate pa bw1 b--red pl05 '
-              : 'flex items-center w-100 h-inherit truncate pl3'
+              ? 'flex items-center w-100 h-inherit truncate outline-0 pa bw1 b--red pl05 '
+              : 'flex items-center w-100 h-inherit truncate outline-0 pl3'
           }
         >
           {value.length ? value.join(', ') : ''}

@@ -39,8 +39,8 @@ class FixedToolbar extends React.Component {
 
     if (this.state.isImport) {
       toolBarContent = (
-        <div className="fiexdtoolbar-wrapper-import">
-          <div className="import-message">
+        <div className="">
+          <div className="">
             <FormattedMessage id="FixedToolbar.isImport.message" />
           </div>
         </div>

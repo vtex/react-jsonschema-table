@@ -81,13 +81,13 @@ class Search extends React.Component {
       exitEdit: this.handleEscape,
     }
     return (
-      <div className="w-100 w-30-l">
+      <div className="w-100 w-30-l outline-0">
         <HotKeys
           handlers={handlers}
           className={
             this.state.selectedIndex !== null
-              ? 'relative flex-row flex-wrap justify-start z-999 bg-white'
-              : 'flex-row nowrap overflow-hidden justify-start z-999 bg-white'
+              ? 'outline-0 relative flex-row flex-wrap justify-start z-999 bg-white'
+              : 'outline-0 flex-row nowrap overflow-hidden justify-start z-999 bg-white'
           }
           onClick={this.handleClick}
         >

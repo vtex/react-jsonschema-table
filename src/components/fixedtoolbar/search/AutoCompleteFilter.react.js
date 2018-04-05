@@ -112,10 +112,10 @@ class AutoCompleteFilter extends React.Component {
         onFocus={this.handleFocus}
         onClick={this.handleClick}
         >
-        <div className="flex pv1 ph3 w-100">
+        <div className="pv1 pl3 pr6 w-100">
           <i className="fa fa-search mr3 self-center" aria-hidden="true" />
           <Input
-            long
+            className="w-100"
             label={null}
             error={!this.state.isValid}
             placeholder="Value Filters"
