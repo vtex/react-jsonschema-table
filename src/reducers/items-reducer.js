@@ -68,6 +68,21 @@ export default (state = initialState, action) => {
       return newState
     }
 
+    case types.DELETE_CHECKED_ITEMS: {
+      const newState = Object.assign({}, state)
+      newState.checkedItems.slice().reverse().forEach((item, index, ref) => {
+        if (newState.staging[item]) {
+          delete newState.staging[item]
+          const stagingIndex = newState.stagingItems.indexOf(item)
+          newState.stagingItems.splice(stagingIndex, 1)
+          newState.checkedItems.splice(ref.length - 1 - index, 1)
+        } else {
+          // To Do: delete document in API (not staged)
+        }
+      })
+      return newState
+    }
+
     case types.ADD_ITEM: {
       const { id, schema, lang } = action
       const newState = Object.assign({}, state)
