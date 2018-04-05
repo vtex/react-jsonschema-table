@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Modal } from 'react-bootstrap'
 import Modal from '@vtex/styleguide/lib/Modal'
 import _ from 'underscore'
 import SectionsControl from './SectionsControl.react'
