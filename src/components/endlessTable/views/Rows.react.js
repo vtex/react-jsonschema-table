@@ -86,7 +86,7 @@ class Rows extends React.Component {
             ref={ref => {
               this.clipboard = ref
             }}
-            className="pa0 h1 w1"
+            className="dn pa0 h1 w1"
           />
         </div>
       </HotKeys>

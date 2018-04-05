@@ -34,7 +34,6 @@
     "intl": "^1.2.5",
     "json2csv": "^3.5.0",
     "moment": "^2.18.1",
-    "react-bootstrap": "^0.31.0",
     "react-dropzone": "^3.13.4",
     "react-hotkeys": "^0.10.0",
     "react-intl": "^2.3.0",

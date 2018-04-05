@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import ControlFactory from '../../dynamic-controls/ControlFactory.react'
 import { HotKeys } from 'react-hotkeys'
 import FillHandle from './FillHandle.react'
-import { Overlay, Popover } from 'react-bootstrap'
 
 class Cell extends React.Component {
   constructor(props) {
@@ -43,24 +42,23 @@ class Cell extends React.Component {
       target: () => this.cellControl,
     }
     const popover = (
-      <Overlay
-        {...sharedProps}
+      <div // should be overlay
+        className={`
+          ${sharedProps.show ? '' : 'dn'}
+        `}
         placement={
           this.props.columnsCount - 1 === this.props.cell.col ? 'left' : 'right'
         }
       >
-        <Popover
+        <div // should be popover
           id="cell-popover"
-          className="db"
-          title={
+          className="absolute mw5 z-9999 dib bg-white br2 ba b--white-20 shadow-2"
+        >
+          <div>
             <div className="tc pv1 ph2 b bb b--light-gay br2 bg-light-gray">
               {this.getI18nStr('Cell.validation.error')}
             </div>
-          }
-          className="absolute mw5 z-999 db bg-white br2 ba b--white-20 shadow-2"
-        >
-          <div>
-            <div
+            {/* <div // little arrow to make looks like tooltip
               className="absolute db w0 h0 ba bw2 b--transparent"
               style={{
                 borderRightColor: '#fff',
@@ -68,15 +66,15 @@ class Cell extends React.Component {
                 left: '-21px',
                 top: '30%',
                 borderWidth: '10px',
-              }} />
+              }} /> */}
             <div className="pv1 ph2 tc">
               {this.props.validationErrors.length > 0
                 ? this.props.validationErrors[0].message
                 : ''}
             </div>
           </div>
-        </Popover>
-      </Overlay>
+        </div>
+      </div>
     )
     return (
       <HotKeys
