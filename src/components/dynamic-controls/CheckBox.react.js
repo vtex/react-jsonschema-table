@@ -44,7 +44,7 @@ class CheckBox extends React.Component {
       >
         <input
           type="checkbox"
-          onClick={this.handleChange}
+          onChange={this.handleChange}
           checked={this.props.value} />
       </HotKeys>
     )

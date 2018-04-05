@@ -1045,20 +1045,6 @@ a:focus {
 .carousel-modal .slick-prev:before {
   color: black;
 }
-.search {
-  height: 4rem;
-}
-.filter-edit-error {
-  -webkit-text-decoration-line: underline;
-  -moz-text-decoration-line: underline;
-  -ms-text-decoration-line: underline;
-  text-decoration-line: underline;
-  -webkit-text-decoration-style: dotted;
-  -moz-text-decoration-style: dotted;
-  -ms-text-decoration-style: dotted;
-  text-decoration-style: dotted;
-  text-decoration-color: red;
-}
 .row-options + div {
   margin-left: 28px;
 }
