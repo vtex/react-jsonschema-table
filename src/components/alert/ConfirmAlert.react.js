@@ -1,5 +1,3 @@
-import './css/confirmAlert.less'
-
 import React from 'react'
 import Modal from '@vtex/styleguide/lib/Modal'
 import Button from '@vtex/styleguide/lib/Button'
@@ -31,7 +29,7 @@ class ConfirmAlert extends React.Component {
             <FormattedMessage id="ConfirmAlert.title" />
           </div>
           <div>{this.props.message}</div>
-          <div class="tr">
+          <div className="tr">
             <span className="mr4">
               <Button primary onClick={this.props.onConfirm}>
                 <FormattedMessage id="ConfirmAlert.footer.yes" />
