@@ -333,7 +333,6 @@ const addStaging = (newState, id, status, changes, schema, lang) => {
 const validateDocument = (schema, lang, documentToValidate) => {
   const validate = ajv.compile(schema)
   const valid = validate(documentToValidate)
-  console.log(`isValid:${valid}`)
   if (!valid) {
     validate.errors.forEach(error => {
       if (error.keyword === 'required') {
