@@ -23,7 +23,7 @@ export default {
   delete: ['del', 'backspace'],
   undo: ['mod+z'],
   redo: ['mod+shift+z', 'mod+y'],
-  konami: 'up up down down left right left right b a enter',
+  konami: 'up up down down left right left right b a',
   space: 'space',
   copy: ['mod+c'],
   paste: ['mod+v'],

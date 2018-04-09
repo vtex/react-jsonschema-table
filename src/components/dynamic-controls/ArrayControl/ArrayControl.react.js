@@ -62,7 +62,7 @@ class ArrayControl extends React.Component {
               <div className="tc">
                 {this.props.title || this.props.label}
               </div>
-              <div bsClass={'pa3'}>
+              <div className='pa3'>
                 <HotKeys
                   className={'h-auto overflow-y-scroll'}
                   ref={ref => {
@@ -158,17 +158,32 @@ class ArrayControl extends React.Component {
     return itemsToRender
   }
   setItemchange = (id, itemChanges) => {
-    const newValue = this.props.value ? this.props.value.slice() : []
-    newValue[id] = itemChanges[this.props.fieldName].value
+    const updatedValue = itemChanges[this.props.fieldName].value
+    let newValue
+    switch(this.props.items.type) {
+      case 'object':
+        newValue = {}
+        newValue[id] = updatedValue
+        break;
+      case 'array':
+      case 'string':
+        newValue = []
+        newValue = newValue.concat(this.props.value)
+        newValue[id] = updatedValue
+        break;
+      default:
+        newValue = updatedValue
+        break;
+    }
     this.props.setChange(newValue)
   };
   onArrow() {}
 
   handleAddItem = () => {
-    const newValue = this.props.value ? this.props.value.slice() : []
+    const newValue = this.props.value || []
     const newItem = this.props.items.type === 'object'
       ? {}
-      : this.props.items.type === 'array' ? [] : null
+      : this.props.items.type === 'array' ? [] : ''
     newValue.push(newItem)
     this.props.setChange(newValue)
   };
