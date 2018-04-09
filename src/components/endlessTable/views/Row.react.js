@@ -27,8 +27,11 @@ class Row extends React.Component {
     this.onAnimationEnd = this.onAnimationEnd.bind(this)
   }
   componentDidMount() {
-    var row = ReactDom.findDOMNode(this.rowlist)
-    row.addEventListener('animationend', this.onAnimationEnd, false)
+    // var row = ReactDom.findDOMNode(this.rowlist)
+    // row.addEventListener('animationend', this.onAnimationEnd, false)
+    if (this.rowlist && this.rowlist.addEventListener) {
+      this.rowlist.addEventListener('animationend', this.onAnimationEnd, false)
+    } else { console.log('No rowlist to addListener on Row.react.js') }
     // this.unsubscribe = Store.listen(this.onStoreChange)
   }
 
@@ -380,7 +383,10 @@ class Row extends React.Component {
   }
 
   onFormClose() {
-    ReactDom.findDOMNode(this).focus()
+    // ReactDom.findDOMNode(this).focus()
+    if (this.focus) {
+      this.focus()
+    } else { console.log('No this to focus on Row.react.js') }
   }
   onOpenForm() {
     // como os componentes filhos não implementam esta key, é possivél abrir um formulario com uma celula em modo de edição
@@ -390,8 +396,12 @@ class Row extends React.Component {
     }
   }
   onSpace() {
-    var checked = ReactDom.findDOMNode(this.rowCheckBox).checked
-    this.props.onCheckRowChange(this.props.item.document.id, !checked)
+    // var checked = ReactDom.findDOMNode(this.rowCheckBox).checked
+    // this.props.onCheckRowChange(this.props.item.document.id, !checked)
+    if (this.rowCheckBox) {
+      var checked = this.rowCheckBox.checked
+      this.props.onCheckRowChange(this.props.item.document.id, !checked)
+    } else { console.log('No rowCheckBox to check on Row.react.js') }
   }
 }
 Row.propTypes = {

@@ -15,7 +15,10 @@ class Dropdown extends React.Component {
 
   componentDidUpdate() {
     if (!this.state.open) {
-      ReactDOM.findDOMNode(this.dropdownlistcontainer).focus()
+      // ReactDOM.findDOMNode(this.dropdownlistcontainer).focus()
+      if (this.dropdownlistcontainer && this.dropdownlistcontainer.focus) {
+        this.dropdownlistcontainer.focus()
+      } else { console.log('No dropdownlistcontainer to focus on Dropdown.react.js') }
     }
   }
 
