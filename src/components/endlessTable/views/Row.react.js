@@ -383,7 +383,10 @@ class Row extends React.Component {
   }
 
   onFormClose() {
-    ReactDom.findDOMNode(this).focus()
+    // ReactDom.findDOMNode(this).focus()
+    if (this.focus) {
+      this.focus()
+    } else { console.log('No this to focus on Row.react.js') }
   }
   onOpenForm() {
     // como os componentes filhos não implementam esta key, é possivél abrir um formulario com uma celula em modo de edição
