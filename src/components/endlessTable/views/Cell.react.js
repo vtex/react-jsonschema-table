@@ -117,7 +117,6 @@ class Cell extends React.Component {
     var style = {}
     if (width) {
       style.width = `${width}px`
-      style.maxWidth = `${width}px`
     }
 
     return style

@@ -96,7 +96,7 @@ export default (state = initialState, action) => {
       const newState = Object.assign({}, state)
       const changesKey = Object.keys(changes)[0]
       let hydratedChanges = changes
-      if (typeof changes[changesKey].value === 'object' && state.staging[id].document[changesKey]) {
+      if (schema.properties[changesKey].type === 'object' && state.staging[id].document[changesKey]) {
         // TO DO: make deep merge if field is object inside object inside object...
         hydratedChanges[changesKey] = {
           value: {

@@ -118,9 +118,10 @@ class ControlFactory extends React.Component {
   }
 
   setChange = newValue => {
-    var changes = {}
-    changes[this.props.fieldName] = {
-      value: newValue,
+    const changes = {
+      [this.props.fieldName]: {
+        value: newValue
+      }
     }
     this.props.setChanges(this.props.id, changes)
   }

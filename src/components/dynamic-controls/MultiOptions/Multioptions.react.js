@@ -36,7 +36,7 @@ class MultiOptions extends React.Component {
         <HotKeys
           className={
             `${border
-            }flex items-center bg-white w-100 relative`
+            } flex items-center bg-white w-100 relative z-999`
           }
           handlers={multiSelectHandlers}
           onClick={this.handleClick}
@@ -46,6 +46,7 @@ class MultiOptions extends React.Component {
             ref={ref => {
               this.multiSelect = ref
             }}
+
             open={this.state.open}
             onToggle={this.handleToggle}
             data={this.props.items.enum}

@@ -48,6 +48,7 @@ const schema = {
       title: 'Qualities',
       items: {
         type: 'string',
+        label: 'qualities',
       }
     },
     competences: {
