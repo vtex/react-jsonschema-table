@@ -78,7 +78,8 @@ class ControlFactory extends React.Component {
         } else if (definition.multiLine) {
           configuration.control = TextArea
         } else if (definition.link) {
-          configuration.control = Link
+          // configuration.control = Link
+          configuration.control = TextBox
         } else if (definition.media) {
           configuration.control = Attachments
         } else {

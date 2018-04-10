@@ -49,10 +49,10 @@ export default (state = initialState, action) => {
         newState.source.push(newItem)
       }
 
-      items.forEach((document, index) => {
+      items.forEach((item, index) => {
         // Get the item from the list and sets the document attibute and changes the document Status to LOADED
         var initialItem = newState.source[index + rowStart]
-        initialItem.document = document
+        initialItem.document = item.document
         initialItem.status = Status.LOADED
       })
 

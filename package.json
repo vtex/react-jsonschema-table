@@ -39,8 +39,8 @@
     "react-intl": "^2.3.0",
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.6",
-    "react-widgets": "^4.0.0",
-    "react-widgets-moment": "^4.0.0",
+    "react-widgets": "^4.2.3",
+    "react-widgets-moment": "^4.0.12",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.9.1",
@@ -50,8 +50,8 @@
     "vtex-tachyons": "^2.3.0"
   },
   "peerDependencies": {
-    "react": "^15.x || ^16.x",
-    "react-dom": "^15.x || ^16.x",
+    "react": "^16.x",
+    "react-dom": "^16.x",
     "prop-types": "^15.5.4"
   },
   "devDependencies": {
