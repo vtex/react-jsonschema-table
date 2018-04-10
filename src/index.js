@@ -28,7 +28,11 @@ import Table from './containers/Table'
 import Form from './containers/Form'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
-import { undo, redo } from './actions/items-actions'
+import {
+  undo,
+  redo,
+  preLoadItems,
+} from './actions/items-actions'
 // import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
 // import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
 
@@ -57,7 +61,22 @@ class JsonSchemaTable extends React.Component {
   constructor(props) {
     super(props)
     SetFetcher(props.fetcher)
-    // Call action for initial items load
+    if (props.items && props.items.length > 0) {
+      // initial items load
+      store.dispatch(preLoadItems(props.items))
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+        prevProps.items && this.props.items &&
+        prevProps.items.length !== this.props.items.length &&
+        this.props.items.length > 0
+      ) {
+      // more items received by props (not the final solution)
+      // To do: fix 'getMoreItems'
+      store.dispatch(preLoadItems(this.props.items))
+    }
   }
 
   render() {

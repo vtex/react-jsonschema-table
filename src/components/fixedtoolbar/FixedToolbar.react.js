@@ -99,10 +99,6 @@ class FixedToolbar extends React.Component {
               </div>
             </div>
           </div>
-          <Search
-            indexedFields={this.props.indexedFields}
-            fields={this.props.schema.properties}
-            onSearch={this.handleSearch} />
           <div className="ph3">
             <div
               className={
@@ -167,6 +163,10 @@ class FixedToolbar extends React.Component {
               disabled={!this.props.hasEditedItems}
             />
           </div>
+          <Search
+            indexedFields={this.props.indexedFields}
+            fields={this.props.schema.properties}
+            onSearch={this.handleSearch} />
           {this.renderCancelStagingConfirmation()}
         </div>
       )
