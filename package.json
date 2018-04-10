@@ -13,14 +13,13 @@
     "url": "git@github.com:vtex/react-jsonschema-table.git"
   },
   "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
+  "module": "dist/index.js",
+  "jsnext:main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "build": "rollup -c",
-    "start": "rollup -c -w",
-    "dev": "NODE_ENV=development webpack-dev-server --progress --colors --config ./webpack.dev.config.js",
+    "build": "NODE_ENV=production webpack --progress --colors --config ./webpack.prod.config.js",
+    "start": "NODE_ENV=development webpack-dev-server --progress --colors --config ./webpack.dev.config.js",
     "prepublish": "npm run build",
     "predeploy": "npm run prepublish && cd example_production && npm start"
   },
@@ -100,6 +99,7 @@
     "style-loader": "^0.20.2",
     "url-loader": "^0.6.2",
     "webpack": "^3.11.0",
+    "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^2.11.1"
   },
   "babel": {
