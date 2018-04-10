@@ -6,6 +6,7 @@ import ConfirmAlert from '../alert/ConfirmAlert.react.js'
 import SaveButton from './SaveButton.react'
 import { FormattedMessage } from 'react-intl'
 import Search from './search/Search.react'
+import _ from 'underscore'
 
 class FixedToolbar extends React.Component {
   constructor(props) {
@@ -38,8 +39,8 @@ class FixedToolbar extends React.Component {
 
     if (this.state.isImport) {
       toolBarContent = (
-        <div className="fiexdtoolbar-wrapper-import">
-          <div className="import-message">
+        <div className="">
+          <div className="">
             <FormattedMessage id="FixedToolbar.isImport.message" />
           </div>
         </div>
@@ -59,7 +60,7 @@ class FixedToolbar extends React.Component {
                 onChangeColumnVisibility={this.props.onChangeColumnVisibility}
               />
               <div
-                className={`pointer ph2 inline-flex nowrap ${
+                className={`pointer ph2 inline-flex nowrap pa2 br2 ${
                   isColumnsToShowSelected ? 'bg-light-gray bn relative' : ''
                 } ${
                   areAnyColumnsHidden ? 'blue' : 'black'
@@ -86,7 +87,7 @@ class FixedToolbar extends React.Component {
                 onChangeInvalidItemsFilter={this.props.onChangeInvalidItemsFilter}
                 onHandleFiltersClick={this.handleFiltersClick} />
                 <div
-                  className={`pointer ph2 inline-flex nowrap ${
+                  className={`pointer ph2 inline-flex nowrap pa2 br2 ${
                     this.state.isFilterSelected ? 'bg-light-gray bn relative' : ''
                   } ${areAnyfilterselected ? 'blue' : ''}`}
                   onClick={this.handleFiltersClick}
@@ -98,7 +99,6 @@ class FixedToolbar extends React.Component {
               </div>
             </div>
           </div>
-          <Search />
           <div className="ph3">
             <div
               className={
@@ -163,6 +163,10 @@ class FixedToolbar extends React.Component {
               disabled={!this.props.hasEditedItems}
             />
           </div>
+          <Search
+            indexedFields={this.props.indexedFields}
+            fields={this.props.schema.properties}
+            onSearch={this.handleSearch} />
           {this.renderCancelStagingConfirmation()}
         </div>
       )
@@ -171,6 +175,9 @@ class FixedToolbar extends React.Component {
     return toolBarContent
   }
 
+  handleSearch(searchString) {
+    console.log('searching for ', searchString)
+  }
   clearSelection() {
     this.setState({
       isColumnsToShowSelected: false,
@@ -258,6 +265,7 @@ FixedToolbar.propTypes = {
   onViewAllColumns: PropTypes.func,
   hiddenFields: PropTypes.array,
   onChangeColumnVisibility: PropTypes.func,
+  indexedFields: PropTypes.array,
 }
 
 export default FixedToolbar

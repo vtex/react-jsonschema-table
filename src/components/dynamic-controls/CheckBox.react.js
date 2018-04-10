@@ -25,7 +25,8 @@ class CheckBox extends React.Component {
     const viewMode = this.props.hasError
       ? 'bw1 ba b--red h-100 pt05'
       : 'h-100 pt2 '
-    var control = (
+
+    return (
       <HotKeys
         ref={ref => {
           this.checkContainer = ref
@@ -41,20 +42,12 @@ class CheckBox extends React.Component {
         }
         handlers={handlers}
       >
-        <i
-          onClick={this.handleChange}
-          className={
-            this.props.value
-              ? this.props.isEditing
-                ? 'far fa-check-square pointer'
-                : 'fa fa-check pointer'
-              : this.props.isEditing ? 'far fa-square pointer' : ''
-          }
-        />
+        <input
+          type="checkbox"
+          onChange={this.handleChange}
+          checked={this.props.value} />
       </HotKeys>
     )
-
-    return control
   }
 
   handleChange = e => {

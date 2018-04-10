@@ -1,11 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../css/fillHandle.less'
 
 const FillHandle = function(props) {
   return (
     <div
-      className="fillHandle ba b--blue bg-lightest-blue relative z-999"
+      className="relative ba b--blue bg-lightest-blue relative z-999"
+      style={{
+        cursor: 'crosshair',
+        width: '6px',
+        height: '6px',
+        marginTop: '-3px',
+        marginLeft: '-3px',
+        zIndex: 4,
+        left: '100%',
+      }}
       onMouseDown={props.onMouseDown}
     />
   )

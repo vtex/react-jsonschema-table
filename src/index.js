@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import 'vtex-tachyons'
-import '../src/app.less'
 import fontawesome from '@fortawesome/fontawesome'
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faExclamation from '@fortawesome/fontawesome-free-solid/faExclamation'
@@ -21,7 +20,6 @@ import { HotKeys } from 'react-hotkeys'
 import keyMap from './KeyMap'
 
 import { SetFetcher } from './actions/FetcherWrapper'
-// import NotificationSystem from 'react-notification-system'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './stores/configureStore'
@@ -30,7 +28,11 @@ import Table from './containers/Table'
 import Form from './containers/Form'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
-import { undo, redo } from './actions/items-actions'
+import {
+  undo,
+  redo,
+  preLoadItems,
+} from './actions/items-actions'
 // import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
 // import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
 
@@ -59,7 +61,22 @@ class JsonSchemaTable extends React.Component {
   constructor(props) {
     super(props)
     SetFetcher(props.fetcher)
-    // Call action for initial items load
+    if (props.items && props.items.length > 0) {
+      // initial items load
+      store.dispatch(preLoadItems(props.items))
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+        prevProps.items && this.props.items &&
+        prevProps.items.length !== this.props.items.length &&
+        this.props.items.length > 0
+      ) {
+      // more items received by props (not the final solution)
+      // To do: fix 'getMoreItems'
+      store.dispatch(preLoadItems(this.props.items))
+    }
   }
 
   render() {
@@ -84,11 +101,12 @@ class JsonSchemaTable extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <IntlProvider locale="en-US" messages={enUSMessages}>
-            <HotKeys keyMap={keyMap} handlers={handlers}>
+            <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
               <ToolBar
                 context={this.props.context}
                 schema={this.props.schema}
                 UIschema={this.props.UIschema}
+                indexedFields={this.props.indexedFields}
                 lang={lang}
               />
               <Table

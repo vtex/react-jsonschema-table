@@ -114,6 +114,17 @@ export function fetchItems(context, fields, skip, size, where, sort) {
   }
 }
 
+export function preLoadItems(items) {
+  const loadedItems = items.filter(i => i.status === 'loaded' && i.document !== null)
+  return dispatch => dispatch(
+    fetchItemsSucess(
+      loadedItems,
+      loadedItems.length,
+      0,
+    )
+  )
+}
+
 export function copyFromSelectedRange(changes, schema, lang) {
   return { type: types.COPY_FROM_SELECTED_RANGE, changes, schema, lang }
 }

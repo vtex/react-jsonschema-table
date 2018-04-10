@@ -43,7 +43,31 @@ const schema = {
       type: 'boolean',
       title: 'Is Active',
     },
-  },
+    qualities: {
+      type: 'array',
+      title: 'Qualities',
+      items: {
+        type: 'string',
+        label: 'qualities',
+      }
+    },
+    competences: {
+      type: 'array',
+      title: 'Competences',
+      items:{
+        type: 'string',
+        enum:[
+           'Developer',
+           'Designer',
+           'Financial',
+           'HR',
+           'Human',
+           'Alien',
+           'Dog',
+        ]
+      },
+    },
+  }
 }
 
 const UIschema = {
@@ -65,13 +89,13 @@ const UIschema = {
       width: 300,
     },
   },
-  list: ['id','email', 'name', 'lastName', 'address', 'isActive'],
+  list: ['id','email', 'name', 'lastName', 'address', 'isActive', 'qualities', 'competences'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['id', 'name', 'email', 'lastName', 'address', 'isActive'],
+          fields: ['id', 'name', 'email', 'lastName', 'address', 'isActive', 'qualities', 'competences'],
         },
       ],
     },
@@ -87,7 +111,7 @@ class App extends Component {
       UIschema,
       schema,
       onGetItems: this.handleLoadDocuments,
-      indexedFields: [ indexedFields ],
+      indexedFields,
       onSort: this.handleSort,
       context: {},
     }

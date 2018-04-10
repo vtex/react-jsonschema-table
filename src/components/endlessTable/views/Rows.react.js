@@ -69,7 +69,7 @@ class Rows extends React.Component {
             this.virtualList = div
           }}
           items={this.props.items}
-          className="list-body"
+          className=""
           container={this.props.listContainer}
           itemHeight={34}
           renderItem={this.renderItem}
@@ -80,13 +80,13 @@ class Rows extends React.Component {
           ref={ref => {
             this.clipboardContainer = ref
           }}
-          className="clipboard-container"
+          className="dn fixed w0 h0 top-0 left-0"
         >
           <textarea
             ref={ref => {
               this.clipboard = ref
             }}
-            className="clipboard"
+            className="dn pa0 h1 w1"
           />
         </div>
       </HotKeys>

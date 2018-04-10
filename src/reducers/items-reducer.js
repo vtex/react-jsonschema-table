@@ -49,10 +49,10 @@ export default (state = initialState, action) => {
         newState.source.push(newItem)
       }
 
-      items.forEach((document, index) => {
+      items.forEach((item, index) => {
         // Get the item from the list and sets the document attibute and changes the document Status to LOADED
         var initialItem = newState.source[index + rowStart]
-        initialItem.document = document
+        initialItem.document = item.document
         initialItem.status = Status.LOADED
       })
 
@@ -65,6 +65,21 @@ export default (state = initialState, action) => {
       const documentId = state.source[rowIndex].document.id
       addStaging(newState, documentId, Status.DELETED, null, schema, lang)
       addToHistoryChanges(newState, documentId, Status.DELETED, null)
+      return newState
+    }
+
+    case types.DELETE_CHECKED_ITEMS: {
+      const newState = Object.assign({}, state)
+      newState.checkedItems.slice().reverse().forEach((item, index, ref) => {
+        if (newState.staging[item]) {
+          delete newState.staging[item]
+          const stagingIndex = newState.stagingItems.indexOf(item)
+          newState.stagingItems.splice(stagingIndex, 1)
+          newState.checkedItems.splice(ref.length - 1 - index, 1)
+        } else {
+          // To Do: delete document in API (not staged)
+        }
+      })
       return newState
     }
 
@@ -81,7 +96,7 @@ export default (state = initialState, action) => {
       const newState = Object.assign({}, state)
       const changesKey = Object.keys(changes)[0]
       let hydratedChanges = changes
-      if (typeof changes[changesKey].value === 'object' && state.staging[id].document[changesKey]) {
+      if (schema.properties[changesKey].type === 'object' && state.staging[id].document[changesKey]) {
         // TO DO: make deep merge if field is object inside object inside object...
         hydratedChanges[changesKey] = {
           value: {
@@ -333,7 +348,6 @@ const addStaging = (newState, id, status, changes, schema, lang) => {
 const validateDocument = (schema, lang, documentToValidate) => {
   const validate = ajv.compile(schema)
   const valid = validate(documentToValidate)
-  console.log(`isValid:${valid}`)
   if (!valid) {
     validate.errors.forEach(error => {
       if (error.keyword === 'required') {

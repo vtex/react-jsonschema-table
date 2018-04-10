@@ -5,7 +5,7 @@ import _ from 'underscore'
 import { HotKeys } from 'react-hotkeys'
 import ControlFactory from '../ControlFactory.react'
 import Icon from '../Common/Icon.react'
-import { Modal } from 'react-bootstrap'
+import Modal from '@vtex/styleguide/lib/Modal'
 import { FormattedMessage } from 'react-intl'
 
 class ArrayControl extends React.Component {
@@ -56,15 +56,13 @@ class ArrayControl extends React.Component {
               ref={ref => {
                 this.arrayModal = ref
               }}
-              show
-              onHide={this.handleCloseModal}
+              isOpen
+              onClose={this.handleCloseModal}
             >
-              <Modal.Header bsClass={'bb pa4 b--moon-gray'} closeButton>
-                <Modal.Title>
-                  {this.props.title || this.props.label}
-                </Modal.Title>
-              </Modal.Header>
-              <Modal.Body bsClass={'pa3'}>
+              <div className="tc">
+                {this.props.title || this.props.label}
+              </div>
+              <div className='pa3'>
                 <HotKeys
                   className={'h-auto overflow-y-scroll'}
                   ref={ref => {
@@ -74,7 +72,7 @@ class ArrayControl extends React.Component {
                 >
                   {this.renderArrayItems()}
                 </HotKeys>
-              </Modal.Body>
+              </div>
             </Modal>
           </div>
         )
@@ -160,17 +158,32 @@ class ArrayControl extends React.Component {
     return itemsToRender
   }
   setItemchange = (id, itemChanges) => {
-    const newValue = this.props.value ? this.props.value.slice() : []
-    newValue[id] = itemChanges[this.props.fieldName].value
+    const updatedValue = itemChanges[this.props.fieldName].value
+    let newValue
+    switch(this.props.items.type) {
+      case 'object':
+        newValue = {}
+        newValue[id] = updatedValue
+        break;
+      case 'array':
+      case 'string':
+        newValue = []
+        newValue = newValue.concat(this.props.value)
+        newValue[id] = updatedValue
+        break;
+      default:
+        newValue = updatedValue
+        break;
+    }
     this.props.setChange(newValue)
   };
   onArrow() {}
 
   handleAddItem = () => {
-    const newValue = this.props.value ? this.props.value.slice() : []
+    const newValue = this.props.value || []
     const newItem = this.props.items.type === 'object'
       ? {}
-      : this.props.items.type === 'array' ? [] : null
+      : this.props.items.type === 'array' ? [] : ''
     newValue.push(newItem)
     this.props.setChange(newValue)
   };

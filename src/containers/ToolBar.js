@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     onDeleteCheckedRows: () => {
-      dispatch(deleteCheckedItems(uuid.v4(), ownProps.schema, ownProps.lang))
+      dispatch(deleteCheckedItems())
     },
 
     onCancelStaging: () => {

@@ -22,7 +22,7 @@ class ObjectControl extends React.Component {
     const control = this.props.isEditing
       ? (<HotKeys
         handlers={handlers}
-        className={`relative overflow-y-auto h-max6 ${className}`}
+        className={`outline-0 relative overflow-y-auto ${className}`}
         onClick={this.handleClick}
       >
         <div>

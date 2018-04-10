@@ -39,7 +39,7 @@ class ControlFactory extends React.Component {
       <div
         className={`${
           this.props.renderType === 'form' ? 'ma3 ' : ''
-        }h-inherit dynamic-control ${controlConfig.style}`}
+        }h-inherit ${controlConfig.style}`}
       >
         {React.createElement(
           controlConfig.control,
@@ -57,7 +57,6 @@ class ControlFactory extends React.Component {
     const controlName = configuration.control.name
       ? configuration.control.name
       : configuration.control.displayName
-    configuration.style = `dynamic-control-${controlName.toLowerCase()}`
     return configuration
   }
 
@@ -79,7 +78,8 @@ class ControlFactory extends React.Component {
         } else if (definition.multiLine) {
           configuration.control = TextArea
         } else if (definition.link) {
-          configuration.control = Link
+          // configuration.control = Link
+          configuration.control = TextBox
         } else if (definition.media) {
           configuration.control = Attachments
         } else {
@@ -119,9 +119,10 @@ class ControlFactory extends React.Component {
   }
 
   setChange = newValue => {
-    var changes = {}
-    changes[this.props.fieldName] = {
-      value: newValue,
+    const changes = {
+      [this.props.fieldName]: {
+        value: newValue
+      }
     }
     this.props.setChanges(this.props.id, changes)
   }
