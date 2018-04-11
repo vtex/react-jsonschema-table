@@ -10,7 +10,7 @@ class AutoCompleteOption extends React.Component {
   render() {
     return (
       <div
-        className={`w-100 white-90 pl3 pr3 pointer ${
+        className={`w-100 pl3 pr3 pointer ${
           this.props.selected ? 'light-blue bg-light-gray' : ''
         }`}
         onClick={this.handleClick}

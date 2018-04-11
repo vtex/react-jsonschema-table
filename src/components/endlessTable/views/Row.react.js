@@ -62,6 +62,8 @@ class Row extends React.Component {
           nextProps.selectionRange.cellB.row
         )) ||
       (this.props.selectionRange &&
+        this.props.selectionRange.cellA &&
+        this.props.selectionRange.cellB &&
         this.isRowInSelectionRange(
           this.props.item.virtualID,
           this.props.selectionRange.cellA.row,
