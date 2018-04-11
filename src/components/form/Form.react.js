@@ -52,7 +52,7 @@ class Form extends React.Component {
     return (
       <div>
         {/* <i className={`contenTypeIcon fa fa-${fieldDefinition.icon}`} /> */}
-        {`${fieldDefinition.title || fieldDefinition.label}: {${fieldDefinition.type}}`}
+        {`${fieldName}: {${fieldDefinition.type}}`}
       </div>
     )
   };

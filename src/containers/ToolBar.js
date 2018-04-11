@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     onSave: () => {
-      dispatch(saveChanges(uuid.v4(), ownProps.schema, ownProps.lang))
+      dispatch(saveChanges(ownProps.UIschema, ownProps.context))
     },
 
     onAdd: () => {

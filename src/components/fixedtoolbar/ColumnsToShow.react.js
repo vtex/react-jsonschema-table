@@ -23,7 +23,7 @@ class ColumnsToShow extends React.Component {
               checked={isChecked}
               onChange={this.handleShowHideColumnClick}
             />
-            {this.props.schema.properties[field].title}
+            {` ${field}`}
           </label>
         </li>
       )
