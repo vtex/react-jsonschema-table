@@ -16,6 +16,8 @@ import faFilter from '@fortawesome/fontawesome-free-solid/faFilter'
 import faPlusSquare from '@fortawesome/fontawesome-free-solid/faPlusSquare'
 import faSave from '@fortawesome/fontawesome-free-solid/faSave'
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
+import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
+import faExpand from '@fortawesome/fontawesome-free-solid/faExpand'
 import { HotKeys } from 'react-hotkeys'
 import keyMap from './KeyMap'
 
@@ -52,7 +54,9 @@ fontawesome.library.add(
   faFilter,
   faPlusSquare,
   faSave,
-  faTimes
+  faTimes,
+  faPlus,
+  faExpand,
 )
 
 const { store, persistor } = configureStore()
@@ -99,7 +103,7 @@ class JsonSchemaTable extends React.Component {
     }
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
           <IntlProvider locale="en-US" messages={enUSMessages}>
             <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
               <ToolBar
@@ -133,7 +137,7 @@ class JsonSchemaTable extends React.Component {
           /> */}
             </HotKeys>
           </IntlProvider>
-        </PersistGate>
+        {/* </PersistGate> */}
       </Provider>
     )
   }

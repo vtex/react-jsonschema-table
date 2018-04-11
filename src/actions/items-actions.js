@@ -57,12 +57,13 @@ export function checkItemChange(id, checked) {
   return { type: types.CHECK_ITEM_CHANGE, id, checked }
 }
 
-export function saveChanges(context, fields, skip, size, where, sort) {
-  return dispatch => {
+export function saveChanges(context, schema) {
+  return (dispatch, getState) => {
+    const items = getState().items.staging
     const fetcher = GetFetcher()
-    dispatch(SaveChangesRequest(context, fields, skip, size, where, sort))
+    dispatch(SaveChangesRequest(items, context, schema))
     return fetcher
-      .saveChanges(context, fields, skip, size, where, sort)
+      .saveChanges(items, context, schema)
       .then(response =>
         dispatch(
           saveChangesSucess(

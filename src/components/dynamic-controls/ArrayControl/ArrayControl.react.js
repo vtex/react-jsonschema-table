@@ -133,7 +133,7 @@ class ArrayControl extends React.Component {
             key={`${this.props.fieldName}[${index}].${this.props.id}.label`}
             className="dib mid-gray ml1"
           >
-            {props.title}
+            {props.title || props.label}
           </label>
           <ControlFactory {...props} />
           <Icon

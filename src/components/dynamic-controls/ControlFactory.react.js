@@ -7,7 +7,7 @@ import Dropdown from './Dropdown.react'
 import Multioptions from './MultiOptions/Multioptions.react'
 import ObjectControl from './ObjectControl/ObjectControl.react'
 // import Attachments from './Attachments/Attachments.react'
-// import Link from './Link/Link.react'
+import Link from './Link/Link.react'
 import DateTime from './DateTime.react'
 import ArrayControl from './ArrayControl/ArrayControl.react'
 import _ from 'underscore'
@@ -78,8 +78,7 @@ class ControlFactory extends React.Component {
         } else if (definition.multiLine) {
           configuration.control = TextArea
         } else if (definition.link) {
-          // configuration.control = Link
-          configuration.control = TextBox
+          configuration.control = Link
         } else if (definition.media) {
           configuration.control = Attachments
         } else {
@@ -101,7 +100,7 @@ class ControlFactory extends React.Component {
           definition.items.properties &&
           definition.items.properties.link
         ) {
-          // configuration.control = Link
+          configuration.control = Link
         } else if (
           definition.items.type === 'string' &&
           definition.items.media
