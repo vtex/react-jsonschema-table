@@ -30,7 +30,9 @@ class Rows extends React.Component {
     this.OnFillHandleUp = this.OnFillHandleUp.bind(this)
     this.isCellInSelectionRange = this.isCellInSelectionRange.bind(this)
     this.getSelectedRangeValues = this.getSelectedRangeValues.bind(this)
-    if (document) document.body.onpaste = this.handlePaste
+    if (document) {
+      document.body.onpaste = this.handlePaste
+    }
   }
   render() {
     if (
@@ -396,7 +398,9 @@ class Rows extends React.Component {
     this.clipboardContainer.style.display = 'block'
     this.clipboard.value = value
     this.clipboard.select()
-    document.execCommand('Copy')
+    if (document) {
+      document.execCommand('Copy')
+    }
   }
   getSelectedRangeValues() {
     var selectionRange = this.props.selectionRange
@@ -424,7 +428,9 @@ class Rows extends React.Component {
   }
   handlePaste() {
     this.clipboard.focus()
-    // document.execCommand('paste')
+    if (document) {
+      document.execCommand('paste')
+    }
     var text = this.clipboard.value
     var selectionRange = this.props.selectionRange
     var documentChanges = []
