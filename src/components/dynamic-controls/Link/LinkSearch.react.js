@@ -9,8 +9,8 @@ import {
   defineMessages,
 } from 'react-intl'
 import { HotKeys } from 'react-hotkeys'
-import Actions from 'actions/Actions'
-import Store from 'stores/VTableStore'
+// import Actions from 'actions/Actions'
+// import Store from 'stores/VTableStore'
 
 class LinkSearch extends React.Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class LinkSearch extends React.Component {
       focusedIndex: -1,
     }
 
-    Actions.documentLoadPage.completed.listen(this.onSearchResult)
+    // Actions.documentLoadPage.completed.listen(this.onSearchResult)
   }
 
   componentDidUpdate() {
@@ -232,19 +232,19 @@ class LinkSearch extends React.Component {
       this.setState({ focusedIndex: -1, searchResultValue: null })
       return
     }
-    var relatedModel = Store.getAppConfiguration(this.props.context).model
-    this.timeout = null
-    // Do the search
-    var filter =
-      '_keyword=*' + this.state.searchValue + '*'
-    Actions.documentLoadPage(
-      this.props.context,
-      relatedModel,
-      null,
-      0,
-      10,
-      filter
-    )
+    // var relatedModel = this.props.UIschema.models[this.props.context]
+    // this.timeout = null
+    // // Do the search
+    // var filter =
+    //   '_keyword=*' + this.state.searchValue + '*'
+    // Actions.documentLoadPage(
+    //   this.props.context,
+    //   relatedModel,
+    //   null,
+    //   0,
+    //   10,
+    //   filter
+    // )
   };
 
   onSearchResult = (dataEntityName, docs, rowStart, totalRows) => {
