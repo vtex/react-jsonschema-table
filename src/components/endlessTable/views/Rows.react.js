@@ -30,7 +30,7 @@ class Rows extends React.Component {
     this.OnFillHandleUp = this.OnFillHandleUp.bind(this)
     this.isCellInSelectionRange = this.isCellInSelectionRange.bind(this)
     this.getSelectedRangeValues = this.getSelectedRangeValues.bind(this)
-    document.body.onpaste = this.handlePaste
+    if (document) document.body.onpaste = this.handlePaste
   }
   render() {
     if (

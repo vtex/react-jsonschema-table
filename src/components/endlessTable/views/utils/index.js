@@ -32,10 +32,10 @@ function viewTop(element) {
   var viewTop
   if (element === window) {
     viewTop = window.pageYOffset
-    if (!viewTop) {
+    if (!viewTop && document) {
       viewTop = document.documentElement.scrollTop
     }
-    if (!viewTop) {
+    if (!viewTop && document) {
       viewTop = document.body.scrollTop
     }
   } else {
