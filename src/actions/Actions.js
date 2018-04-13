@@ -226,6 +226,7 @@ Actions.deleteAttachmentRef.listen(function() {})
 Actions.exportCheckedItems.listen(function(context, fields, documents) {
   var that = this
   json2csv({ data: documents, fields: fields }, function(err, csv) {
+    if (!window || !document) return false
     if (err) console.log(err)
     var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
     var csvURL = window.URL.createObjectURL(csvData)
