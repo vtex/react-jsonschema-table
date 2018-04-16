@@ -1,4 +1,3 @@
-import '../css/header.less'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -34,21 +33,26 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="list-header" style={this.getInlineStyle()}>
-        <div className="list-row-header">
-          <div className="first-cell flex items-center justify-center">
-            {this.props.isChecking ? (
-              <input
-                type="checkbox"
-                title="Limpar seleção"
-                checked={this.props.isChecking}
-                onChange={this.handleClearCheckedRows}
-              />
-            ) : (
-              ''
-            )}
+      <div
+        className="relative inline-flex pt1 mt0" 
+        style={this.getInlineStyle()}>
+        <div className="pt1 ph2 flex dib">
+          <div
+            className="flex items-center justify-center ba b--silver"
+            style={{width: '50px', height: '35px'}}>
+            <div className="flex items-center justify-center">
+              {this.props.isChecking ? (
+                <input
+                  type="checkbox"
+                  title="Limpar seleção"
+                  checked={this.props.isChecking}
+                  onChange={this.handleClearCheckedRows}
+                />
+              ) : (
+                ''
+              )}
+            </div>
           </div>
-          <div className="row-menu-button" />
           {this.props.children}
         </div>
       </div>
