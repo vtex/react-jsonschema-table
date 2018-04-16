@@ -1,4 +1,3 @@
-import '../css/row-options.less'
 import React from 'react'
 import ReactDom from 'react-dom'
 import _ from 'underscore'
@@ -159,17 +158,32 @@ class Row extends React.Component {
         }
         : null
     var rowStyle = ''
-    if (focusedCell && focusedCell.row === virtualID) {
-      rowStyle += 'list-row-selected '
+    switch(this.props.item.status) {
+      case 'loaded':
+      case 'header':
+      case 'new':
+      case 'lazzy':
+      case 'loaded':
+      case 'deleted':
+      case 'imported':
+      case 'sesupdated':
+      case 'staging':
+      case 'checking':
+      case 'selecte':
+        rowStyle += 'flex relative v-mid justify-center items-center no-underline bb br b--silver mv0 '
+        break;
     }
+    // if (focusedCell && focusedCell.row === virtualID) {
+    //   rowStyle += 'list-row-selected '
+    // }
     if (this.props.isChecking) {
       rowStyle += 'list-row-checking '
     }
     if (this.props.item.isChecked) {
       rowStyle += 'list-row-checked '
     }
-    rowStyle += `list-row-${this.props.item.status}`
-    rowStyle += virtualID === 0 ? ' first-row' : ''
+    // rowStyle += `list-row-${this.props.item.status}`
+    // rowStyle += virtualID === 0 ? ' first-row' : ''
     // var animationStyle = this.props.item.status === STATUS.SESUPDATED
     //  ? 'row-animation'
     //  : ''
@@ -192,9 +206,12 @@ class Row extends React.Component {
         }}
         handlers={handlers}
         className={rowStyle}
+        style={{ height: '35px' }}
       >
-        <div className="first-cell flex items-center justify-center">
-          <div className="select">
+        <div
+            className="flex items-center justify-center bl br bb b--silver"
+            style={{width: '50px', height: '35px'}} >
+          <div className={this.props.isChecking ? 'db' : 'dn'}>
             <input
               ref={input => {
                 this.rowCheckBox = input
@@ -204,12 +221,14 @@ class Row extends React.Component {
               checked={item.isChecked || false}
             />
           </div>
-          <div className="view">
+          <div className={this.props.isChecking ? 'dn' : 'db'}>
             {new Intl.NumberFormat().format(virtualID + 1)}
           </div>
         </div>
-        <div className="row-options" onClick={this.handleEdit}>
-          <i className="fa fa-pencil-alt" />
+        <div
+          className="relative flex items-center justify-center bg-transparent bn tl ph4 f3"
+          onClick={this.handleEdit}>
+          <i className="pointer fa fa-expand" />
         </div>
         {columns.map((column, colIndex) => {
           const props = this.createPropsObject(

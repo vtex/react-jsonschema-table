@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import '../css/endless-table.less'
 
 class HeaderCell extends React.Component {
   constructor(props) {
@@ -15,12 +14,12 @@ class HeaderCell extends React.Component {
   render() {
     return (
       <div
-        className={`ph2 pv2 h-100${
-          this.props.index === 0 ? '' : ' bl b--moon-gray'
+        className={`flex items-center justify-center ph2 pv2 h-100 bb bt b--moon-gray${
+          this.props.index === 0 ? ' ' : ' bl'
         }`}
         style={this._getInlineStyle()}
       >
-        <div className="fl w-90">{this.props.value}</div>
+        <div className="fl fw5 w-90">{this.props.value}</div>
         {this.props.isIndex && this.props.type !== 'object' ? (
           this.state.inactive ? (
             <div className="fl w-10 tc lh-solid">
@@ -81,6 +80,7 @@ class HeaderCell extends React.Component {
     if (this.props.width) {
       style.width = `${this.props.width}px`
       style.maxWidth = `${this.props.width}px`
+      style.height = '35px'
     }
 
     return style
