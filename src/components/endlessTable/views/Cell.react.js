@@ -85,7 +85,7 @@ class Cell extends React.Component {
           (this.props.isSelected ? ' bg-lightest-blue' : '') +
           (this.props.isFillHandleSelected ? ' bg-near-white' : '')
         }
-        style={this.getInlineStyle(this.props.width)}
+        style={this.getInlineStyle(this.props.width, this.props.cell.col)}
         onMouseDown={this.handleFocus}
         onKeyDown={this.handleKeyDown}
         onKeyPress={this.handleKeyPress}
@@ -113,10 +113,10 @@ class Cell extends React.Component {
     )
   }
 
-  getInlineStyle(width) {
+  getInlineStyle(width, col) {
     var style = {}
-    if (width) {
-      style.width = `${width}px`
+    if (width) { // 30px is the size of the edit row btn
+      style.width = `${col === 0 ? width - 30 : width}px`
     }
 
     return style
