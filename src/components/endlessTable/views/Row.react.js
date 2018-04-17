@@ -173,18 +173,18 @@ class Row extends React.Component {
       case 'staging':
       case 'checking':
       case 'selecte':
-        rowStyle += 'flex relative v-mid justify-center items-center no-underline bb br b--silver mv0 '
+        rowStyle += 'flex relative no-underline bb br b--silver mv0 '
         break;
     }
     // if (focusedCell && focusedCell.row === virtualID) {
     //   rowStyle += 'list-row-selected '
     // }
-    if (this.props.isChecking) {
-      rowStyle += 'list-row-checking '
-    }
-    if (this.props.item.isChecked) {
-      rowStyle += 'list-row-checked '
-    }
+    // if (this.props.isChecking) {
+    //   rowStyle += 'list-row-checking '
+    // }
+    // if (this.props.item.isChecked) {
+    //   rowStyle += 'list-row-checked '
+    // }
     // rowStyle += `list-row-${this.props.item.status}`
     // rowStyle += virtualID === 0 ? ' first-row' : ''
     // var animationStyle = this.props.item.status === STATUS.SESUPDATED
@@ -213,7 +213,7 @@ class Row extends React.Component {
       >
         <div
             className="flex items-center justify-center bl br bb b--silver"
-            style={{width: '50px', height: '35px'}} >
+            style={{minWidth: '50px', height: '35px'}} >
           <div className={this.props.isChecking ? 'db' : 'dn'}>
             <input
               ref={input => {

@@ -119,7 +119,7 @@ class Cell extends React.Component {
   getInlineStyle(width, col) {
     var style = {}
     if (width) { // 30px is the size of the edit row btn
-      style.width = `${col === 0 ? width - 30 : width}px`
+      style.minWidth = `${col === 0 ? width - 30 : width}px`
     }
 
     return style
