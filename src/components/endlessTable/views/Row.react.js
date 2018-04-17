@@ -142,7 +142,7 @@ class Row extends React.Component {
   render() {
     // var that = this
     var item = this.props.item
-    var document = item.document
+    var itemDocument = item.document
     var virtualID = item.virtualID
     var columns = this.props.columns || []
     // var renderValue = this.props.renderValue
@@ -190,10 +190,10 @@ class Row extends React.Component {
     // var animationStyle = this.props.item.status === STATUS.SESUPDATED
     //  ? 'row-animation'
     //  : ''
-    if (!document) {
-      document = {}
+    if (!itemDocument) {
+      itemDocument = {}
     }
-    // var id = document.id ? document.id : ''
+    // var id = itemDocument.id ? itemDocument.id : ''
     const handlers = {
       editCell: this.onEnter,
       exitEdit: this.onEscape,
@@ -275,7 +275,7 @@ class Row extends React.Component {
       width: column.width,
       cell: { row: item.virtualID, col: colIndex },
       value: item.document[column.fieldName],
-      linkedValue: document[`${column.fieldName}_linked`],
+      linkedValue: itemDocument[`${column.fieldName}_linked`],
       id: item.document.id,
       onSelectCell: this.props.onSelectCell,
       onFillHandleDown: this.props.onFillHandleDown,
