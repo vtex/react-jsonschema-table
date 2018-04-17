@@ -1,6 +1,6 @@
 import babel from 'rollup-plugin-babel'
 import commonjs from 'rollup-plugin-commonjs'
-import postcss from 'rollup-plugin-postcss'
+// import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
 // import less from 'rollup-plugin-less'
 import json from 'rollup-plugin-json'
@@ -32,7 +32,6 @@ export default {
         'node_modules/react-hotkeys/lib/index.js': ['HotKeys'],
       },
     }),
-    postcss({}),
     json(),
     sourcemaps({
       exclude: ['node_modules/**'],

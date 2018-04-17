@@ -46,8 +46,7 @@
     "redux-persist": "^5.9.1",
     "redux-thunk": "^2.2.0",
     "reflux": "^6.4.1",
-    "underscore": "^1.8.3",
-    "vtex-tachyons": "^2.3.0"
+    "underscore": "^1.8.3"
   },
   "peerDependencies": {
     "react": "^16.x",
