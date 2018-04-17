@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import 'vtex-tachyons'
+import 'vtex-tachyons'
 import fontawesome from '@fortawesome/fontawesome'
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faExclamation from '@fortawesome/fontawesome-free-solid/faExclamation'
