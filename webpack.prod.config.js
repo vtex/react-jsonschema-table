@@ -5,6 +5,7 @@ module.exports = {
     './src/index.js'
   ],
   devtool: 'source-map',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -13,11 +14,10 @@ module.exports = {
         use: ['babel-loader']
       },
       {
-        test: /\.(less|css)$/,
+        test: /\.css$/,
+        include: /node_modules/,
         use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: "css-loader/locals" // translates CSS into CommonJS
         }]
       },
       {
