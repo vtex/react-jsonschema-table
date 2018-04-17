@@ -34,6 +34,7 @@ export default {
       },
     }),
     json(),
+    postcss({}),
     sourcemaps({
       exclude: ['node_modules/**'],
     }),
