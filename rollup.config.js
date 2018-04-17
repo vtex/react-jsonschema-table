@@ -17,7 +17,8 @@ export default {
     },
     {
       file: pkg.module,
-      format: 'es',
+      name: 'ssr',
+      format: 'iife',
     },
   ],
   external: ['react', 'react-dom', 'prop-types'],
