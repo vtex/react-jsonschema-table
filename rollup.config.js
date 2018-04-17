@@ -25,7 +25,7 @@ export default {
   sourcemap: true,
   plugins: [
     resolve({
-      browser: true,
+      browser: false,
       extensions: ['.js', '.json'],
     }),
     commonjs({
