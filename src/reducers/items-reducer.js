@@ -346,15 +346,17 @@ const addStaging = (newState, id, status, changes, schema, lang) => {
 }
 
 const validateDocument = (schema, lang, documentToValidate) => {
-  const validate = ajv.compile(schema)
-  const valid = validate(documentToValidate)
-  if (!valid) {
-    validate.errors.forEach(error => {
-      if (error.keyword === 'required') {
-        error.dataPath = `.${error.params.missingProperty}`
-      }
-    })
-  }
-  ajvLocalize[lang](validate.errors)
-  return validate.errors
+  if (window && document) {
+    const validate = ajv.compile(schema)
+    const valid = validate(documentToValidate)
+    if (!valid) {
+      validate.errors.forEach(error => {
+        if (error.keyword === 'required') {
+          error.dataPath = `.${error.params.missingProperty}`
+        }
+      })
+    }
+    ajvLocalize[lang](validate.errors)
+    return validate.errors
+  } return [] // review this fallback
 }
