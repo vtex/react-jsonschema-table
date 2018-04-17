@@ -28,10 +28,7 @@ class Cell extends React.Component {
 
   componentDidUpdate() {
     if (this.props.isFocus && !this.props.isEditing) {
-      // ReactDom.findDOMNode(this.cellControl).focus()
-      if (this.cellControl && this.cellControl.focus) {
-        this.cellControl.focus()
-      } else { console.log('No cellControl to focus on Cell.react.js') }
+      ReactDom.findDOMNode(this.cellControl).focus()
     }
   }
 

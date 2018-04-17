@@ -11,12 +11,8 @@ class CheckBox extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('check')
     if (this.props.isEditing) {
-      // ReactDOM.findDOMNode(this.checkContainer).focus()
-      if (this.checkContainer && this.checkContainer.focus) {
-        this.checkContainer.focus()
-      } else { console.log('No check container to focus on CheckBox.react.js') }
+      ReactDOM.findDOMNode(this.checkContainer).focus()
     }
   }
 

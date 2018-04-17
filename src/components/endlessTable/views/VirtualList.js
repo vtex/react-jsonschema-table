@@ -93,8 +93,7 @@ export default class VirtualList extends React.Component {
     }
   }
   _getListBox(nextProps) {
-    // var list = ReactDOM.findDOMNode(this)
-    var list = this
+    var list = ReactDOM.findDOMNode(this)
 
     var top = utils.topDifference(list, nextProps.container)
 
