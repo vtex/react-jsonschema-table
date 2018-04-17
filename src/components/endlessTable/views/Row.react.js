@@ -27,8 +27,11 @@ class Row extends React.Component {
     this.onAnimationEnd = this.onAnimationEnd.bind(this)
   }
   componentDidMount() {
-    var row = ReactDom.findDOMNode(this.rowlist)
-    row.addEventListener('animationend', this.onAnimationEnd, false)
+    var row
+    if (window && document) {
+      row = ReactDom.findDOMNode(this.rowlist)
+    }
+    row && row.addEventListener('animationend', this.onAnimationEnd, false)
     // this.unsubscribe = Store.listen(this.onStoreChange)
   }
 
@@ -390,7 +393,10 @@ class Row extends React.Component {
     }
   }
   onSpace() {
-    var checked = ReactDom.findDOMNode(this.rowCheckBox).checked
+    var checked
+    if (window && document) { // wat
+      checked = ReactDom.findDOMNode(this.rowCheckBox).checked
+    }
     this.props.onCheckRowChange(this.props.item.document.id, !checked)
   }
 }

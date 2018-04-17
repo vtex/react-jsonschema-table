@@ -20,7 +20,9 @@ class ArrayControl extends React.Component {
       this.props.renderType === 'cell'
     ) {
       this.props.onExitEdit()
-      ReactDOM.findDOMNode(this).focus()
+      if (window && document) {
+        ReactDOM.findDOMNode(this).focus()
+      }
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -190,7 +192,9 @@ class ArrayControl extends React.Component {
 
   handleCloseModal = () => {
     this.setState({ showModal: false })
-    ReactDOM.findDOMNode(this).focus()
+    if (window && document) {
+      ReactDOM.findDOMNode(this).focus()
+    }
   };
 
   handleRemoveLink = index => {
