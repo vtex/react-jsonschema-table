@@ -8,7 +8,9 @@ import _ from 'underscore'
 class ObjectControl extends React.Component {
   componentDidUpdate() {
     if (this.props.isEditing && this.props.renderType === 'cell') {
-      ReactDom.findDOMNode(this).focus()
+      if (window && document) {
+        ReactDom.findDOMNode(this).focus()
+      }
     }
   }
   render() {

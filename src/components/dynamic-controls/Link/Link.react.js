@@ -237,7 +237,10 @@ class Link extends React.Component {
   }
 
   calculateVisibleLinks = () => {
-    var cardsContainer = ReactDOM.findDOMNode(this.cardsContainer)
+    var cardsContainer
+    if (window && document) {
+      cardsContainer = ReactDOM.findDOMNode(this.cardsContainer)
+    }
     var cellWidth = cardsContainer ? cardsContainer.clientWidth : 0
     // o largo disponivel corresponde ao 70% do width da calula, como são duas linhas se multiplica por 1.4
     var availableWidth = cellWidth * 1.4
@@ -253,7 +256,10 @@ class Link extends React.Component {
     var that = this
     _.each(this.state.value, function(item, index) {
       if (item) {
-        var card = ReactDOM.findDOMNode(that.refs['card-show-' + index])
+        var card
+        if (window && document) {
+          card = ReactDOM.findDOMNode(that.refs['card-show-' + index])
+        }
         var cardWidth = card && card.clientWidth
           ? card.clientWidth
           : estimatedRowCardWidth
@@ -284,7 +290,9 @@ class Link extends React.Component {
       focusedDiv: null,
       userTypedText: null,
     })
-    ReactDOM.findDOMNode(this).focus()
+    if (window && document) {
+      ReactDOM.findDOMNode(this).focus()
+    }
   };
 
   handleEditCell = () => {
@@ -378,7 +386,9 @@ class Link extends React.Component {
   };
 
   onFormClose = () => {
-    ReactDOM.findDOMNode(this).focus()
+    if (window && document) {
+      ReactDOM.findDOMNode(this).focus()
+    }
   };
 }
 

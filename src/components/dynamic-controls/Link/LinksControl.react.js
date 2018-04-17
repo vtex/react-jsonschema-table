@@ -18,7 +18,9 @@ class LinksControl extends React.Component {
 
   componentDidUpdate() {
     if (!this.state.focusedDiv) {
-      ReactDOM.findDOMNode(this.searchControl).focus()
+      if (window && document) {
+        ReactDOM.findDOMNode(this.searchControl).focus()
+      }
       this.setState({ focusedDiv: 'searchControl', focusedIndex: -1 })
     }
   }
@@ -157,7 +159,9 @@ class LinksControl extends React.Component {
   handleMoveDown = () => {
     switch (this.state.focusedDiv) {
       case 'addLink':
-        ReactDOM.findDOMNode(this.searchControl).focus()
+        if (window && document) {
+          ReactDOM.findDOMNode(this.searchControl).focus()
+        }
         this.setState({
           focusedIndex: -1,
           focusedDiv: 'searchControl',
@@ -166,13 +170,17 @@ class LinksControl extends React.Component {
         break
       case 'searchControl':
         if (this.props.value.length === this.state.focusedIndex + 1) {
-          ReactDOM.findDOMNode(this.addLink).focus()
+          if (window && document) {
+            ReactDOM.findDOMNode(this.addLink).focus()
+          }
           this.setState({
             focusedIndex: -1,
             focusedDiv: 'addLink',
           })
         } else {
-          ReactDOM.findDOMNode(this.associatedCards).focus()
+          if (window && document) {
+            ReactDOM.findDOMNode(this.associatedCards).focus()
+          }
           this.setState({ focusedIndex: 0, focusedDiv: 'associatedCards' })
         }
         break
@@ -193,13 +201,17 @@ class LinksControl extends React.Component {
     switch (this.state.focusedDiv) {
       case 'addLink':
         if (this.props.value && this.props.value.length > 0) {
-          ReactDOM.findDOMNode(this.associatedCards).focus()
+          if (window && document) {
+            ReactDOM.findDOMNode(this.associatedCards).focus()
+          }
           this.setState({
             focusedIndex: this.props.value.length - 1,
             focusedDiv: 'associatedCards',
           })
         } else {
-          ReactDOM.findDOMNode(this.searchControl).focus()
+          if (window && document) {
+            ReactDOM.findDOMNode(this.searchControl).focus()
+          }
           this.setState({
             focusedIndex: -1,
             focusedDiv: 'searchControl',
@@ -208,12 +220,16 @@ class LinksControl extends React.Component {
         }
         break
       case 'searchControl':
-        ReactDOM.findDOMNode(this.addLink).focus()
+      if (window && document) {
+          ReactDOM.findDOMNode(this.addLink).focus()
+      }
         this.setState({ focusedIndex: -1, focusedDiv: 'addLink' })
         break
       case 'associatedCards':
         if (this.state.focusedIndex === 0) {
-          ReactDOM.findDOMNode(this.searchControl).focus()
+          if (window && document) {
+            ReactDOM.findDOMNode(this.searchControl).focus()
+          }
           this.setState({
             focusedIndex: -1,
             focusedDiv: 'searchControl',
