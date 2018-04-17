@@ -5,7 +5,8 @@ import resolve from 'rollup-plugin-node-resolve'
 // import less from 'rollup-plugin-less'
 import json from 'rollup-plugin-json'
 import sourcemaps from 'rollup-plugin-sourcemaps'
-import url from 'rollup-plugin-url'
+// import url from 'rollup-plugin-url'
+import builtins from 'rollup-plugin-node-builtins'
 
 import pkg from './package.json'
 
@@ -25,6 +26,7 @@ export default {
   external: ['react', 'react-dom', 'prop-types'],
   sourcemap: true,
   plugins: [
+    builtins(),
     resolve({
       browser: false,
       extensions: ['.js', '.json'],
@@ -34,7 +36,7 @@ export default {
         'node_modules/react-hotkeys/lib/index.js': ['HotKeys'],
       },
     }),
-    url({}),
+    // url({}),
     json(),
     postcss({}),
     sourcemaps({
