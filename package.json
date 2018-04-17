@@ -96,6 +96,7 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-postcss": "^0.5.5",
     "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-url": "^1.4.0",
     "style-loader": "^0.20.2",
     "url-loader": "^0.6.2",
     "webpack": "^3.11.0",

@@ -5,6 +5,7 @@ import resolve from 'rollup-plugin-node-resolve'
 // import less from 'rollup-plugin-less'
 import json from 'rollup-plugin-json'
 import sourcemaps from 'rollup-plugin-sourcemaps'
+import url from 'rollup-plugin-url'
 
 import pkg from './package.json'
 
@@ -33,6 +34,7 @@ export default {
         'node_modules/react-hotkeys/lib/index.js': ['HotKeys'],
       },
     }),
+    url({}),
     json(),
     postcss({}),
     sourcemaps({
