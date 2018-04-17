@@ -15,13 +15,17 @@ class Table extends React.Component {
   }
 
   handleScroll = () => {
-    var header = ReactDOM.findDOMNode(this.header)
-    var scrollDiv = ReactDOM.findDOMNode(this.scrollDiv)
-    header.style.left = `-${scrollDiv.scrollLeft}px`
+    if (window && document) {
+      var header = ReactDOM.findDOMNode(this.header)
+      var scrollDiv = ReactDOM.findDOMNode(this.scrollDiv)
+      header.style.left = `-${scrollDiv.scrollLeft}px`
+    }
   }
 
   handleScrollVertically = pixels => {
-    ReactDOM.findDOMNode(this.scrollDiv).scrollTop += pixels
+    if (window && document) {
+      ReactDOM.findDOMNode(this.scrollDiv).scrollTop += pixels
+    }
   }
 
   render() {

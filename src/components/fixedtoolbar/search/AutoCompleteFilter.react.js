@@ -53,7 +53,7 @@ class AutoCompleteFilter extends React.Component {
     ) {
       // this.addFilter.focus()
     }
-    if (this.props.isSelected && !this.state.isEditing) {
+    if (this.props.isSelected && !this.state.isEditing && window && document) {
       ReactDom.findDOMNode(this.editFilter).focus()
     }
   }

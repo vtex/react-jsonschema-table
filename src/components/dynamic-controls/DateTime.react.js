@@ -17,7 +17,7 @@ class DateTime extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.isEditing) {
+    if (this.props.isEditing && window && document) {
       ReactDOM.findDOMNode(this.picker).focus()
     }
   }
