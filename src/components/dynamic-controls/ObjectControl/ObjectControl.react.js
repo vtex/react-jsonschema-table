@@ -8,7 +8,10 @@ import _ from 'underscore'
 class ObjectControl extends React.Component {
   componentDidUpdate() {
     if (this.props.isEditing && this.props.renderType === 'cell') {
-      ReactDom.findDOMNode(this).focus()
+      // ReactDom.findDOMNode(this).focus()
+      if (this.focus) {
+        this.focus()
+      } else { console.log('No this to focus on ObjectControl.react.js') }
     }
   }
   render() {

@@ -18,7 +18,10 @@ class DateTime extends React.Component {
 
   componentDidUpdate() {
     if (this.props.isEditing) {
-      ReactDOM.findDOMNode(this.picker).focus()
+      // ReactDOM.findDOMNode(this.picker).focus()
+      if (this.picker && this.picker.focus) {
+        this.picker.focus()
+      } else { console.log('No picker to focus on DateTime.react.js') }
     }
   }
 

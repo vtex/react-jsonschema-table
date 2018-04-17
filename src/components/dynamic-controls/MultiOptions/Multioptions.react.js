@@ -15,7 +15,10 @@ class MultiOptions extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.isEditing && !prevProps.isEditing) {
-      ReactDOM.findDOMNode(this.multiSelect).focus()
+      // ReactDOM.findDOMNode(this.multiSelect).focus()
+      if (this.multiSelect && this.multiSelect.focus) {
+        this.multiSelect.focus()
+      } else { console.log('No multiSelect to focus on Multioptions.react.js') }
     }
   }
   render() {
