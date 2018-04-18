@@ -99,7 +99,7 @@ class TextBox extends React.Component {
     }
     var control = null
     const borderColor = this.props.hasError ? 'b--red' : 'b--blue'
-    const formBorderColor = this.props.hasError ? 'b--red' : 'b--moon-gray'
+    const formBorderColor = this.props.hasError ? 'b--red' : 'b--silver'
     if (this.props.isEditing) {
       var error = null
       control = (

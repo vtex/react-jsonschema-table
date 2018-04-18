@@ -46,7 +46,7 @@ class TextArea extends React.Component {
       exitEdit: this.onEscape,
     }
     const borderColor = this.props.hasError ? 'b--red' : 'b--blue'
-    const formBorderColor = this.props.hasError ? 'b--red' : 'b--moon-gray'
+    const formBorderColor = this.props.hasError ? 'b--red' : 'b--silver'
 
     var control = null
     if (this.props.isEditing) {

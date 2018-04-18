@@ -4,10 +4,6 @@ import JsonSchemaTable from './index.js'
 
 const schema = {
   properties: {
-    id: {
-      type: 'string',
-      title: 'Id',
-    },
     name: {
       type: 'string',
       title: 'Name',
@@ -39,43 +35,12 @@ const schema = {
         },
       }
     },
-    isActive: {
-      type: 'boolean',
-      title: 'Is Active',
-    },
-    qualities: {
-      type: 'array',
-      title: 'Qualities',
-      items: {
-        type: 'string',
-        label: 'qualities',
-      }
-    },
-    competences: {
-      type: 'array',
-      title: 'Competences',
-      items:{
-        type: 'string',
-        enum:[
-           'Developer',
-           'Designer',
-           'Financial',
-           'HR',
-           'Human',
-           'Alien',
-           'Dog',
-        ]
-      },
-    },
   }
 }
 
 const UIschema = {
   title: 'Users',
   fields: {
-    id: {
-      width: 100,
-    },
     name: {
       width: 200,
     },
@@ -85,17 +50,17 @@ const UIschema = {
     email: {
       width: 300,
     },
-    isActive: {
+    address: {
       width: 300,
     },
   },
-  list: ['id','email', 'name', 'lastName', 'address', 'isActive', 'qualities', 'competences'],
+  list: ['email', 'name', 'lastName', 'address'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['id', 'name', 'email', 'lastName', 'address', 'isActive', 'qualities', 'competences'],
+          fields: ['id', 'name', 'email', 'lastName', 'address'],
         },
       ],
     },

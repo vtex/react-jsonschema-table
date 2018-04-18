@@ -39,7 +39,7 @@ class Dropdown extends React.Component {
     // const borderColor = this.props.hasError ? 'b--red' : 'b--blue'
     const borderColor = this.props.renderType === 'cell'
       ? this.props.hasError ? 'b--red' : 'b--blue'
-      : this.props.hasError ? 'b--red br3' : 'b--moon-gray br3'
+      : this.props.hasError ? 'b--red br3' : 'b--silver br3'
     var control
     if (this.props.isFocus || this.props.isEditing) {
       control = (

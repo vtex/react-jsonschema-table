@@ -16,7 +16,7 @@ module.exports = {
         test: /\.css$/,
         include: /node_modules/,
         use: [{
-            loader: "css-loader/locals" // translates CSS into CommonJS
+            loader: "css-loader" // translates CSS into CommonJS
         }]
       },
       {

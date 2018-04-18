@@ -30,7 +30,7 @@ class MultiOptions extends React.Component {
     }
     const border = this.props.renderType === 'cell'
       ? `bw1 ba ${this.props.hasError ? 'b--red ' : 'b--blue '}`
-      : `bw1 ba ${this.props.hasError ? 'b--red br3 ' : 'b--moon-gray br3 '}`
+      : `bw1 ba ${this.props.hasError ? 'b--red br3 ' : 'b--silver br3 '}`
     var control = null
     var value = this.props.value ? this.props.value : []
     if (this.props.isEditing || this.props.isFocus) {

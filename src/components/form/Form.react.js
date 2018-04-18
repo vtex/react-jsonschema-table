@@ -52,7 +52,7 @@ class Form extends React.Component {
     return (
       <div>
         {/* <i className={`contenTypeIcon fa fa-${fieldDefinition.icon}`} /> */}
-        {`${fieldName}: {${fieldDefinition.type}}`}
+        {`${fieldName || 'undefined'}: {${fieldDefinition.type || 'undefined'}}`}
       </div>
     )
   };
@@ -84,7 +84,7 @@ class Form extends React.Component {
       <HotKeys handlers={handlers}>
         <Modal
           isOpen={showModal}
-          // dialogClassName="absolute z-9999 top-2 left-2 w-70 overflow-y-auto bg-white ba b--moon-gray br3 bw1"
+          // dialogClassName="absolute z-9999 top-2 left-2 w-70 overflow-y-auto bg-white ba b--silver br3 bw1"
           // centered
           onClose={this.handleCloseModal}
           // onExited={this.handleModalExited}

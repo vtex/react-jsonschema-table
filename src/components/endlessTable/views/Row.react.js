@@ -140,6 +140,7 @@ class Row extends React.Component {
   }
 
   render() {
+    console.log('render row item', this.props.item)
     // var that = this
     var item = this.props.item
     var itemDocument = item.document
@@ -230,6 +231,7 @@ class Row extends React.Component {
         </div>
         <div
           className="relative flex items-center justify-center bg-transparent bn tl ph4 f3"
+          style={{ minWidth: '30px', width: '30px'}}
           onClick={this.handleEdit}>
           <i className="pointer fa fa-expand" />
         </div>
@@ -275,7 +277,7 @@ class Row extends React.Component {
       width: column.width,
       cell: { row: item.virtualID, col: colIndex },
       value: item.document[column.fieldName],
-      linkedValue: itemDocument[`${column.fieldName}_linked`],
+      linkedValue: document[`${column.fieldName}_linked`],
       id: item.document.id,
       onSelectCell: this.props.onSelectCell,
       onFillHandleDown: this.props.onFillHandleDown,

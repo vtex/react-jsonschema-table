@@ -36,8 +36,8 @@ class LinksControl extends React.Component {
           className={
             this.state.focusedDiv === 'associatedCards' &&
               this.state.focusedIndex === index
-              ? 'relative pl1 bw1 b--moon-gray br3 ma3 h-25 shadow-1 ba dim'
-              : 'relative pl1 bw1 b--moon-gray br3 ma3 h-25 ba dim'
+              ? 'relative pl1 bw1 b--silver br3 ma3 h-25 shadow-1 ba dim'
+              : 'relative pl1 bw1 b--silver br3 ma3 h-25 ba dim'
           }
         >
           <Icon
@@ -93,7 +93,7 @@ class LinksControl extends React.Component {
           up={this.state.up}
           userTypedText={this.props.userTypedText}
         />
-        <div className="bb b--moon-gray mt4 mb4 nr3 nl3" />
+        <div className="bb b--silver mt4 mb4 nr3 nl3" />
         <h4>
           <FormattedMessage id="Link.links" />
         </h4>
@@ -106,7 +106,7 @@ class LinksControl extends React.Component {
         >
           {allRowCards}
         </HotKeys>
-        <div className="bb b--moon-gray mt4 mb4 nr3 nl3" />
+        <div className="bb b--silver mt4 mb4 nr3 nl3" />
         <HotKeys
           handlers={addLinkdivHandlers}
           onFocus={this.handleFocusAddLinkDiv}

@@ -15,11 +15,7 @@ module.exports = {
       },
       {
         test: /\.(less|css)$/,
-        use: [{
-            loader: "style-loader" // creates style nodes from JS strings
-        }, {
-            loader: "css-loader" // translates CSS into CommonJS
-        }]
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
