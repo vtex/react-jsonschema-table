@@ -5,7 +5,6 @@ module.exports = {
     './src/index.js'
   ],
   devtool: 'source-map',
-  mode: 'production',
   module: {
     rules: [
       {
