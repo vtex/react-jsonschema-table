@@ -1,11 +1,12 @@
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+// import thunk from 'redux-thunk'
 import * as actions from '../items-actions'
 import * as types from '../ActionTypes'
 
 jest.mock('../FetcherWrapper')
 
-const middlewares = [thunk]
+// const middlewares = [thunk]
+const middlewares = []
 const mockStore = configureMockStore(middlewares)
 
 describe('actions', () => {

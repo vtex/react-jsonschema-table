@@ -23,7 +23,7 @@ import keyMap from './KeyMap'
 
 import { SetFetcher } from './actions/FetcherWrapper'
 import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
+// import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './stores/configureStore'
 import ToolBar from './containers/ToolBar'
 import Table from './containers/Table'
