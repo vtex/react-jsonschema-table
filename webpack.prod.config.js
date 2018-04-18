@@ -47,6 +47,8 @@ module.exports = {
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'index.js'
+    filename: 'index.js',
+    libraryExport: 'default',
+    libraryTarget: 'commonjs2'
   }
 };
