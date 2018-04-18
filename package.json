@@ -1,6 +1,6 @@
 {
   "name": "react-jsonschema-table",
-  "version": "0.0.2-beta.22",
+  "version": "0.0.2-beta.23",
   "description": "Simple usage react component stylesheet table with inifnite scroll for massive data consumption",
   "author": "Alejandro Osorio",
   "contributors": [
