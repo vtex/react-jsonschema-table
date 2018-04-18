@@ -84,10 +84,10 @@ class LinkSearch extends React.Component {
               id={item.id}
               className={
                 associated
-                  ? 'relative pl1 bw1 b--moon-gray br3 ma3 h-25 ba bg-light-gray'
+                  ? 'relative pl1 bw1 b--silver br3 ma3 h-25 ba bg-light-gray'
                   : that.state.focusedIndex === index
-                      ? 'relative pl1 bw1 b--moon-gray br3 ma3 h-25 ba dim pointer shadow-1'
-                      : 'relative pl1 bw1 b--moon-gray br3 ma3 h-25 ba dim pointer'
+                      ? 'relative pl1 bw1 b--silver br3 ma3 h-25 ba dim pointer shadow-1'
+                      : 'relative pl1 bw1 b--silver br3 ma3 h-25 ba dim pointer'
               }
             />
           )
@@ -96,7 +96,7 @@ class LinkSearch extends React.Component {
       })
       searchResultDiv = (
         <div>
-          <div className="bb b--moon-gray mt4 mb4 nr3 nl3" />
+          <div className="bb b--silver mt4 mb4 nr3 nl3" />
           <h4>
             {'Resultados' +
               (this.state.totalRows > this.state.searchResultValue.length

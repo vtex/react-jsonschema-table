@@ -42,7 +42,7 @@ class ArrayControl extends React.Component {
     const borderColor = this.props.validationErrors &&
       this.props.validationErrors.length > 0
       ? 'b--red'
-      : 'b--moon-gray'
+      : 'b--silver'
 
     if (this.props.isEditing) {
       if (this.state.showModal) {
@@ -120,7 +120,7 @@ class ArrayControl extends React.Component {
       const borderColor = props.validationErrors &&
         props.validationErrors.length > 0
         ? 'b--red'
-        : 'b--moon-gray'
+        : 'b--silver'
       const iconColor = props.validationErrors &&
         props.validationErrors.length > 0
         ? 'bg-red'

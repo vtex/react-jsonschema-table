@@ -121,7 +121,7 @@ class ObjectControl extends React.Component {
     const border = this.props.isEditing
       ? this.props.renderType === 'cell'
         ? `ba ${this.props.hasError ? 'b--red ' : 'b--blue '}`
-        : `ba ${this.props.hasError ? 'b--red br3 ' : 'b--moon-gray br3'}`
+        : `ba ${this.props.hasError ? 'b--red br3 ' : 'b--silver br3'}`
       : this.props.isFocus
         ? `ba ${this.props.hasError ? 'b--red ' : 'b--blue '} pl05`
         : this.props.hasError ? 'ba b--red pl05' : 'pl2'

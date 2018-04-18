@@ -111,7 +111,7 @@ class Link extends React.Component {
               className={
                 that.props.isFocus
                   ? 'relative pointer flex ph1 mr1 br3 ba b--silver shadow-hover'
-                  : 'dit ph1 mh2 br3 ba b--moon-gray'
+                  : 'dit ph1 mh2 br3 ba b--silver'
               }
               // ref={'card' + index}
             >
@@ -203,7 +203,7 @@ class Link extends React.Component {
               isOpen={this.state.showModal}
               onClose={this.handleCloseModal}
             >
-              <div bsClass={'bb b--moon-gray pa4'} closeButton>
+              <div bsClass={'bb b--silver pa4'} closeButton>
                 <div>
                   <FormattedMessage id="Link.links.with" />
                   &nbsp;
@@ -233,7 +233,7 @@ class Link extends React.Component {
 
       return control
     }
-    return <div className="ba br3 pa3 bw1 b--moon-gray">{modalLinksDiv}</div>
+    return <div className="ba br3 pa3 bw1 b--silver">{modalLinksDiv}</div>
   }
 
   calculateVisibleLinks = () => {

@@ -83,7 +83,7 @@ class Cell extends React.Component {
         className={
           (this.props.cell.col === 0
             ? 'relative h-100 outline-0'
-            : 'relative h-100 outline-0 bl b--moon-gray') +
+            : 'relative h-100 outline-0 bl b--silver') +
           (this.props.isSelected ? ' bg-lightest-blue' : '') +
           (this.props.isFillHandleSelected ? ' bg-near-white' : '')
         }

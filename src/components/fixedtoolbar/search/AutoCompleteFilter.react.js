@@ -147,7 +147,7 @@ class AutoCompleteFilter extends React.Component {
         handlers={editHandlers}
         className={
             'nowrap flex pv1 ph3 br3 mid-gray ml3 mb3 ' +
-              (this.props.isSelected ? 'bg-light-blue b--blue' : 'bg-moon-gray')
+              (this.props.isSelected ? 'bg-light-blue b--blue' : 'bg-silver')
           }
         onClick={this.handleClick}
         ref={div => {
