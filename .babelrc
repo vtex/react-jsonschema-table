@@ -4,10 +4,7 @@
       "presets": [
         "react",
         [
-          "es2015",
-          {
-            "modules": false
-          }
+          "es2015"
         ]
       ],
       "plugins": [
@@ -27,10 +24,7 @@
       "presets": [
         "react",
         [
-          "es2015",
-          {
-            "modules": false
-          }
+          "es2015"
         ]
       ],
       "plugins": [
@@ -41,10 +35,7 @@
       "presets": [
         "react",
         [
-          "es2015",
-          {
-            "modules": false
-          }
+          "es2015"
         ]
       ],
       "plugins": [

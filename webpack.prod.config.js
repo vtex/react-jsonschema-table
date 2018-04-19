@@ -16,7 +16,7 @@ module.exports = {
         test: /\.css$/,
         include: /node_modules/,
         use: [{
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: "css-loader/locals" // translates CSS into CommonJS
         }]
       },
       {
@@ -49,6 +49,6 @@ module.exports = {
     publicPath: '/',
     filename: 'index.js',
     libraryExport: 'default',
-    libraryTarget: 'umd'
+    libraryTarget: 'commonjs2',
   }
 };
