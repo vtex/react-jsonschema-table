@@ -174,7 +174,7 @@ class Row extends React.Component {
       case 'staging':
       case 'checking':
       case 'selecte':
-        rowStyle += 'flex relative no-underline bb br b--silver mv0 '
+        rowStyle += 'flex relative no-underline br b--silver mv0 '
         break;
     }
     // if (focusedCell && focusedCell.row === virtualID) {
