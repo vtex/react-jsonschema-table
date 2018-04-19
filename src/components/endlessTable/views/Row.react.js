@@ -230,7 +230,7 @@ class Row extends React.Component {
           </div>
         </div>
         <div
-          className="relative flex items-center justify-center bg-transparent bn tl ph4 f3"
+          className="relative flex items-center justify-center bg-transparent bb b--silver tl ph4 f3"
           style={{ minWidth: '30px', width: '30px'}}
           onClick={this.handleEdit}>
           <i className="pointer fa fa-expand" />
