@@ -120,6 +120,7 @@ class Table extends React.Component {
             index={index}
             key={key}
             value={label}
+            lastCellIndex={Object.keys(schema.properties).length - 1}
             {...fieldDef}
             fieldName={key}
             onHandleSort={that.handleSort}
