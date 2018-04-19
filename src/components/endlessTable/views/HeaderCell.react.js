@@ -16,6 +16,8 @@ class HeaderCell extends React.Component {
       <div
         className={`flex items-center justify-center ph2 pv2 h-100 bb bt b--silver${
           this.props.index === 0 ? ' ' : ' bl'
+        }${
+          this.props.lastCellIndex === this.props.index ? ' br' : ' '
         }`}
         style={this._getInlineStyle()}
       >
@@ -95,6 +97,7 @@ HeaderCell.propTypes = {
   onHandleSort: PropTypes.func,
   type: PropTypes.string,
   index: PropTypes.number,
+  lastCellIndex: PropTypes.number,
 }
 
 export default HeaderCell
