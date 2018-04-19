@@ -82,8 +82,11 @@ class Cell extends React.Component {
       <HotKeys
         className={
           (this.props.cell.col === 0
-            ? 'relative h-100 outline-0'
-            : 'relative h-100 outline-0 bl b--silver') +
+            ? 'relative h-100 outline-0 bb b--silver'
+            : 'relative h-100 outline-0 bl bb b--silver') +
+          (this.props.cell.col === this.props.columnsCount - 1
+            ? ' br'
+            : ' ') +
           (this.props.isSelected ? ' bg-lightest-blue' : '') +
           (this.props.isFillHandleSelected ? ' bg-near-white' : '')
         }
