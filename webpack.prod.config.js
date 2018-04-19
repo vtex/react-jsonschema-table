@@ -49,6 +49,6 @@ module.exports = {
     publicPath: '/',
     filename: 'index.js',
     libraryExport: 'default',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'umd'
   }
 };
