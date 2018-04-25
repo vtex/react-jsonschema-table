@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import ToolBar from '../components/Toolbar'
+import ToolBar from 'toolBar/components/ToolBar'
 import {
   addItem,
   exportCheckedItems,
@@ -31,7 +31,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const bindedActions = bindActionCreators(actionCreators, dispatch)
-  console.log('mah binded actions', bindedActions)
   return {
     ...bindedActions,
 

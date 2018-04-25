@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import _ from 'underscore'
-// import Actions from '../actions/Actions'
-// import Store from '../stores/RowsStore'
 import STATUS from '../../../constants/Status'
 import { HotKeys } from 'react-hotkeys'
 import PropTypes from 'prop-types'
@@ -12,40 +10,14 @@ class Row extends React.Component {
   constructor(props) {
     super(props)
 
-    this.handleCheckRow = this.handleCheckRow.bind(this)
-    // this.handleEdit = this.handleEdit.bind(this)
-    this.handleRemove = this.handleRemove.bind(this)
-    this.onFocusCell = this.onFocusCell.bind(this)
-    this.onEditCell = this.onEditCell.bind(this)
-    this.onExitEditCell = this.onExitEditCell.bind(this)
-    // this.onStoreChange = this.onStoreChange.bind(this)
-    this.onEnter = this.onEnter.bind(this)
-    this.onEscape = this.onEscape.bind(this)
-    this.onOpenForm = this.onOpenForm.bind(this)
-    this.onFormClose = this.onFormClose.bind(this)
-    this.onSpace = this.onSpace.bind(this)
-    this.onAnimationEnd = this.onAnimationEnd.bind(this)
-  }
-  componentDidMount() {
-    var row
-    if (window && document) {
-      row = ReactDom.findDOMNode(this.rowlist)
+    this.state = {
+      isHoveringIndexCell: false,
     }
-    row && row.addEventListener('animationend', this.onAnimationEnd, false)
-    // this.unsubscribe = Store.listen(this.onStoreChange)
   }
 
-  onAnimationEnd() {
-    if (this.props.item.status === STATUS.SESUPDATED) {
-      // MainActions.changeRowStatus(
-      //   this.props.context,
-      //   this.props.item.virtualID,
-      //   STATUS.LOADED
-      // )
-    }
-  }
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (this.props.columns !== nextProps.columns) return true
+    if (this.state.isHoveringIndexCell !== nextState.isHoveringIndexCell) return true
     if (
       (nextProps.focusedCell &&
         this.props.item.virtualID === nextProps.focusedCell.row) ||
@@ -119,13 +91,13 @@ class Row extends React.Component {
     return shouldUpdate
   }
 
-  isRowInSelectionRange(row, rowA, rowB) {
+  isRowInSelectionRange = (row, rowA, rowB) => {
     var min = Math.min(rowA, rowB)
     var max = Math.max(rowA, rowB)
     return row >= min && row <= max
   }
 
-  isCellInSelectionRange(cell, cellA, cellB) {
+  isCellInSelectionRange = (cell, cellA, cellB) => {
     if (!cell || !cellA || !cellB) return false
     var minRow = Math.min(cellA.row, cellB.row)
     var maxRow = Math.max(cellA.row, cellB.row)
@@ -140,20 +112,12 @@ class Row extends React.Component {
   }
 
   render() {
-    console.log('render row item', this.props.item)
-    // var that = this
     var item = this.props.item
     var itemDocument = item.document
     var virtualID = item.virtualID
     var columns = this.props.columns || []
-    // var renderValue = this.props.renderValue
-    // var onFocusCell = this.onFocusCell
-    // var onEditCell = this.onEditCell
-    // var onExitEditCell = this.onExitEditCell
     var focusedCell = this.props.focusedCell
-    // var editingCell = this.props.editingCell
     var selectionRange = this.props.selectionRange
-    // var selectionFillHandleRange = this.props.selectionFillHandleRange
     var fillHandleCell =
       selectionRange.cellA && selectionRange.cellB
         ? {
@@ -161,40 +125,9 @@ class Row extends React.Component {
           col: Math.max(selectionRange.cellA.col, selectionRange.cellB.col),
         }
         : null
-    var rowStyle = ''
-    switch(this.props.item.status) {
-      case 'loaded':
-      case 'header':
-      case 'new':
-      case 'lazzy':
-      case 'loaded':
-      case 'deleted':
-      case 'imported':
-      case 'sesupdated':
-      case 'staging':
-      case 'checking':
-      case 'selecte':
-        rowStyle += 'flex relative no-underline br b--silver mv0 '
-        break;
-    }
-    // if (focusedCell && focusedCell.row === virtualID) {
-    //   rowStyle += 'list-row-selected '
-    // }
-    // if (this.props.isChecking) {
-    //   rowStyle += 'list-row-checking '
-    // }
-    // if (this.props.item.isChecked) {
-    //   rowStyle += 'list-row-checked '
-    // }
-    // rowStyle += `list-row-${this.props.item.status}`
-    // rowStyle += virtualID === 0 ? ' first-row' : ''
-    // var animationStyle = this.props.item.status === STATUS.SESUPDATED
-    //  ? 'row-animation'
-    //  : ''
     if (!itemDocument) {
       itemDocument = {}
     }
-    // var id = itemDocument.id ? itemDocument.id : ''
     const handlers = {
       editCell: this.onEnter,
       exitEdit: this.onEscape,
@@ -209,13 +142,18 @@ class Row extends React.Component {
           this.rowlist = input
         }}
         handlers={handlers}
-        className={rowStyle}
+        className="flex relative no-underline br b--silver mv0"
         style={{ height: '35px' }}
       >
         <div
+            onMouseEnter={() => this.setState({ isHoveringIndexCell: true })}
+            onMouseLeave={() => this.setState({ isHoveringIndexCell: false })}
             className="flex items-center justify-center bl br bb b--silver"
             style={{minWidth: '50px', height: '35px'}} >
-          <div className={this.props.isChecking ? 'db' : 'dn'}>
+          <div
+            className={
+              this.props.isChecking || this.state.isHoveringIndexCell
+              ? 'db' : 'dn'}>
             <input
               ref={input => {
                 this.rowCheckBox = input
@@ -225,7 +163,10 @@ class Row extends React.Component {
               checked={item.isChecked || false}
             />
           </div>
-          <div className={this.props.isChecking ? 'dn' : 'db'}>
+          <div
+            className={
+              this.props.isChecking || this.state.isHoveringIndexCell
+              ? 'dn' : 'db'}>
             {new Intl.NumberFormat().format(virtualID + 1)}
           </div>
         </div>
@@ -315,89 +256,54 @@ class Row extends React.Component {
     })
   }
 
-  handleCheckRow(ev) {
+  handleCheckRow = (ev) => {
     this.props.onCheckRowChange(this.props.item.document.id, ev.target.checked)
   }
+
   handleEdit = () => {
     this.props.onEditItem(this.props.item)
-    // this.props.onEdit(this.props.item, this.props.context, this.onFormClose)
-  }
-  handleRemove() {
-    this.props.onRemove(this.props.item, this.props.context, this.onFormClose)
-  }
-  onFocusCell(cell) {
-    this.props.onFocusCell(cell)
-  }
-  onEditCell(cell) {
-    this.props.onEditCell(cell)
-  }
-  onExitEditCell(cell) {
-    this.props.onExitEditCell(cell)
-  }
-  onEnter() {
-    this.onEditCell(this.props.focusedCell)
-  }
-  onEscape() {
-    this.onExitEditCell(this.props.editingCell)
-  }
-  onStoreChange() {
-    // var selectionFillHandleRange = null
-    // var store = Store.get()
-    // var fillHandleCell = {
-    //   row: Math.max(
-    //     store.selectionRange.cellA.row,
-    //     store.selectionRange.cellB.row
-    //   ),
-    //   col: Math.max(
-    //     store.selectionRange.cellA.col,
-    //     store.selectionRange.cellB.col
-    //   ),
-    // }
-    // if (store.selectionFillHandleRange) {
-    // fillHandleCell = {
-    //   row: Math.max(
-    //     store.selectionFillHandleRange.cellA.row,
-    //     store.selectionFillHandleRange.cellB.row
-    //   ),
-    //   col: Math.max(
-    //     store.selectionFillHandleRange.cellA.col,
-    //     store.selectionFillHandleRange.cellB.col
-    //   ),
-    // }
-    //   selectionFillHandleRange = {}
-    //   selectionFillHandleRange.cellA = {}
-    //   selectionFillHandleRange.cellB = {}
-    //   selectionFillHandleRange.cellA = store.selectionFillHandleRange.cellA
-    //   selectionFillHandleRange.cellB = store.selectionFillHandleRange.cellB
-    // }
-    // var selectionRange = {}
-    // selectionRange.cellA = {}
-    // selectionRange.cellB = {}
-    // selectionRange.cellA = store.selectionRange.cellA
-    // selectionRange.cellB = store.selectionRange.cellB
-    // this.setState({
-    //   selectedCell: store.focusedCell,
-    //   editingCell: store.editingCell,
-    //   selectionRange: selectionRange,
-    //   fillHandleCell: fillHandleCell,
-    //   selectionFillHandleRange: selectionFillHandleRange,
-    // })
   }
 
-  onFormClose() {
+  handleRemove = () => {
+    this.props.onRemove(this.props.item, this.props.context, this.onFormClose)
+  }
+
+  onFocusCell = (cell) => {
+    this.props.onFocusCell(cell)
+  }
+
+  onEditCell = (cell) => {
+    this.props.onEditCell(cell)
+  }
+
+  onExitEditCell = (cell) => {
+    this.props.onExitEditCell(cell)
+  }
+
+  onEnter = () => {
+    this.onEditCell(this.props.focusedCell)
+  }
+
+  onEscape = () => {
+    this.onExitEditCell(this.props.editingCell)
+  }
+
+  onFormClose = () => {
     // ReactDom.findDOMNode(this).focus()
     if (this.focus) {
       this.focus()
     } else { console.log('No this to focus on Row.react.js') }
   }
-  onOpenForm() {
+
+  onOpenForm = () => {
     // como os componentes filhos não implementam esta key, é possivél abrir um formulario com uma celula em modo de edição
     // Por isso antes de abrir o formulario vamos validar que não tem celulas em modo de edição
     if (!this.props.editingCell) {
       this.props.onEdit(this.props.item, this.props.context, this.onFormClose)
     }
   }
-  onSpace() {
+
+  onSpace = () => {
     var checked
     if (window && document) { // wat
       checked = ReactDom.findDOMNode(this.rowCheckBox).checked
@@ -405,6 +311,7 @@ class Row extends React.Component {
     this.props.onCheckRowChange(this.props.item.document.id, !checked)
   }
 }
+
 Row.propTypes = {
   item: PropTypes.object,
   context: PropTypes.object,
