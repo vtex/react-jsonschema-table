@@ -1,8 +1,10 @@
-import { FORM_ACTIONS } from '../actions/form-actions'
+import { FORM_ACTIONS } from 'table/actions'
 
 const initialState = {
-  showModal: false,
-  selectedItem: {},
+  form: {
+    showModal: false,
+    selectedItem: {},
+  },
 }
 
 export default (state = initialState, action) => {
@@ -11,9 +13,12 @@ export default (state = initialState, action) => {
     case FORM_ACTIONS.HIDE_MODAL:
       return {
         ...state,
-        showModal: action.payload.showModal,
-        selectedItem: action.payload.selectedItem || {},
+        form: {
+          selectedItem: action.payload.selectedItem || {},
+          showModal: action.payload.showModal,
+        },
       }
+
     default:
       return state
   }

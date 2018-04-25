@@ -15,11 +15,11 @@ import {
   updateItem,
   copyFromSelectedRange,
 } from '../actions/items-actions'
-import { showFormModal } from '../actions/form-actions'
+import { showFormModal } from 'table/actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    form: state.form,
+    form: state.table.form,
     context: ownProps.context,
     fetchSize: ownProps.fetchSize,
     UIschema: ownProps.UIschema,

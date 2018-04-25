@@ -33,9 +33,9 @@ const schema = {
           type: 'number',
           title: 'Number',
         },
-      }
+      },
     },
-  }
+  },
 }
 
 const UIschema = {
@@ -60,7 +60,7 @@ const UIschema = {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['id', 'name', 'email', 'lastName', 'address'],
+          fields: ['name', 'email', 'lastName', 'address'],
         },
       ],
     },

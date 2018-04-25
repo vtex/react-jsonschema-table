@@ -27,14 +27,10 @@ import { Provider } from 'react-redux'
 import configureStore from 'redux/configureStore'
 import ToolBarContainer from 'toolBar/containers/ToolBarContainer'
 import Table from './containers/Table'
-import Form from './containers/Form'
+import FormContainer from 'table/containers/FormContainer'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
-import {
-  undo,
-  redo,
-  preLoadItems,
-} from './actions/items-actions'
+import { undo, redo, preLoadItems } from './actions/items-actions'
 // import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
 // import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
 
@@ -56,7 +52,7 @@ fontawesome.library.add(
   faSave,
   faTimes,
   faPlus,
-  faExpand,
+  faExpand
 )
 
 const { store, persistor } = configureStore()
@@ -73,10 +69,11 @@ class JsonSchemaTable extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (
-        prevProps.items && this.props.items &&
-        prevProps.items.length !== this.props.items.length &&
-        this.props.items.length > 0
-      ) {
+      prevProps.items &&
+      this.props.items &&
+      prevProps.items.length !== this.props.items.length &&
+      this.props.items.length > 0
+    ) {
       // more items received by props (not the final solution)
       // To do: fix 'getMoreItems'
       store.dispatch(preLoadItems(this.props.items))
@@ -93,7 +90,7 @@ class JsonSchemaTable extends React.Component {
     const handleUndo = () => {
       store.dispatch(undo(schema, lang))
     }
-  
+
     const handleRedo = () => {
       store.dispatch(redo(schema, lang))
     }
@@ -104,39 +101,39 @@ class JsonSchemaTable extends React.Component {
     return (
       <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
-          <IntlProvider locale="en-US" messages={enUSMessages}>
-            <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
-              <ToolBarContainer
-                context={this.props.context}
-                schema={this.props.schema}
-                UIschema={this.props.UIschema}
-                indexedFields={this.props.indexedFields}
-                lang={lang}
-              />
-              <Table
-                ref={ref => {
-                  this.table = ref
-                }}
-                context={this.props.context}
-                UIschema={this.props.UIschema}
-                schema={this.props.schema}
-                fetchSize={this.props.fetchSize}
-                lang={lang}
-              />
-              <Form
-                schema={this.props.schema}
-                UIschema={this.props.UIschema}
-                onOpenLink={this.handleOpenLink}
-                onAddDocument={this.handleAddRowAndOpen}
-              />
-              {/* <NotificationSystem
+        <IntlProvider locale="en-US" messages={enUSMessages}>
+          <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
+            <ToolBarContainer
+              context={this.props.context}
+              schema={this.props.schema}
+              UIschema={this.props.UIschema}
+              indexedFields={this.props.indexedFields}
+              lang={lang}
+            />
+            <Table
+              ref={ref => {
+                this.table = ref
+              }}
+              context={this.props.context}
+              UIschema={this.props.UIschema}
+              schema={this.props.schema}
+              fetchSize={this.props.fetchSize}
+              lang={lang}
+            />
+            <FormContainer
+              schema={this.props.schema}
+              UIschema={this.props.UIschema}
+              onOpenLink={this.handleOpenLink}
+              onAddDocument={this.handleAddRowAndOpen}
+            />
+            {/* <NotificationSystem
 
             ref={ref => {
               this.msg = ref
             }}
           /> */}
-            </HotKeys>
-          </IntlProvider>
+          </HotKeys>
+        </IntlProvider>
         {/* </PersistGate> */}
       </Provider>
     )
