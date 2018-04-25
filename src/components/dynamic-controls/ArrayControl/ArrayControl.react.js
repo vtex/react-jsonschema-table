@@ -140,7 +140,7 @@ class ArrayControl extends React.Component {
           <ControlFactory {...props} />
           <Icon
             key={`card-remove-${index}`}
-            className={`top-1 right-0 z-4 absolute white ${iconColor} mr2 ml1 br-100 f1 w2 h2 pt1 tc nt3 dim fa fa-remove pointer`}
+            className={`top-1 right-0 z-4 absolute white ${iconColor} mr2 ml1 br-100 f3 pv1 ph2 tc nt3 dim fa fa-times pointer`}
             onClick={this.handleRemoveLink}
             id={index}
           />
