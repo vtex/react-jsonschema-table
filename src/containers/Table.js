@@ -15,7 +15,7 @@ import {
   updateItem,
   copyFromSelectedRange,
 } from '../actions/items-actions'
-import { showFormModal } from '../actions/form-actions'
+import { showFormModal } from 'table/actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
