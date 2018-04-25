@@ -1,4 +1,4 @@
-import { FORM_ACTIONS } from '../actions/form-actions'
+import { FORM_ACTIONS } from 'table/actions'
 
 const initialState = {
   showModal: false,
