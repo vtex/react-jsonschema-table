@@ -1,3 +1,5 @@
+// this reducer is deprecated since redux module refactor
+
 import * as types from '../actions/ActionTypes'
 
 const initialState = {
