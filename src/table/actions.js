@@ -1,6 +1,6 @@
 /** ACTION TYPES **/
 
-const NAME = `RJST/modal`
+const NAME = 'RJST/modal'
 
 export const FORM_ACTIONS = {
   SHOW_MODAL: `${NAME}/SHOW_MODAL`,
