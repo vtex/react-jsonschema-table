@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component } from 'react'
 import { HotKeys } from 'react-hotkeys'
 import Modal from '@vtex/styleguide/lib/Modal'
 
-import SectionsControl from 'components/form/SectionsControl.react'
+import FormSection from './FormSection'
 
-class Form extends React.Component {
+class Form extends Component {
   constructor(props) {
     super(props)
 
@@ -49,7 +49,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { showModal, selectedItem, UIschema } = this.props
+    const { schema, showModal, selectedItem, UIschema } = this.props
     const { validationErrors } = this.state
 
     if (!showModal || !selectedItem) {
@@ -93,18 +93,20 @@ class Form extends React.Component {
               }}
               className="dib w-100 pt1 overflow-y-scroll vh-75"
             >
-              <SectionsControl
-                item={item}
-                labels={labels}
-                validationErrors={validationErrors}
-                configuration={UIschema}
-                setChange={this.setChange}
-                setChanges={this.setChanges}
-                {...this.props}
-              />
-            </div>
-            <div className="w-30 h-inherit pt1 overflow-y-scroll flex-column">
-              <div className="h-inherit pt1 overflow-y-scroll" />
+              {sections.map((section, index) => (
+                <FormSection
+                  key={index}
+                  configuration={UIschema}
+                  labels={labels}
+                  item={item}
+                  schema={schema}
+                  section={section}
+                  setChange={this.setChange}
+                  setChanges={this.setChanges}
+                  UIschema={UIschema}
+                  validationErrors={validationErrors}
+                />
+              ))}
             </div>
           </div>
         </Modal>
@@ -112,6 +114,7 @@ class Form extends React.Component {
     )
   }
 }
+
 Form.propTypes = {
   hideFormModal: PropTypes.func,
   schema: PropTypes.any,
