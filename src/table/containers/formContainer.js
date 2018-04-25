@@ -7,8 +7,8 @@ import Form from 'table/components/Row/Form'
 
 const mapStateToProps = state => {
   return {
-    showModal: state.form.showModal || false,
-    selectedItem: state.form.selectedItem,
+    showModal: state.table.form.showModal || false,
+    selectedItem: state.table.form.selectedItem,
   }
 }
 

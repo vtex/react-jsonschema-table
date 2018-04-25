@@ -11,9 +11,11 @@ const rootReducer = (state = {}, action) => {
       selectionRange,
       selectionFillHandleRange,
     }),
-    table: table(state.table, action),
+    table: {
+      ...table(state.table, action),
+      form: form(state.table.form, action),
+    },
     filter: filter(state.filter, action),
-    form: form(state.form, action),
   }
 }
 
