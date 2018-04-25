@@ -1,8 +1,10 @@
+import { PROJECT_NAME } from '../redux/constants'
+
 /** ACTION TYPES **/
 
-const NAME = 'RJST/modal'
+const NAME = `${PROJECT_NAME}/table`
 
-export const FORM_ACTIONS = {
+export const TABLE_ACTIONS = {
   SHOW_MODAL: `${NAME}/SHOW_MODAL`,
   HIDE_MODAL: `${NAME}/HIDE_MODAL`,
 }
@@ -11,7 +13,7 @@ export const FORM_ACTIONS = {
 
 export function showFormModal(document) {
   return {
-    type: FORM_ACTIONS.SHOW_MODAL,
+    type: TABLE_ACTIONS.SHOW_MODAL,
     payload: {
       showModal: true,
       selectedItem: document,
@@ -21,7 +23,7 @@ export function showFormModal(document) {
 
 export function hideFormModal() {
   return {
-    type: FORM_ACTIONS.HIDE_MODAL,
+    type: TABLE_ACTIONS.HIDE_MODAL,
     payload: {
       showModal: false,
     },

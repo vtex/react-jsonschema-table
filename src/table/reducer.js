@@ -1,4 +1,4 @@
-import { FORM_ACTIONS } from 'table/actions'
+import { TABLE_ACTIONS } from 'table/actions'
 
 const initialState = {
   form: {
@@ -9,8 +9,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FORM_ACTIONS.SHOW_MODAL:
-    case FORM_ACTIONS.HIDE_MODAL:
+    case TABLE_ACTIONS.SHOW_MODAL:
+    case TABLE_ACTIONS.HIDE_MODAL:
       return {
         ...state,
         form: {
