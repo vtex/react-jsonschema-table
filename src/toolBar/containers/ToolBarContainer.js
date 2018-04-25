@@ -7,8 +7,8 @@ import {
   saveChanges,
   deleteCheckedItems,
   discardChanges,
-} from '../../actions/items-actions'
-import { actionCreators } from '../actions'
+} from 'actions/items-actions'
+import { actionCreators } from 'toolBar/actions'
 import uuid from 'uuid'
 
 const mapStateToProps = (state, ownProps) => {
