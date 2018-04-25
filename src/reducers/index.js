@@ -13,7 +13,7 @@ const rootReducer = (state = {}, action) => {
     }),
     table: table(state.table, action),
     filter: filter(state.filter, action),
-    form: form(state.form, action),
+    form: form(state.table.form, action),
   }
 }
 
