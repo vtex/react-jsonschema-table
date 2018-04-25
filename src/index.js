@@ -24,8 +24,8 @@ import keyMap from './KeyMap'
 import { SetFetcher } from './actions/FetcherWrapper'
 import { Provider } from 'react-redux'
 // import { PersistGate } from 'redux-persist/integration/react'
-import configureStore from './stores/configureStore'
-import ToolBar from './containers/ToolBar'
+import configureStore from 'redux/configureStore'
+import ToolBarContainer from 'toolBar/containers/ToolBarContainer'
 import Table from './containers/Table'
 import Form from './containers/Form'
 import { IntlProvider } from 'react-intl'
@@ -106,7 +106,7 @@ class JsonSchemaTable extends React.Component {
         {/* <PersistGate loading={null} persistor={persistor}> */}
           <IntlProvider locale="en-US" messages={enUSMessages}>
             <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
-              <ToolBar
+              <ToolBarContainer
                 context={this.props.context}
                 schema={this.props.schema}
                 UIschema={this.props.UIschema}
