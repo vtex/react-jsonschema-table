@@ -199,7 +199,8 @@ class FixedToolbar extends React.Component {
 
   handleSaveAll = () => {
     this.setState({ isSavingMode: true })
-    this.props.onSave()
+    // this.props.onSave()
+    this.props.stagingItemsCallback(this.props.items.staging)
   }
 
   handleExport = () => {
@@ -271,6 +272,8 @@ FixedToolbar.propTypes = {
   hiddenFields: PropTypes.array,
   changeColumnVisibility: PropTypes.func,
   indexedFields: PropTypes.array,
+  stagingItemsCallback: PropTypes.func,
+  items: PropTypes.array,
 }
 
 export default FixedToolbar

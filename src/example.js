@@ -71,19 +71,17 @@ const indexedFields = ['name', 'email']
 
 class App extends Component {
   render() {
-    const props = {
-      items: [],
-      UIschema,
-      schema,
-      onGetItems: this.handleLoadDocuments,
-      indexedFields,
-      onSort: this.handleSort,
-      context: {},
-    }
 
     return (
       <div>
-        <JsonSchemaTable className="" {...props} />
+        <JsonSchemaTable
+          schema={schema}
+          stagingItemsCallback={(docs) => {
+            console.log('save this staging documents:', docs)
+          }}
+          items={[]}
+          context={{}}
+          UIschema={UIschema} />
       </div>
     )
   }

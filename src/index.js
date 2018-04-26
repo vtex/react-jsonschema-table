@@ -72,6 +72,7 @@ class JsonSchemaTable extends React.Component {
               UIschema={this.props.UIschema}
               indexedFields={this.props.indexedFields}
               lang={lang}
+              stagingItemsCallback={this.props.stagingItemsCallback}
             />
             <TableContainer
               ref={ref => {
@@ -104,6 +105,7 @@ JsonSchemaTable.propTypes = {
   context: PropTypes.object,
   fetchSize: PropTypes.number,
   lang: PropTypes.string,
+  stagingItemsCallback: PropTypes.func,
 }
 
 JsonSchemaTable.contextTypes = {
