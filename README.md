@@ -10,7 +10,7 @@
 ## Install
 
 ```bash
-npm install --save react-modern-library-boilerplate
+npm install --save react-jsonschema-table
 ```
 
 ## Simple Usage
