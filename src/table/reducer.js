@@ -36,17 +36,14 @@ export default (state = initialState, action) => {
           cellA: action.payload.cell,
           cellB: action.payload.cell,
         },
-        editingCell: cell,
+        editingCell: action.payload.cell,
       }
     }
 
     case TABLE_ACTIONS.EXIT_EDIT_CELL: {
-      return { // test: for me exit editing should always set null...
+      return {
         ...state,
-        editingCell:
-          JSON.stringify(action.payload.cell) === JSON.stringify(state.editingCell)
-          ? null
-          : state.editingCell,
+        editingCell: null,
       }
     }
 

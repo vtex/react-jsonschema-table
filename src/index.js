@@ -26,7 +26,7 @@ import { Provider } from 'react-redux'
 // import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from 'redux/configureStore'
 import ToolBarContainer from 'toolBar/containers/ToolBarContainer'
-import Table from './containers/Table'
+import TableContainer from 'table/containers/TableContainer'
 import FormContainer from 'table/containers/FormContainer'
 import { IntlProvider } from 'react-intl'
 import enUSMessages from './i18n/en-US_messages.json'
@@ -110,7 +110,7 @@ class JsonSchemaTable extends React.Component {
               indexedFields={this.props.indexedFields}
               lang={lang}
             />
-            <Table
+            <TableContainer
               ref={ref => {
                 this.table = ref
               }}
