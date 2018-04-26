@@ -26,6 +26,8 @@ const mapStateToProps = (state, ownProps) => {
     UIschema: ownProps.UIschema,
     schema: ownProps.schema,
     hiddenFields: state.filter.hiddenFields,
+    items: state.items,
+    stagingItemsCallback: ownProps.stagingItemsCallback,
   }
 }
 
