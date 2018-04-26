@@ -1,5 +1,5 @@
 import * as types from '../actions/ActionTypes'
-import Status from '../constants/Status'
+import { STATUS } from 'table/constants'
 import Ajv from 'ajv'
 import ajvLocalize from 'ajv-i18n'
 const ajv = new Ajv({ allErrors: true })
@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
         const newItem = {
           virtualIndex: newState.source.length,
           document: null,
-          status: Status.LAZZY,
+          status: STATUS.LAZZY,
         }
         newState.source.push(newItem)
       }
@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
         // Get the item from the list and sets the document attibute and changes the document Status to LOADED
         var initialItem = newState.source[index + rowStart]
         initialItem.document = item.document
-        initialItem.status = Status.LOADED
+        initialItem.status = STATUS.LOADED
       })
 
       return newState
@@ -63,8 +63,8 @@ export default (state = initialState, action) => {
       const { rowIndex, schema, lang } = action
       const newState = Object.assign({}, state)
       const documentId = state.source[rowIndex].document.id
-      addStaging(newState, documentId, Status.DELETED, null, schema, lang)
-      addToHistoryChanges(newState, documentId, Status.DELETED, null)
+      addStaging(newState, documentId, STATUS.DELETED, null, schema, lang)
+      addToHistoryChanges(newState, documentId, STATUS.DELETED, null)
       return newState
     }
 
@@ -86,8 +86,8 @@ export default (state = initialState, action) => {
     case types.ADD_ITEM: {
       const { id, schema, lang } = action
       const newState = Object.assign({}, state)
-      addStaging(newState, id, Status.NEW, { id: { value: id } }, schema, lang)
-      addToHistoryChanges(newState, id, Status.NEW, null)
+      addStaging(newState, id, STATUS.NEW, { id: { value: id } }, schema, lang)
+      addToHistoryChanges(newState, id, STATUS.NEW, null)
       return newState
     }
 
@@ -162,7 +162,7 @@ export default (state = initialState, action) => {
         }
         const stagingItem = newState.staging[documentId]
         console.log('stagingItem', documentId)
-        if (stagingItem.status === Status.LOADED) {
+        if (stagingItem.status === STATUS.LOADED) {
           const loadedItem = newState.source.find(
             item => item.document && item.document.id === documentId
           )
@@ -178,12 +178,12 @@ export default (state = initialState, action) => {
           continue
         }
 
-        if (stagingItem.status === Status.NEW) {
+        if (stagingItem.status === STATUS.NEW) {
           const newItem = Object.assign(
             {},
             { document: newState.staging[documentId].document },
             {
-              status: Status.LOADED,
+              status: STATUS.LOADED,
             }
           )
           newState.source.push(newItem)
@@ -194,7 +194,7 @@ export default (state = initialState, action) => {
           continue
         }
 
-        if (stagingItem.status === Status.DELETED) {
+        if (stagingItem.status === STATUS.DELETED) {
           newState.source = newState.source.filter(
             item => item.document.id !== documentId
           )
@@ -216,7 +216,7 @@ export default (state = initialState, action) => {
         addStaging(
           newState,
           change.id,
-          change.changes['id'] ? Status.NEW : null,
+          change.changes['id'] ? STATUS.NEW : null,
           change.changes,
           schema,
           lang

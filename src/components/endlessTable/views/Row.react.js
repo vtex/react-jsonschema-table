@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import _ from 'underscore'
-import STATUS from '../../../constants/Status'
 import { HotKeys } from 'react-hotkeys'
 import PropTypes from 'prop-types'
 import Cell from './Cell.react'
