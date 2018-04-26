@@ -1,61 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import 'vtex-tachyons'
-import fontawesome from '@fortawesome/fontawesome'
-import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
-import faExclamation from '@fortawesome/fontawesome-free-solid/faExclamation'
-import faPencil from '@fortawesome/fontawesome-free-solid/faPencilAlt'
-import facolumns from '@fortawesome/fontawesome-free-solid/faColumns'
-import faDownload from '@fortawesome/fontawesome-free-solid/faCloudDownloadAlt'
-import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
-import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
-import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
-import faCheckSquare from '@fortawesome/fontawesome-free-solid/faCheckSquare'
-import faSquare from '@fortawesome/fontawesome-free-solid/faSquare'
-import faFilter from '@fortawesome/fontawesome-free-solid/faFilter'
-import faPlusSquare from '@fortawesome/fontawesome-free-solid/faPlusSquare'
-import faSave from '@fortawesome/fontawesome-free-solid/faSave'
-import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
-import faExpand from '@fortawesome/fontawesome-free-solid/faExpand'
 import { HotKeys } from 'react-hotkeys'
-import keyMap from './KeyMap'
-
-import { SetFetcher } from './actions/FetcherWrapper'
+import keyMap from 'utils/KeyMap'
+import 'utils/icons'
+import 'vtex-tachyons'
 import { Provider } from 'react-redux'
-// import { PersistGate } from 'redux-persist/integration/react'
+import { IntlProvider } from 'react-intl'
+
+import { SetFetcher } from 'actions/FetcherWrapper'
 import configureStore from 'redux/configureStore'
 import ToolBarContainer from 'toolBar/containers/ToolBarContainer'
 import TableContainer from 'table/containers/TableContainer'
 import FormContainer from 'table/containers/FormContainer'
-import { IntlProvider } from 'react-intl'
-import enUSMessages from './i18n/en-US_messages.json'
-import { undo, redo, preLoadItems } from './actions/items-actions'
-// import ptBRMessages from '!json-loader!./js/i18n/pt-BR_messages.json'
-// import esARMessages from '!json-loader!./js/i18n/es-AR_messages.json'
+import enUSMessages from 'i18n/en-US_messages.json'
+import { undo, redo, preLoadItems } from 'actions/items-actions'
 
-// addLocaleData([...en, ...es, ...pt])
-
-fontawesome.library.add(
-  facolumns,
-  faCheck,
-  faPencil,
-  faExclamation,
-  faTrash,
-  faDownload,
-  faUndo,
-  faSearch,
-  faSquare,
-  faCheckSquare,
-  faFilter,
-  faPlusSquare,
-  faSave,
-  faTimes,
-  faPlus,
-  faExpand
-)
-
-const { store, persistor } = configureStore()
+const { store } = configureStore()
 
 class JsonSchemaTable extends React.Component {
   constructor(props) {
@@ -82,10 +42,12 @@ class JsonSchemaTable extends React.Component {
 
   render() {
     const { schema } = this.props
+
     if (!schema || Object.keys(schema).length === 0) {
       return <div>jsonschema table cannot render without a jsonschema!</div>
     }
-    const lang = 'en'
+
+    const lang = 'en' // To do: i18 for realz
 
     const handleUndo = () => {
       store.dispatch(undo(schema, lang))
@@ -94,13 +56,14 @@ class JsonSchemaTable extends React.Component {
     const handleRedo = () => {
       store.dispatch(redo(schema, lang))
     }
+
     const handlers = {
       undo: handleUndo,
       redo: handleRedo,
     }
+
     return (
       <Provider store={store}>
-        {/* <PersistGate loading={null} persistor={persistor}> */}
         <IntlProvider locale="en-US" messages={enUSMessages}>
           <HotKeys keyMap={keyMap} handlers={handlers} className="outline-0">
             <ToolBarContainer
@@ -126,15 +89,8 @@ class JsonSchemaTable extends React.Component {
               onOpenLink={this.handleOpenLink}
               onAddDocument={this.handleAddRowAndOpen}
             />
-            {/* <NotificationSystem
-
-            ref={ref => {
-              this.msg = ref
-            }}
-          /> */}
           </HotKeys>
         </IntlProvider>
-        {/* </PersistGate> */}
       </Provider>
     )
   }
