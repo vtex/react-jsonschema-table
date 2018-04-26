@@ -1,21 +1,16 @@
 import { connect } from 'react-redux'
-import Table from '../components/endlessTable/views/Table.react'
-import Status from '../constants/Status'
-import {
-  editCell,
-  exitEditCell,
-  selectCell,
-  selectFillHandleRange,
-  selectCellsRange,
-} from '../actions/table-actions'
+import { bindActionCreators } from 'redux'
+
+import Table from 'components/endlessTable/views/Table.react'
+import { STATUS } from 'table/constants'
+import { actionCreators } from 'table/actions'
 import {
   removeItem,
   fetchItems,
   checkItemChange,
   updateItem,
   copyFromSelectedRange,
-} from '../actions/items-actions'
-import { showFormModal } from 'table/actions'
+} from 'actions/items-actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -42,7 +37,7 @@ function ListITems(state) {
   const newItems = []
   if (state.items.staging) {
     Object.keys(state.items.staging).forEach(id => {
-      if (state.items.staging[id].status === Status.NEW) {
+      if (state.items.staging[id].status === STATUS.NEW) {
         newItems.push(state.items.staging[id])
       }
     })
@@ -78,9 +73,13 @@ function ListITems(state) {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const bindedActions = bindActionCreators(actionCreators, dispatch)
+
   return {
+    ...bindedActions,
+
     onEditItem: (doc) => {
-      dispatch(showFormModal(doc))
+      dispatch(actionCreators.showFormModal(doc))
     },
 
     onFetchItems: (context, fields, skip, size, where, sort) => {
@@ -96,23 +95,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
 
     onSelectCellsRange: (cellA, cellB) => {
-      dispatch(selectCellsRange(cellA, cellB))
+      dispatch(actionCreators.selectCellsRange(cellA, cellB))
     },
 
     onSelectFillHandleRange: (cellA, cellB) => {
-      dispatch(selectFillHandleRange(cellA, cellB))
+      dispatch(actionCreators.selectFillHandleRange(cellA, cellB))
     },
 
     onFocusCell: cell => {
-      dispatch(selectCell(cell))
+      dispatch(actionCreators.selectCell(cell))
     },
 
     onEditCell: cell => {
-      dispatch(editCell(cell))
+      dispatch(actionCreators.editCell(cell))
     },
 
     onExitEditCell: cell => {
-      dispatch(exitEditCell(cell))
+      dispatch(actionCreators.exitEditCell(cell))
     },
     setChanges: (id, changes) => {
       dispatch(updateItem(id, ownProps.schema, changes, ownProps.lang))
@@ -124,6 +123,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-const TableContainer = connect(mapStateToProps, mapDispatchToProps)(Table)
-
-export default TableContainer
+export default connect(mapStateToProps, mapDispatchToProps)(Table)

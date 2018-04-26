@@ -1,5 +1,5 @@
 // LISTA DE STATUS POSSÍVEIS PARA UM ITEM
-export default {
+export const STATUS =  {
   LAZZY: 'lazzy',
   NEW: 'new',
   LOADED: 'loaded',
