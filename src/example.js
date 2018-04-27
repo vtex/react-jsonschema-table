@@ -79,7 +79,19 @@ class App extends Component {
           stagingItemsCallback={(docs) => {
             console.log('save this staging documents:', docs)
           }}
-          items={[]}
+          items={[
+            {
+              virtualID: 0,
+              document: {
+                id: '4c177c9e-499e-11e8-81e8-88f7b34fff36',
+                email: 'jhon@doe.com',
+                name: 'Jhon',
+                lastName: 'Doe',
+                address: {},
+              },
+              status: 'loaded',
+            }
+          ]}
           context={{}}
           UIschema={UIschema} />
       </div>
