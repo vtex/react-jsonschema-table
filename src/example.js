@@ -94,7 +94,7 @@ class App extends Component {
             {
               virtualID: 1,
               document: {
-                id: '4c177c9e-499e-11e8-81e8-88f7b34fff36',
+                id: '2316cc32-47f2-11e8-81e8-915df33538ea',
                 email: 'jane@doe.com',
                 name: 'Jane',
                 lastName: 'Doe',

@@ -51,7 +51,15 @@ function ListITems(state) {
     } else {
       staging = {}
     }
+
+    // shallow merge
     var newItem = Object.assign({}, item, staging)
+    // little deeper merge. TO DO: make deep merge...
+    newItem.document = {
+      ...item.document || {},
+      ...staging.document || {},
+    }
+
     if (state.items.checkedItems.includes(newItem.document.id)) {
       newItem.isChecked = true
     }
