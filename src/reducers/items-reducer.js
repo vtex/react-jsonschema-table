@@ -105,7 +105,7 @@ export default (state = initialState, action) => {
           }
         }
       }
-      addStaging(newState, id, null, hydratedChanges, schema, lang)
+      addStaging(newState, id, null, hydratedChanges, schema, lang, state)
       addToHistoryChanges(newState, id, null, hydratedChanges)
       return newState
     }
@@ -287,7 +287,7 @@ const addToHistoryChanges = (newState, id, status, changes) => {
   newState.historyIndex++
 }
 
-const addStaging = (newState, id, status, changes, schema, lang) => {
+const addStaging = (newState, id, status, changes, schema, lang, state) => {
   const { staging, source } = newState
   const newStagingDocument = {}
   const item = source.find(item => item.document && item.document.id === id)
@@ -314,16 +314,14 @@ const addStaging = (newState, id, status, changes, schema, lang) => {
 
   // Shallow merge of the existing staging with the new staging
 
-  staging[id].document = Object.assign(
-    {},
-    staging[id].document,
-    newStagingDocument
-  )
+  staging[id].document = {
+    ...staging[id].document,
+    ...newStagingDocument
+  }
+
   // If the item has status DELETED, keep that status
-  staging[id].status = status || staging[id].status
-  // staging[id].status && staging[id].status === Status.DELETED
-  //  ? staging[id].status
-  //  : status
+  const sourceItem = state && state.source.find(i => i.document.id === id)
+  staging[id].status = sourceItem ? STATUS.STAGING : status || staging[id].status
 
   // Validate the document usign the JSONSchema
 

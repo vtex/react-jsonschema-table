@@ -273,7 +273,7 @@ FixedToolbar.propTypes = {
   changeColumnVisibility: PropTypes.func,
   indexedFields: PropTypes.array,
   stagingItemsCallback: PropTypes.func,
-  items: PropTypes.array,
+  items: PropTypes.object,
 }
 
 export default FixedToolbar
