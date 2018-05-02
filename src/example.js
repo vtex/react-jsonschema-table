@@ -80,8 +80,6 @@ const UIschema = {
   },
 }
 
-const indexedFields = ['name', 'email']
-
 class App extends Component {
   render() {
     return (
