@@ -19,9 +19,11 @@ class CheckBox extends React.Component {
   }
 
   handleChange = e => {
+    const { isEditing, setChange, value } = this.props
+
     e.preventDefault()
-    if (this.props.isEditing) {
-      this.props.setChange(!this.props.value)
+    if (isEditing) {
+      setChange(!value)
     }
   }
 
@@ -33,8 +35,8 @@ class CheckBox extends React.Component {
 
     return (
       <HotKeys
-        ref={ref => {
-          this.checkContainer = ref
+        ref={el => {
+          this.el = el
         }}
         className={`w-100 h-100 flex items-center justify-center outline-0 ${
           this.props.isFocus ? 'bw1 ba b--blue' : ''
@@ -51,9 +53,9 @@ CheckBox.propTypes = {
   hasError: PropTypes.bool,
   isEditing: PropTypes.bool,
   isFocus: PropTypes.bool,
-  onEditCell: PropTypes.func,
+  onEditCell: PropTypes.func.isRequired,
   renderType: PropTypes.string,
-  setChange: PropTypes.func,
+  setChange: PropTypes.func.isRequired,
   value: PropTypes.bool,
 }
 
