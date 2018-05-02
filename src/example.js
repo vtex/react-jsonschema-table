@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { hot } from 'react-hot-loader'
+
 import JsonSchemaTable from './index.js'
 
 const schema = {
@@ -121,7 +123,6 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
-module.hot.accept()
+export default hot(module)(App)
 
-export default App
+ReactDOM.render(<App />, document.getElementById('app'))
