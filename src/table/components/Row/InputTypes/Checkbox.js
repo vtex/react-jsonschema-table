@@ -43,7 +43,9 @@ class CheckBox extends React.Component {
         }`}
         handlers={handlers}
       >
-        <Toggle checked={this.props.value} onClick={this.handleChange} />
+        <div style={{ transform: 'scale(0.7)' }}>
+          <Toggle checked={this.props.value} onClick={this.handleChange} />
+        </div>
       </HotKeys>
     )
   }
