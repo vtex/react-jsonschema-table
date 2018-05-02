@@ -5,7 +5,7 @@ import { HotKeys } from 'react-hotkeys'
 
 import Toggle from '@vtex/styleguide/lib/Toggle'
 
-class CheckBox extends React.Component {
+class Checkbox extends React.Component {
   componentDidUpdate(prevProps) {
     const { isFocus, isEditing } = this.props
 
@@ -51,7 +51,7 @@ class CheckBox extends React.Component {
   }
 }
 
-CheckBox.propTypes = {
+Checkbox.propTypes = {
   hasError: PropTypes.bool,
   isEditing: PropTypes.bool,
   isFocus: PropTypes.bool,
@@ -61,4 +61,4 @@ CheckBox.propTypes = {
   value: PropTypes.bool,
 }
 
-export default CheckBox
+export default Checkbox
