@@ -39,6 +39,10 @@ const schema = {
         },
       },
     },
+    isActive: {
+      type: 'boolean',
+      title: 'Active',
+    },
   },
 }
 
@@ -57,17 +61,17 @@ const UIschema = {
     address: {
       width: 300,
     },
-    birthdate: {
-      width: 200,
+    isActive: {
+      width: 300,
     },
   },
-  list: ['email', 'name', 'lastName', 'address', 'birthdate'],
+  list: ['email', 'name', 'lastName', 'birthdate', 'address', 'isActive'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['name', 'email', 'lastName', 'address', 'birthdate'],
+          fields: ['name', 'email', 'lastName', 'birthdate', 'address', 'isActive'],
         },
       ],
     },
@@ -78,12 +82,11 @@ const indexedFields = ['name', 'email']
 
 class App extends Component {
   render() {
-
     return (
       <div>
         <JsonSchemaTable
           schema={schema}
-          stagingItemsCallback={(docs) => {
+          stagingItemsCallback={docs => {
             console.log('save this staging documents:', docs)
           }}
           items={[
@@ -108,10 +111,11 @@ class App extends Component {
                 address: {},
               },
               status: 'loaded',
-            }
+            },
           ]}
           context={{}}
-          UIschema={UIschema} />
+          UIschema={UIschema}
+        />
       </div>
     )
   }
