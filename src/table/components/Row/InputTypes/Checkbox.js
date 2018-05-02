@@ -6,15 +6,15 @@ import { HotKeys } from 'react-hotkeys'
 import Toggle from '@vtex/styleguide/lib/Toggle'
 
 class CheckBox extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isFocus && !this.props.isFocus) {
+  componentDidUpdate(prevProps) {
+    const { isFocus, isEditing } = this.props
+
+    if (isFocus && !prevProps.isFocus) {
       this.props.onEditCell()
     }
-  }
 
-  componentDidUpdate() {
-    if (this.props.isEditing && window && document) {
-      ReactDOM.findDOMNode(this.checkContainer).focus()
+    if (isEditing && window && document) {
+      ReactDOM.findDOMNode(this.el).focus()
     }
   }
 
