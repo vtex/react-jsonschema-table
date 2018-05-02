@@ -1,12 +1,9 @@
 import React from 'react'
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
-import Moment from 'moment'
-import momentLocalizer from 'react-widgets-moment'
+import { ReactDatez } from 'react-datez'
+import 'react-datez/dist/css/react-datez.css'
 import { HotKeys } from 'react-hotkeys'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-
-momentLocalizer(Moment)
 
 class DateTime extends React.Component {
   constructor(props) {
@@ -56,18 +53,17 @@ class DateTime extends React.Component {
         onDoubleClick={this.props.onEditCell}
         handlers={handlers}
       >
-        <DateTimePicker
-          ref={ref => {
-            this.picker = ref
-          }}
-          format={'llll'}
-          value={this.state.date}
-          defaultValue={null}
-          onChange={this.handleChange}
-          date={this.props.isEditing}
-          time={this.props.isEditing}
-          readOnly={!this.props.isEditing}
-        />
+        <div className="w-100">
+          <ReactDatez
+            ref={ref => {
+              this.picker = ref
+            }}
+            inputStyle={{ width: '100%', marginLeft: '5px' }}
+            allowPast
+            value={this.state.date}
+            handleChange={this.handleChange}
+          />
+        </div>
       </HotKeys>
     )
   }
@@ -83,8 +79,11 @@ class DateTime extends React.Component {
   };
 
   handleChange = (date, dateStr) => {
-    const newValue = date ? date.toISOString() : ''
-    this.setState({ date: date, dateStr: dateStr })
+
+    const selecteddate = date ? new Date(date) : ''
+    const newValue = selecteddate ? selecteddate.toISOString() : ''
+
+    this.setState({ date: date, dateStr: newValue })
     this.props.setChange(newValue)
   };
 

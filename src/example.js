@@ -17,6 +17,10 @@ const schema = {
       format: 'email',
       title: 'Email',
     },
+    birthdate: {
+      type: "string",
+      format: "date-time",
+    },
     address: {
       type: 'object',
       title: 'Address',
@@ -53,14 +57,17 @@ const UIschema = {
     address: {
       width: 300,
     },
+    birthdate: {
+      width: 200,
+    },
   },
-  list: ['email', 'name', 'lastName', 'address'],
+  list: ['email', 'name', 'lastName', 'address', 'birthdate'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['name', 'email', 'lastName', 'address'],
+          fields: ['name', 'email', 'lastName', 'address', 'birthdate'],
         },
       ],
     },

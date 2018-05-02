@@ -31,6 +31,7 @@
     "ajv-i18n": "^2.1.1",
     "intl": "^1.2.5",
     "moment": "^2.18.1",
+    "react-datez": "^1.3.5",
     "react-dropzone": "^3.13.4",
     "react-hotkeys": "^0.10.0",
     "react-intl": "^2.3.0",
