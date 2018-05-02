@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import TextArea from './TextArea.react'
-import CheckBox from './CheckBox.react'
+import CheckBox from 'table/components/Row/InputTypes/Checkbox'
 import TextBox from './TextBox.react'
 import Dropdown from './Dropdown.react'
 import Multioptions from './MultiOptions/Multioptions.react'
@@ -120,8 +120,8 @@ class ControlFactory extends React.Component {
   setChange = newValue => {
     const changes = {
       [this.props.fieldName]: {
-        value: newValue
-      }
+        value: newValue,
+      },
     }
     this.props.setChanges(this.props.id, changes)
   }
