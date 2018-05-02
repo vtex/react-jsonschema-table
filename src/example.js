@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { hot } from 'react-hot-loader'
+
 import JsonSchemaTable from './index.js'
 
 const schema = {
@@ -39,6 +41,10 @@ const schema = {
         },
       },
     },
+    isActive: {
+      type: 'boolean',
+      title: 'Active',
+    },
   },
 }
 
@@ -57,33 +63,30 @@ const UIschema = {
     address: {
       width: 300,
     },
-    birthdate: {
-      width: 200,
+    isActive: {
+      width: 300,
     },
   },
-  list: ['email', 'name', 'lastName', 'address', 'birthdate'],
+  list: ['email', 'name', 'lastName', 'birthdate', 'address', 'isActive'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['name', 'email', 'lastName', 'address', 'birthdate'],
+          fields: ['name', 'email', 'lastName', 'birthdate', 'address', 'isActive'],
         },
       ],
     },
   },
 }
 
-const indexedFields = ['name', 'email']
-
 class App extends Component {
   render() {
-
     return (
       <div>
         <JsonSchemaTable
           schema={schema}
-          stagingItemsCallback={(docs) => {
+          stagingItemsCallback={docs => {
             console.log('save this staging documents:', docs)
           }}
           items={[
@@ -94,6 +97,7 @@ class App extends Component {
                 email: 'jhon@doe.com',
                 name: 'Jhon',
                 lastName: 'Doe',
+                birthdate: '2018-04-20T03:00:00.000Z',
                 address: {},
               },
               status: 'loaded',
@@ -106,18 +110,19 @@ class App extends Component {
                 name: 'Jane',
                 lastName: 'Doe',
                 address: {},
+                isActive: true,
               },
               status: 'loaded',
-            }
+            },
           ]}
           context={{}}
-          UIschema={UIschema} />
+          UIschema={UIschema}
+        />
       </div>
     )
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
-module.hot.accept()
+export default hot(module)(App)
 
-export default App
+ReactDOM.render(<App />, document.getElementById('app'))
