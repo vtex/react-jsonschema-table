@@ -6,6 +6,12 @@ import { HotKeys } from 'react-hotkeys'
 import Toggle from '@vtex/styleguide/lib/Toggle'
 
 class Checkbox extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { isChecked: !!props.value }
+  }
+
   componentDidUpdate(prevProps) {
     const { isFocus, isEditing } = this.props
 
@@ -16,18 +22,26 @@ class Checkbox extends React.Component {
     if (isEditing && window && document) {
       ReactDOM.findDOMNode(this.el).focus()
     }
+
+    if (prevProps.value !== this.props.value) {
+      this.setState({ isChecked: !!this.props.value })
+    }
   }
 
   handleChange = e => {
-    const { isEditing, setChange, value } = this.props
+    const { isEditing, setChange } = this.props
 
     e.preventDefault()
+
     if (isEditing) {
-      setChange(!value)
+      setChange(!this.state.isChecked)
+
+      this.setState({ isChecked: !this.state.isChecked })
     }
   }
 
   render() {
+    const { isChecked } = this.state
     const handlers = {
       space: this.handleChange,
       stageChanges: this.handleChange,
@@ -44,7 +58,7 @@ class Checkbox extends React.Component {
         handlers={handlers}
       >
         <div style={{ transform: 'scale(0.7)' }}>
-          <Toggle checked={this.props.value} onClick={this.handleChange} />
+          <Toggle checked={isChecked} onClick={this.handleChange} />
         </div>
       </HotKeys>
     )
@@ -55,7 +69,7 @@ Checkbox.propTypes = {
   hasError: PropTypes.bool,
   isEditing: PropTypes.bool,
   isFocus: PropTypes.bool,
-  onEditCell: PropTypes.func.isRequired,
+  onEditCell: PropTypes.func,
   renderType: PropTypes.string,
   setChange: PropTypes.func.isRequired,
   value: PropTypes.bool,
