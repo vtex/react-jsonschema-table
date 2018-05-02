@@ -58,7 +58,7 @@ class Checkbox extends React.Component {
         handlers={handlers}
       >
         <div style={{ transform: 'scale(0.7)' }}>
-          <Toggle checked={isChecked} onClick={this.handleChange} />
+          <Toggle checked={isChecked} onChange={this.handleChange} />
         </div>
       </HotKeys>
     )
