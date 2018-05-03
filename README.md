@@ -72,6 +72,8 @@ class Example extends Component {
 
 **stagingItemsCallback**: function that return all the staging documents when 'save' button is clicked, so you can save them to your API or whatever.
 
+**checkedItemsCallback**: function that return all the checked documents when 'delete' button is clicked, so you can delete them in your API or whatever.
+
 ## Local setup for developing
 
 Setup project

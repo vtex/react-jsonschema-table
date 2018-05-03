@@ -209,6 +209,7 @@ class FixedToolbar extends React.Component {
 
   handleDeleteCheckedRows = () => {
     this.props.onDeleteCheckedRows(this.props.context)
+    this.props.checkedItemsCallback(this.props.items.checkedItems)
   }
 
   handleCancelStaging = () => {
@@ -273,6 +274,7 @@ FixedToolbar.propTypes = {
   changeColumnVisibility: PropTypes.func,
   indexedFields: PropTypes.array,
   stagingItemsCallback: PropTypes.func,
+  checkedItemsCallback: PropTypes.func,
   items: PropTypes.object,
 }
 

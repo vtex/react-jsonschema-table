@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     hiddenFields: state.filter.hiddenFields,
     items: state.items,
     stagingItemsCallback: ownProps.stagingItemsCallback,
+    checkedItemsCallback: ownProps.checkedItemsCallback,
   }
 }
 
