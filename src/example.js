@@ -89,6 +89,9 @@ class App extends Component {
           stagingItemsCallback={docs => {
             console.log('save this staging documents:', docs)
           }}
+          checkedItemsCallback={docs => {
+            console.log('delete this checked documents:', docs)
+          }}
           items={[
             {
               virtualID: 0,
@@ -109,7 +112,11 @@ class App extends Component {
                 email: 'jane@doe.com',
                 name: 'Jane',
                 lastName: 'Doe',
-                address: {},
+                address: {
+                  street: 'P. Sherman',
+                  number: 42,
+                  Postalcode: 'Wallaby Way, Sidney',
+                },
                 isActive: true,
               },
               status: 'loaded',
