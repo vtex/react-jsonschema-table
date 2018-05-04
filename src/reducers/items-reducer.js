@@ -1,5 +1,6 @@
 import * as types from '../actions/ActionTypes'
 import { STATUS } from 'table/constants'
+import json2csv from 'json2csv'
 import Ajv from 'ajv'
 import ajvLocalize from 'ajv-i18n'
 const ajv = new Ajv({ allErrors: true })
@@ -34,6 +35,41 @@ export default (state = initialState, action) => {
       return {
         ...state,
         source: items,
+      }
+    }
+
+    case types.EXPORT_CHECKED_ITEMS: {
+      const { fields, entityId } = action.payload
+      const { checkedItems, source, staging } = state
+      const documentsToExport = []
+
+      checkedItems.forEach(key => {
+        const sourceDoc = source.find(o => o.document.id === key) || {}
+        const stagDoc = staging[key] || {}
+
+        const doc = {
+          ...sourceDoc.document,
+          ...stagDoc.document,
+        }
+        documentsToExport.push(doc)
+      })
+
+      json2csv({ data: documentsToExport, fields: fields }, function(err, csv) {
+        if (err) console.log(err)
+        var csvData = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+        var csvURL = window.URL.createObjectURL(csvData)
+        var tempLink = document.createElement('a')
+        tempLink.href = csvURL
+        tempLink.setAttribute(
+          'download',
+          entityId + '-' + Date.now() + '.csv'
+        )
+        tempLink.click()
+      })
+
+      return {
+        ...state,
+        checkedItems: [],
       }
     }
 
