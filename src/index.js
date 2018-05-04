@@ -13,7 +13,7 @@ import ToolBarContainer from 'toolBar/containers/ToolBarContainer'
 import TableContainer from 'table/containers/TableContainer'
 import FormContainer from 'table/containers/FormContainer'
 import enUSMessages from 'i18n/en-US_messages.json'
-import { undo, redo, preLoadItems } from 'actions/items-actions'
+import { undo, redo, preLoadItems, receiveItemsFromProps } from 'actions/items-actions'
 
 const { store } = configureStore()
 
@@ -23,7 +23,7 @@ class JsonSchemaTable extends React.Component {
     SetFetcher(props.fetcher)
     if (props.items && props.items.length > 0) {
       // initial items load
-      store.dispatch(preLoadItems(props.items))
+      store.dispatch(receiveItemsFromProps(props.items))
     }
   }
 
@@ -36,8 +36,7 @@ class JsonSchemaTable extends React.Component {
     ) {
       // more items received by props (not the final solution)
       // To do: fix 'getMoreItems'
-      store.dispatch(preLoadItems(this.props.items))
-      this.forceUpdate()
+      store.dispatch(receiveItemsFromProps(this.props.items))
     }
   }
 

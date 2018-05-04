@@ -29,6 +29,14 @@ export default (state = initialState, action) => {
       })
     }
 
+    case types.RECEIVE_ITEMS_FROM_PROPS: {
+      const { items } = action.payload
+      return {
+        ...state,
+        source: items,
+      }
+    }
+
     case types.ITEMS_LOAD_SUCCESS: {
       const { items, sort, where, totalRows, rowStart } = action
       const newState = Object.assign({}, state)
