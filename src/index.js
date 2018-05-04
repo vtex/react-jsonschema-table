@@ -28,16 +28,9 @@ class JsonSchemaTable extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevProps.items &&
-      this.props.items &&
-      prevProps.items.length !== this.props.items.length &&
-      this.props.items.length > 0
-    ) {
-      // more items received by props (not the final solution)
-      // To do: fix 'getMoreItems'
-      store.dispatch(receiveItemsFromProps(this.props.items))
-    }
+    // more items received by props (not the final solution)
+    // To do: fix 'getMoreItems'
+    store.dispatch(receiveItemsFromProps(this.props.items))
   }
 
   render() {
