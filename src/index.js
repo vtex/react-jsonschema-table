@@ -37,6 +37,7 @@ class JsonSchemaTable extends React.Component {
       // more items received by props (not the final solution)
       // To do: fix 'getMoreItems'
       store.dispatch(preLoadItems(this.props.items))
+      this.forceUpdate()
     }
   }
 
