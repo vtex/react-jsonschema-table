@@ -127,3 +127,12 @@ export function preLoadItems(items) {
 export function copyFromSelectedRange(changes, schema, lang) {
   return { type: types.COPY_FROM_SELECTED_RANGE, changes, schema, lang }
 }
+
+export function receiveItemsFromProps(items) {
+  return {
+    type: types.RECEIVE_ITEMS_FROM_PROPS,
+    payload: {
+      items,
+    }
+  }
+}
