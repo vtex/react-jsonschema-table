@@ -49,8 +49,14 @@ export function updateItem(id, schema, changes, lang) {
   return { type: types.UPDATE_ITEM, id, schema, changes, lang }
 }
 
-export function exportCheckedItems(id, schema, lang) {
-  return { type: types.ADD_ITEM, id, schema, lang }
+export function exportCheckedItems(fields, entityId) {
+  return {
+    type: types.EXPORT_CHECKED_ITEMS,
+    payload: {
+      fields,
+      entityId,
+    },
+  }
 }
 
 export function checkItemChange(id, checked) {

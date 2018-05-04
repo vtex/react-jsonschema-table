@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...bindedActions,
 
     onExport: () => {
-      dispatch(exportCheckedItems(uuid.v4(), ownProps.schema, ownProps.lang))
+      dispatch(exportCheckedItems(ownProps.UIschema.list, ownProps.UIschema.title))
     },
 
     onSave: () => {
