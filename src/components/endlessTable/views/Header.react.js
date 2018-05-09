@@ -38,8 +38,9 @@ class Header extends React.Component {
         style={this.getInlineStyle()}>
         <div className="pt1 ph2 flex dib">
           <div
-            className="flex items-center justify-center ba b--silver"
-            style={{width: '50px', height: '35px'}}>
+            className="flex items-center justify-center bg-near-white ba b--silver"
+            style={{ width: '50px', height: '35px' }}
+          >
             <div className="flex items-center justify-center">
               {this.props.isChecking ? (
                 <input

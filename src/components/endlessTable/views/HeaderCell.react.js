@@ -14,7 +14,7 @@ class HeaderCell extends React.Component {
   render() {
     return (
       <div
-        className={`flex items-center justify-center ph2 pv2 h-100 bb bt b--silver${
+        className={`flex items-center justify-center ph2 pv2 h-100 bg-near-white bb bt b--silver${
           this.props.index === 0 ? ' ' : ' bl'
         }${
           this.props.lastCellIndex === this.props.index ? ' br' : ' '

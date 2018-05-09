@@ -147,7 +147,7 @@ class Row extends React.Component {
         <div
             onMouseEnter={() => this.setState({ isHoveringIndexCell: true })}
             onMouseLeave={() => this.setState({ isHoveringIndexCell: false })}
-            className="flex items-center justify-center bl br bb b--silver"
+            className="flex items-center justify-center bg-near-white bl br bb b--silver"
             style={{minWidth: '50px', height: '35px'}} >
           <div
             className={
