@@ -82,9 +82,7 @@ class TextArea extends React.Component {
           onDoubleClick={this.props.onEditCell}
           onKeyDown={this.handleKeyDown}
         >
-          <div className="relative h-auto truncate">
-            {this.state.value}
-          </div>
+          <div className="relative h-auto truncate">{this.state.value}</div>
         </div>
       )
     }
@@ -95,7 +93,7 @@ class TextArea extends React.Component {
     if (this.props.value !== this.state.value) {
       this.props.setChange(this.state.value)
     }
-  };
+  }
 
   onEscape = () => {
     if (this.props.isEditing) {
@@ -106,13 +104,13 @@ class TextArea extends React.Component {
         this.props.onExitEditCell(this.props.cell)
       }
     }
-  };
+  }
 
-  onArrow = () => {};
+  onArrow = () => {}
 
   handleChange = e => {
     this.setState({ value: e.target.value })
-  };
+  }
 }
 
 TextArea.propTypes = {

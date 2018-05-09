@@ -34,8 +34,9 @@ class Header extends React.Component {
   render() {
     return (
       <div
-        className="relative inline-flex pt1 mt0" 
-        style={this.getInlineStyle()}>
+        className="relative inline-flex pt1 mt0"
+        style={this.getInlineStyle()}
+      >
         <div className="pt1 ph2 flex dib">
           <div
             className="flex items-center justify-center bg-near-white ba b--silver"

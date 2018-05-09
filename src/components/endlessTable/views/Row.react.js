@@ -67,12 +67,12 @@ class Row extends React.Component {
     }
     var shouldUpdate = false
     var currentProps = this.props
-    var attrs = _.filter(_.allKeys(nextProps.item.document), function(key) {
+    var attrs = _.filter(_.allKeys(nextProps.item.document), function (key) {
       return key[0] !== '_'
     })
     shouldUpdate =
       !shouldUpdate &&
-      _.some(attrs, function(key) {
+      _.some(attrs, function (key) {
         return (
           (nextProps.item.document && !currentProps.item.document) ||
           (!nextProps.item.document && currentProps.item.document) ||
@@ -151,7 +151,7 @@ class Row extends React.Component {
           <div
             className={
               this.props.isChecking || this.state.isHoveringIndexCell
-              ? 'db' : 'dn'}>
+                ? 'db' : 'dn'}>
             <input
               ref={input => {
                 this.rowCheckBox = input
@@ -202,8 +202,8 @@ class Row extends React.Component {
         ? _.filter(item.validationErrors, error => {
           return (
             error.dataPath.includes(`.${column.fieldName}[`) ||
-              error.dataPath.includes(`.${column.fieldName}.`) ||
-              error.dataPath === `.${column.fieldName}`
+            error.dataPath.includes(`.${column.fieldName}.`) ||
+            error.dataPath === `.${column.fieldName}`
           )
         })
         : [],

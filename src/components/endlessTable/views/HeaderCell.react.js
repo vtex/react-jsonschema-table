@@ -16,9 +16,7 @@ class HeaderCell extends React.Component {
       <div
         className={`flex items-center justify-center ph2 pv2 h-100 bg-near-white bb bt b--silver${
           this.props.index === 0 ? ' ' : ' bl'
-        }${
-          this.props.lastCellIndex === this.props.index ? ' br' : ' '
-        }`}
+        }${this.props.lastCellIndex === this.props.index ? ' br' : ' '}`}
         style={this._getInlineStyle()}
       >
         <div className="fl fw5 w-90">{this.props.value}</div>
@@ -27,7 +25,7 @@ class HeaderCell extends React.Component {
             <div className="fl w-10 tc lh-solid">
               <div className="center relative">
                 <i
-                  className={`${'fa fa-sort-asc' + ' pointer fa-lg '}${
+                  className={`${'fa fa-sort-asc pointer fa-lg '}${
                     this.state.inactive ? 'o-70' : ''
                   }`}
                   onClick={this.handleSortAsc}
@@ -35,7 +33,7 @@ class HeaderCell extends React.Component {
               </div>
               <div className="center relative mt2 bottom-1">
                 <i
-                  className={`${'fa fa-sort-desc' + ' pointer fa-lg '}${
+                  className={`${'fa fa-sort-desc pointer fa-lg '}${
                     this.state.inactive ? 'o-70' : ''
                   }`}
                   onClick={this.handleSortDesc}
