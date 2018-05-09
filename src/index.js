@@ -67,6 +67,7 @@ class JsonSchemaTable extends React.Component {
               stagingItemsCallback={this.props.stagingItemsCallback}
               checkedItemsCallback={this.props.checkedItemsCallback}
             />
+            {this.props.children}
             <TableContainer
               ref={ref => {
                 this.table = ref
@@ -101,6 +102,7 @@ JsonSchemaTable.propTypes = {
   stagingItemsCallback: PropTypes.func,
   checkedItemsCallback: PropTypes.func,
   items: PropTypes.arrayOf(PropTypes.object),
+  children: PropTypes.node,
 }
 
 JsonSchemaTable.contextTypes = {
