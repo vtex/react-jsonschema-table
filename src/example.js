@@ -131,7 +131,9 @@ class App extends Component {
           ]}
           context={{}}
           UIschema={UIschema}
-        />
+        >
+          <p>Children prop</p>
+        </JsonSchemaTable>
       </div>
     )
   }
