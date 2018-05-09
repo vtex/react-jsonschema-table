@@ -141,13 +141,13 @@ class Row extends React.Component {
         }}
         handlers={handlers}
         className="flex relative no-underline br b--silver mv0"
-        style={{ height: '35px' }}
+        style={{ height: '44px' }}
       >
         <div
-            onMouseEnter={() => this.setState({ isHoveringIndexCell: true })}
-            onMouseLeave={() => this.setState({ isHoveringIndexCell: false })}
-            className="flex items-center justify-center bg-near-white bl br bb b--silver"
-            style={{minWidth: '50px', height: '35px'}} >
+          onMouseEnter={() => this.setState({ isHoveringIndexCell: true })}
+          onMouseLeave={() => this.setState({ isHoveringIndexCell: false })}
+          className="flex items-center justify-center bg-near-white bl br bb b--silver"
+          style={{ minWidth: '50px', height: '44px' }} >
           <div
             className={
               this.props.isChecking || this.state.isHoveringIndexCell
