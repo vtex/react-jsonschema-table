@@ -129,12 +129,13 @@ class TextBox extends React.Component {
     } else {
       control = (
         <div
-          className={
-            `flex items-center w-100 ph4 h-inherit outline-0 ${
-              this.props.isFocus
-                ? `bw1 ba ${borderColor} bg-lightest-blue pl05 `
-                : this.props.hasError ? 'bw1 ba b--red pl05' : 'pl2'}`
-          }
+          className={`flex items-center w-100 ph4 h-inherit outline-0 ${
+            this.props.isFocus
+              ? `bw1 ba ${borderColor} pl5 `
+              : this.props.hasError
+                ? 'bw1 ba b--red pl5'
+                : 'pl2'
+          }`}
           onDoubleClick={this.handleEdit}
         >
           <div className={'truncate'}>
