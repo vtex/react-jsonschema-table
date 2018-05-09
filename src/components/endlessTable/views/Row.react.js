@@ -115,7 +115,6 @@ class Row extends React.Component {
     var itemDocument = item.document
     var virtualID = item.virtualID
     var columns = this.props.columns || []
-    var focusedCell = this.props.focusedCell
     var selectionRange = this.props.selectionRange
     var fillHandleCell =
       selectionRange.cellA && selectionRange.cellB
@@ -165,15 +164,9 @@ class Row extends React.Component {
           <div
             className={
               this.props.isChecking || this.state.isHoveringIndexCell
-              ? 'dn' : 'db'}>
+                ? 'dn' : 'db'}>
             {new Intl.NumberFormat().format(virtualID + 1)}
           </div>
-        </div>
-        <div
-          className="relative flex items-center justify-center bg-transparent bb b--silver tl ph4 f3"
-          style={{ minWidth: '30px', width: '30px'}}
-          onClick={this.handleEdit}>
-          <i className="pointer fa fa-expand" />
         </div>
         {columns.map((column, colIndex) => {
           const props = this.createPropsObject(
