@@ -20,8 +20,8 @@ const schema = {
       title: 'Email',
     },
     birthdate: {
-      type: "string",
-      format: "date-time",
+      type: 'string',
+      format: 'date-time',
     },
     address: {
       type: 'object',
@@ -73,7 +73,14 @@ const UIschema = {
       sections: [
         {
           name: 'Personal Data',
-          fields: ['name', 'email', 'lastName', 'birthdate', 'address', 'isActive'],
+          fields: [
+            'name',
+            'email',
+            'lastName',
+            'birthdate',
+            'address',
+            'isActive',
+          ],
         },
       ],
     },
@@ -124,7 +131,9 @@ class App extends Component {
           ]}
           context={{}}
           UIschema={UIschema}
-        />
+        >
+          <p>Children prop</p>
+        </JsonSchemaTable>
       </div>
     )
   }

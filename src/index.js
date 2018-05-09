@@ -13,7 +13,7 @@ import ToolBarContainer from 'toolBar/containers/ToolBarContainer'
 import TableContainer from 'table/containers/TableContainer'
 import FormContainer from 'table/containers/FormContainer'
 import enUSMessages from 'i18n/en-US_messages.json'
-import { undo, redo, preLoadItems, receiveItemsFromProps } from 'actions/items-actions'
+import { undo, redo, receiveItemsFromProps } from 'actions/items-actions'
 
 const { store } = configureStore()
 
@@ -27,7 +27,7 @@ class JsonSchemaTable extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     // more items received by props (not the final solution)
     // To do: fix 'getMoreItems'
     store.dispatch(receiveItemsFromProps(this.props.items))
@@ -63,11 +63,11 @@ class JsonSchemaTable extends React.Component {
               context={this.props.context}
               schema={this.props.schema}
               UIschema={this.props.UIschema}
-              indexedFields={this.props.indexedFields}
               lang={lang}
               stagingItemsCallback={this.props.stagingItemsCallback}
               checkedItemsCallback={this.props.checkedItemsCallback}
             />
+            {this.props.children}
             <TableContainer
               ref={ref => {
                 this.table = ref
@@ -101,6 +101,8 @@ JsonSchemaTable.propTypes = {
   lang: PropTypes.string,
   stagingItemsCallback: PropTypes.func,
   checkedItemsCallback: PropTypes.func,
+  items: PropTypes.arrayOf(PropTypes.object),
+  children: PropTypes.node,
 }
 
 JsonSchemaTable.contextTypes = {
