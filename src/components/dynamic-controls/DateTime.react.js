@@ -1,15 +1,18 @@
 import React from 'react'
-import { ReactDatez } from 'react-datez'
-import 'react-datez/dist/css/react-datez.css'
+// import { ReactDatez } from 'react-datez'
+// import 'react-datez/dist/css/react-datez.css'
 import { HotKeys } from 'react-hotkeys'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+
+import moment from 'moment'
 
 class DateTime extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       date: props.value ? new Date(props.value) : null,
+      dateStr: props.value ? this.prettierDate(props.value) : '',
     }
   }
 
@@ -24,7 +27,12 @@ class DateTime extends React.Component {
     this.setState({ value: value })
   }
 
+  prettierDate(date) {
+    return moment(date).format('MM-DD-YYYY').replace(/-/g, '/')
+  }
+
   render() {
+    window.momento = moment
     const handlers = {
       moveUp: this.onArrow,
       moveDown: this.onArrow,
@@ -53,8 +61,8 @@ class DateTime extends React.Component {
         onDoubleClick={this.props.onEditCell}
         handlers={handlers}
       >
-        <div className="w-100">
-          <ReactDatez
+        <div className="w-100 flex items-center h-inherit ph4">
+          {/* <ReactDatez
             ref={ref => {
               this.picker = ref
             }}
@@ -62,6 +70,20 @@ class DateTime extends React.Component {
             allowPast
             value={this.state.date}
             handleChange={this.handleChange}
+          /> */}
+          <input
+            className={`w-100 bn pl05 outline-0 ${
+              this.props.isEditing || this.props.isFocus
+              ? 'bg-washed-blue'
+              : ''
+            }`}
+            value={this.state.dateStr}
+            ref={ref => {
+              this.picker = ref
+            }}
+            onChange={this.handleChange}
+            onClick={this.handleInputClick}
+            onBlur={this.handleBlur}
           />
         </div>
       </HotKeys>
@@ -78,13 +100,22 @@ class DateTime extends React.Component {
     this.props.setChange(newValue)
   };
 
-  handleChange = (date, dateStr) => {
+  // handleChange = (date, dateStr) => {
 
-    const selecteddate = date ? new Date(date) : ''
-    const newValue = selecteddate ? selecteddate.toISOString() : ''
+  //   const selecteddate = date ? new Date(date) : ''
+  //   const newValue = selecteddate ? selecteddate.toISOString() : ''
 
-    this.setState({ date: date, dateStr: newValue })
-    this.props.setChange(newValue)
+  //   this.setState({ date: date, dateStr: newValue })
+  //   this.props.setChange(newValue)
+  // };
+
+  handleChange = (e) => {
+    const typedDate = e.target.value
+
+    const selecteddate = typedDate ? new Date(typedDate) : typedDate
+
+    this.setState({ date: selecteddate, dateStr: typedDate })
+    this.props.setChange(typedDate)
   };
 
   onEnter = () => {

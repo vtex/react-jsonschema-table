@@ -19,7 +19,7 @@ class HeaderCell extends React.Component {
         }${this.props.lastCellIndex === this.props.index ? ' br' : ' '}`}
         style={this._getInlineStyle()}
       >
-        <div className="fl fw5 w-90">{this.props.value}</div>
+        <div className="fl fw5 w-90 truncate">{this.props.value.props.children}</div>
         {this.props.isIndex && this.props.type !== 'object' ? (
           this.state.inactive ? (
             <div className="fl w-10 tc lh-solid">
