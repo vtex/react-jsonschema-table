@@ -20,8 +20,8 @@ class SaveButton extends React.Component {
         }`}
         onClick={this.handleClick}
       >
-        <i className="fa fa-save pr2" />
-        <div className="dn di-l">
+        <i className="fa fa-save pr2 blue" />
+        <div className="dn di-l blue">
           <FormattedMessage
             id={this.state.isSaving
             ? 'FixedToolbar.saving'
