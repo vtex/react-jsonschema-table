@@ -37,7 +37,7 @@ class Header extends React.Component {
         className="relative inline-flex pt1 mt0"
         style={this.getInlineStyle()}
       >
-        <div className="pt1 ph2 flex dib">
+        <div className="pt1 flex dib">
           <div
             className="flex items-center justify-center bg-near-white ba b--silver"
             style={{ width: '50px', height: '35px' }}
