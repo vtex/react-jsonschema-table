@@ -140,7 +140,7 @@ class Row extends React.Component {
           this.rowlist = input
         }}
         handlers={handlers}
-        className="flex relative no-underline br b--silver mv0"
+        className="flex relative no-underline mv0"
         style={{ height: '44px' }}
       >
         <div
