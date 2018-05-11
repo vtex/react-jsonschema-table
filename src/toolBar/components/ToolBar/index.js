@@ -7,7 +7,6 @@ import StateFilters from 'toolBar/components/StateFilters'
 import ConfirmAlert from 'components/alert/ConfirmAlert.react.js'
 import SaveButton from 'toolBar/components/SaveButton'
 
-
 class FixedToolbar extends React.Component {
   constructor(props) {
     super(props)
@@ -23,12 +22,11 @@ class FixedToolbar extends React.Component {
   render() {
     const { toolbarConfigs } = this.props
     const { isColumnsToShowSelected } = this.state
-    const areAnyColumnsHidden = (this.props.hiddenFields.length > 0)
-    const areAnyfilterselected = (
+    const areAnyColumnsHidden = this.props.hiddenFields.length > 0
+    const areAnyfilterselected =
       this.props.isSelectedFilterActive ||
       this.props.isInvalidFilterActive ||
       this.props.isStagingFilterActive
-    )
     var toolBarContent = null
 
     if (this.state.isImport) {
@@ -44,39 +42,34 @@ class FixedToolbar extends React.Component {
         <div className="flex items-center mb3">
           <div className="flex items-center">
             {/* COLUMN FILTERS BUTTON */}
-            {
-              toolbarConfigs && toolbarConfigs.hideColumnsVisibilityBtn
-              ? null
-              : <div className="ph3">
-                <ColumnFilter
-                  hiddenFields={this.props.hiddenFields}
-                  isSelected={isColumnsToShowSelected}
-                  context={this.props.context}
-                  UIschema={this.props.UIschema}
-                  schema={this.props.schema}
-                  onViewAllColumns={this.props.showAllColumns}
-                  onChangeColumnVisibility={this.props.changeColumnVisibility}
-                />
-                <div
-                  className={`pointer ph2 inline-flex nowrap pa2 br2 ${
-                    isColumnsToShowSelected ? 'bg-light-gray bn relative' : ''
-                  } ${
-                    areAnyColumnsHidden ? 'blue' : 'black'
-                  }`}
-                  onClick={this.handleColumnsToShowClick}
-                >
-                  <i className="fa fa-columns pr2 blue" />
-                  <div className="dn di-l blue">
-                    <FormattedMessage id="FixedToolbar.ColumnsToShow.columns" />
+            {toolbarConfigs &&
+              toolbarConfigs.hideColumnsVisibilityBtn ? null : (
+                <div className="ph3">
+                  <ColumnFilter
+                    hiddenFields={this.props.hiddenFields}
+                    isSelected={isColumnsToShowSelected}
+                    context={this.props.context}
+                    UIschema={this.props.UIschema}
+                    schema={this.props.schema}
+                    onViewAllColumns={this.props.showAllColumns}
+                    onChangeColumnVisibility={this.props.changeColumnVisibility}
+                  />
+                  <div
+                    className={`pointer ph2 inline-flex nowrap pa2 br2 ${
+                      isColumnsToShowSelected ? 'bg-light-gray bn relative' : ''
+                    } ${areAnyColumnsHidden ? 'blue' : 'black'}`}
+                    onClick={this.handleColumnsToShowClick}
+                  >
+                    <i className="fa fa-columns pr2 blue" />
+                    <div className="dn di-l blue">
+                      <FormattedMessage id="FixedToolbar.ColumnsToShow.columns" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            }
+              )}
             {/* STATE FILTERS BUTTON */}
-            {
-              toolbarConfigs && toolbarConfigs.hideStateFilterBtn
-              ? null
-              : <div className="ph3">
+            {toolbarConfigs && toolbarConfigs.hideStateFilterBtn ? null : (
+              <div className="ph3">
                 <StateFilters
                   isSelected={this.state.isFilterSelected}
                   hasCheckedItems={this.props.hasCheckedItems}
@@ -85,32 +78,39 @@ class FixedToolbar extends React.Component {
                   isSelectedFilterActive={this.props.isSelectedFilterActive}
                   isInvalidFilterActive={this.props.isInvalidFilterActive}
                   isStagingFilterActive={this.props.isStagingFilterActive}
-                  onChangeCheckedItemsFilter={this.props.toggleCheckedItemsFilter}
+                  onChangeCheckedItemsFilter={
+                    this.props.toggleCheckedItemsFilter
+                  }
                   onChangeStagingFilter={this.props.toggleStagingFilter}
-                  onChangeInvalidItemsFilter={this.props.toggleInvalidItemsFilter}
-                  onHandleFiltersClick={this.handleFiltersClick} />
-                  <div
-                    className={`pointer ph2 inline-flex nowrap pa2 br2 ${
-                      this.state.isFilterSelected ? 'bg-light-gray bn relative' : ''
-                    } ${areAnyfilterselected ? 'blue' : ''}`}
-                    onClick={this.handleFiltersClick}
-                  >
-                    <i className="fa fa-filter pr2 blue" />
-                    <div className="dn di-l blue">
-                      <FormattedMessage id="FixedToolbar.StateFilters.filters" />
-                    </div>
+                  onChangeInvalidItemsFilter={
+                    this.props.toggleInvalidItemsFilter
+                  }
+                  onHandleFiltersClick={this.handleFiltersClick}
+                />
+                <div
+                  className={`pointer ph2 inline-flex nowrap pa2 br2 ${
+                    this.state.isFilterSelected
+                      ? 'bg-light-gray bn relative'
+                      : ''
+                  } ${areAnyfilterselected ? 'blue' : ''}`}
+                  onClick={this.handleFiltersClick}
+                >
+                  <i className="fa fa-filter pr2 blue" />
+                  <div className="dn di-l blue">
+                    <FormattedMessage id="FixedToolbar.StateFilters.filters" />
+                  </div>
                 </div>
               </div>
-            }
-            </div>
+            )}
+          </div>
           {/* DOWNLOAD CHECKED ROWS AS CSV BUTTON */}
-          {
-            toolbarConfigs && toolbarConfigs.hideDownloadBtn
-            ? null
-            : <div className="ph3">
+          {toolbarConfigs && toolbarConfigs.hideDownloadBtn ? null : (
+            <div className="ph3">
               <section
                 className={`ph2 inline-flex nowrap ${
-                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : 'pointer'
+                  !this.props.hasCheckedItems
+                    ? 'o-30 cursor-not-allowed'
+                    : 'pointer'
                 }`}
                 onClick={!this.props.hasCheckedItems ? null : this.handleExport}
               >
@@ -120,16 +120,12 @@ class FixedToolbar extends React.Component {
                 </div>
               </section>
             </div>
-          }
+          )}
           {/* NEW LINE BUTTON */}
-          {
-            toolbarConfigs && toolbarConfigs.hideNewLineBtn
-            ? null
-            : <div className="ph3">
+          {toolbarConfigs && toolbarConfigs.hideNewLineBtn ? null : (
+            <div className="ph3">
               <div
-                className={
-                  'pointer ph2 inline-flex nowrap'
-                }
+                className={'pointer ph2 inline-flex nowrap'}
                 onClick={this.props.onAdd}
               >
                 <i className="fa fa-plus-square pr2 blue" />
@@ -138,15 +134,15 @@ class FixedToolbar extends React.Component {
                 </div>
               </div>
             </div>
-          }
+          )}
           {/* DELETE CHECKED ROWS BUTTON */}
-          {
-            toolbarConfigs && toolbarConfigs.hideDeleteBtn
-            ? null
-            : <div className="ph3">
+          {toolbarConfigs && toolbarConfigs.hideDeleteBtn ? null : (
+            <div className="ph3">
               <section
                 className={`ph2 inline-flex nowrap ${
-                  !this.props.hasCheckedItems ? 'o-30 cursor-not-allowed' : 'pointer'
+                  !this.props.hasCheckedItems
+                    ? 'o-30 cursor-not-allowed'
+                    : 'pointer'
                 }`}
                 onClick={
                   !this.props.hasCheckedItems
@@ -160,15 +156,15 @@ class FixedToolbar extends React.Component {
                 </div>
               </section>
             </div>
-          }
+          )}
           {/* UNDO ALL CHANGES BUTTON */}
-          {
-            toolbarConfigs && toolbarConfigs.hideUndoBtn
-            ? null
-            : <div className="ph3">
+          {toolbarConfigs && toolbarConfigs.hideUndoBtn ? null : (
+            <div className="ph3">
               <section
                 className={`ph2 inline-flex nowrap ${
-                  !this.props.hasEditedItems ? 'o-30 cursor-not-allowed' : 'pointer'
+                  !this.props.hasEditedItems
+                    ? 'o-30 cursor-not-allowed'
+                    : 'pointer'
                 }`}
                 onClick={
                   !this.props.hasEditedItems ? null : this.handleCancelStaging
@@ -180,18 +176,16 @@ class FixedToolbar extends React.Component {
                 </div>
               </section>
             </div>
-          }
+          )}
           {/* SAVE ALL BUTTON */}
-          {
-            toolbarConfigs && toolbarConfigs.hideSaveBtn
-            ? null
-            : <div className="ph3">
+          {toolbarConfigs && toolbarConfigs.hideSaveBtn ? null : (
+            <div className="ph3">
               <SaveButton
                 handleSaveAll={this.handleSaveAll}
                 disabled={!this.props.hasEditedItems}
               />
             </div>
-          }
+          )}
           {this.renderCancelStagingConfirmation()}
         </div>
       )

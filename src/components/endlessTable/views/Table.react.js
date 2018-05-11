@@ -59,21 +59,21 @@ class Table extends React.Component {
           onScroll={this.handleScroll}
           ref={div => {
             this.scrollDiv = div
-            !this.state.scrollDiv && this.setState({scrollDiv: div})
+            !this.state.scrollDiv && this.setState({ scrollDiv: div })
           }}
         >
-          {this.state.scrollDiv
-            ? <HotKeys className="list">
-                <Rows
-                  onGetNotLoadedDocument={this.handleFetchItems}
-                  onScroll={this.handleScrollVertically}
-                  onCheckRow={this.props.onCheckRow}
-                  columns={columns}
-                  listContainer={this.state.scrollDiv}
-                  {...this.props}
-                />
-              </HotKeys>
-            : null //loader
+          {this.state.scrollDiv ? (
+            <HotKeys className="list">
+              <Rows
+                onGetNotLoadedDocument={this.handleFetchItems}
+                onScroll={this.handleScrollVertically}
+                onCheckRow={this.props.onCheckRow}
+                columns={columns}
+                listContainer={this.state.scrollDiv}
+                {...this.props}
+              />
+            </HotKeys>
+          ) : null // loader
           }
         </div>
       </div>
