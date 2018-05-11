@@ -154,8 +154,8 @@ class FixedToolbar extends React.Component {
                     : this.handleDeleteCheckedRows
                 }
               >
-                <i className="fa fa-trash pr2 blue" aria-hidden="true" />
-                <div className="dn di-l blue">
+                <i className="fa fa-trash pr2 red" aria-hidden="true" />
+                <div className="dn di-l red">
                   <FormattedMessage id="FixedToolbar.deleteChecked" />
                 </div>
               </section>
