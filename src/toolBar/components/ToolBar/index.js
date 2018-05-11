@@ -158,34 +158,47 @@ class FixedToolbar extends React.Component {
             </div>
           )}
           {/* UNDO ALL CHANGES BUTTON */}
-          {toolbarConfigs && toolbarConfigs.hideUndoBtn ? null : (
-            <div className="ph3">
-              <section
-                className={`ph2 inline-flex nowrap ${
-                  !this.props.hasEditedItems
-                    ? 'o-30 cursor-not-allowed'
-                    : 'pointer'
-                }`}
-                onClick={
-                  !this.props.hasEditedItems ? null : this.handleCancelStaging
-                }
-              >
-                <i className="fa fa-undo pr2 blue" />
-                <div className="dn di-l blue">
-                  <FormattedMessage id="FixedToolbar.undo" />
-                </div>
-              </section>
-            </div>
-          )}
+          {toolbarConfigs && toolbarConfigs.hideUndoBtn ? null : toolbarConfigs &&
+            toolbarConfigs.resetButton ? (<toolbarConfigs.resetButton
+              onClick={
+                !this.props.hasEditedItems ? null : this.handleCancelStaging
+              }
+            />) : (
+              <div className="ph3">
+                <section
+                  className={`ph2 inline-flex nowrap ${
+                    !this.props.hasEditedItems
+                      ? 'o-30 cursor-not-allowed'
+                      : 'pointer'
+                  }`}
+                  onClick={
+                    !this.props.hasEditedItems ? null : this.handleCancelStaging
+                  }
+                >
+                  <i className="fa fa-undo pr2 blue" />
+                  <div className="dn di-l blue">
+                    <FormattedMessage id="FixedToolbar.undo" />
+                  </div>
+                </section>
+              </div>
+            )}
           {/* SAVE ALL BUTTON */}
-          {toolbarConfigs && toolbarConfigs.hideSaveBtn ? null : (
-            <div className="ph3">
-              <SaveButton
-                handleSaveAll={this.handleSaveAll}
-                disabled={!this.props.hasEditedItems}
-              />
-            </div>
-          )}
+          {toolbarConfigs &&
+            toolbarConfigs.hideSaveBtn ? null : toolbarConfigs &&
+              toolbarConfigs.saveButton ? (
+                <toolbarConfigs.saveButton
+                  onSave={this.handleSaveAll}
+                  disabled={!this.props.hasEditedItems}
+                />
+              ) : (
+                <div className="ph3">
+                  <toolbarConfigs.saveButton onSave={this.handleSaveAll} />
+                  <SaveButton
+                    handleSaveAll={this.handleSaveAll}
+                    disabled={!this.props.hasEditedItems}
+                  />
+                </div>
+              )}
           {this.renderCancelStagingConfirmation()}
         </div>
       )
