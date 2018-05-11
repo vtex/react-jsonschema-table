@@ -42,7 +42,7 @@ class Table extends React.Component {
 
     return (
       <div className={this.props.form.showModal ? 'z-0' : ''}>
-        <div className="mh4 overflow-hidden" style={{height: '39px'}}>
+        <div className="mh4 w-100 overflow-hidden" style={{ height: '39px' }}>
           <Header
             onCheckRow={this.props.onCheckRow}
             {...this.props}
@@ -54,8 +54,7 @@ class Table extends React.Component {
           </Header>
         </div>
         <div
-          // className="fixed overflow-scroll vh-75 w-100 mh4 ph2" // keeping this in case of returning to overflow-scroll
-          className="mh4 overflow-hidden"
+          className="mh4 w-100 overflow-x-scroll overflow-y-hidden"
           id="listContainer"
           onScroll={this.handleScroll}
           ref={div => {
