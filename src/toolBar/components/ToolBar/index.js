@@ -104,15 +104,13 @@ class FixedToolbar extends React.Component {
             )}
           </div>
           {/* DOWNLOAD CHECKED ROWS AS CSV BUTTON */}
-          {toolbarConfigs && toolbarConfigs.hideDownloadBtn ? null : (
+          {toolbarConfigs && (toolbarConfigs.hideDownloadBtn || !this.props.hasCheckedItems)
+            ? null
+            : (
             <div className="ph3">
               <section
-                className={`ph2 inline-flex nowrap ${
-                  !this.props.hasCheckedItems
-                    ? 'dn'
-                    : 'pointer'
-                }`}
-                onClick={!this.props.hasCheckedItems ? null : this.handleExport}
+                className="ph2 inline-flex nowrap pointer"
+                onClick={this.handleExport}
               >
                 <i className="fa fa-cloud-download-alt pr2 blue" />
                 <div className="dn di-l blue">
@@ -136,19 +134,13 @@ class FixedToolbar extends React.Component {
             </div>
           )}
           {/* DELETE CHECKED ROWS BUTTON */}
-          {toolbarConfigs && toolbarConfigs.hideDeleteBtn ? null : (
+          {toolbarConfigs && (toolbarConfigs.hideDeleteBtn || !this.props.hasCheckedItems)
+            ? null
+            : (
             <div className="ph3">
               <section
-                className={`ph2 inline-flex nowrap ${
-                  !this.props.hasCheckedItems
-                    ? 'dn'
-                    : 'pointer'
-                }`}
-                onClick={
-                  !this.props.hasCheckedItems
-                    ? null
-                    : this.handleDeleteCheckedRows
-                }
+                className="ph2 inline-flex nowrap pointer"
+                onClick={this.handleDeleteCheckedRows}
               >
                 <i className="fa fa-trash pr2 red" aria-hidden="true" />
                 <div className="dn di-l red">
@@ -158,22 +150,13 @@ class FixedToolbar extends React.Component {
             </div>
           )}
           {/* UNDO ALL CHANGES BUTTON */}
-          {toolbarConfigs && toolbarConfigs.hideUndoBtn ? null : toolbarConfigs &&
-            toolbarConfigs.resetButton ? (<toolbarConfigs.resetButton
-              onClick={
-                !this.props.hasEditedItems ? null : this.handleCancelStaging
-              }
-            />) : (
+          {toolbarConfigs && (toolbarConfigs.hideUndoBtn || !this.props.hasEditedItems)
+            ? null
+            : (
               <div className="ph3">
                 <section
-                  className={`ph2 inline-flex nowrap ${
-                    !this.props.hasEditedItems
-                      ? 'o-30 cursor-not-allowed'
-                      : 'pointer'
-                  }`}
-                  onClick={
-                    !this.props.hasEditedItems ? null : this.handleCancelStaging
-                  }
+                  className="ph2 inline-flex nowrap pointer"
+                  onClick={this.handleCancelStaging}
                   style={toolbarConfigs && toolbarConfigs.undoAllChangesButtonOverrideStyle || {}}
                 >
                   <i className={`fa fa-undo pr2 ${
@@ -197,6 +180,7 @@ class FixedToolbar extends React.Component {
               ? null
               : <div className="ph3">
                 <SaveButton
+                  hasEditedItems={this.props.hasEditedItems}
                   customStyle={toolbarConfigs && toolbarConfigs.saveButtonOverrideStyle || {}}
                   handleSaveAll={this.handleSaveAll}
                   disabled={!this.props.hasEditedItems}

@@ -11,7 +11,8 @@ class SaveButton extends React.Component {
   }
 
   render() {
-    const { customStyle } = this.props
+    const { customStyle, hasEditedItems } = this.props
+    if (!hasEditedItems) return null
     return (
       <div
         className={`pv2 br3 ph2 inline-flex nowrap ${
@@ -49,6 +50,7 @@ SaveButton.propTypes = {
   handleSaveAll: PropTypes.func,
   disabled: PropTypes.bool,
   customStyle: PropTypes.object,
+  hasEditedItems: PropTypes.bool,
 }
 
 export default SaveButton
