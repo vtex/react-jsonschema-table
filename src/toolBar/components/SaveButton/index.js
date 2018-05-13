@@ -22,8 +22,8 @@ class SaveButton extends React.Component {
         onClick={this.handleClick}
         style={customStyle || {}}
       >
-        <i className="fa fa-save pr2 blue" />
-        <div className="dn di-l blue">
+        <i className={`fa fa-save pr2 ${customStyle ? '' : 'blue'}`} />
+        <div className={`dn di-l ${customStyle ? '' : 'blue'}`}>
           <FormattedMessage
             id={this.state.isSaving
             ? 'FixedToolbar.saving'
