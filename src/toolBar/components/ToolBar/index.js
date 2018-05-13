@@ -185,12 +185,14 @@ class FixedToolbar extends React.Component {
           {/* SAVE ALL BUTTON */}
           {toolbarConfigs &&
             toolbarConfigs.hideSaveBtn ? null : toolbarConfigs &&
-              toolbarConfigs.saveButton ? (
-                <toolbarConfigs.saveButton
-                  onSave={this.handleSaveAll}
-                  disabled={!this.props.hasEditedItems}
-                />
-              ) : (
+              toolbarConfigs.saveButton ? () => {
+                toolbarConfigs.saveButton.props = {
+                  ...toolbarConfigs.saveButton.props,
+                  onSave: this.handleSaveAll,
+                  disabled: !this.props.hasEditedItems,
+                }
+                return toolbarConfigs.saveButton
+               } : (
                 <div className="ph3">
                   <SaveButton
                     handleSaveAll={this.handleSaveAll}
