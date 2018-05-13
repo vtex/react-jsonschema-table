@@ -174,9 +174,18 @@ class FixedToolbar extends React.Component {
                   onClick={
                     !this.props.hasEditedItems ? null : this.handleCancelStaging
                   }
+                  style={toolbarConfigs && toolbarConfigs.undoAllChangesButtonOverrideStyle || {}}
                 >
-                  <i className="fa fa-undo pr2 blue" />
-                  <div className="dn di-l blue">
+                  <i className={`fa fa-undo pr2 ${
+                    toolbarConfigs && toolbarConfigs.undoAllChangesButtonOverrideStyle
+                      ? ''
+                      : 'blue'
+                    }`} />
+                  <div className={`dn di-l ${
+                    toolbarConfigs && toolbarConfigs.undoAllChangesButtonOverrideStyle
+                      ? ''
+                      : 'blue'
+                    }`}>
                     <FormattedMessage id="FixedToolbar.undo" />
                   </div>
                 </section>
