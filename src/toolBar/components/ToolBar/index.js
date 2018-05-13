@@ -38,6 +38,14 @@ class FixedToolbar extends React.Component {
         </div>
       )
     } else {
+      if (toolbarConfigs && toolbarConfigs.saveButton) {
+        // hydrate custom save button with our props
+        toolbarConfigs.saveButton.props = {
+          ...toolbarConfigs.saveButton.props,
+          onSave: this.handleSaveAll,
+          disabled: !this.props.hasEditedItems,
+        }
+      }
       toolBarContent = (
         <div className="flex items-center mb3">
           <div className="flex items-center">
@@ -184,22 +192,20 @@ class FixedToolbar extends React.Component {
             )}
           {/* SAVE ALL BUTTON */}
           {toolbarConfigs &&
-            toolbarConfigs.hideSaveBtn ? null : toolbarConfigs &&
-              toolbarConfigs.saveButton ? () => {
-                toolbarConfigs.saveButton.props = {
-                  ...toolbarConfigs.saveButton.props,
-                  onSave: this.handleSaveAll,
-                  disabled: !this.props.hasEditedItems,
-                }
-                return toolbarConfigs.saveButton
-               } : (
-                <div className="ph3">
-                  <SaveButton
-                    handleSaveAll={this.handleSaveAll}
-                    disabled={!this.props.hasEditedItems}
-                  />
-                </div>
-              )}
+            toolbarConfigs.hideSaveBtn
+              ? null
+              : toolbarConfigs &&
+                toolbarConfigs.saveButton
+                  ? toolbarConfigs.saveButton
+                  : (
+                    <div className="ph3">
+                      <SaveButton
+                        handleSaveAll={this.handleSaveAll}
+                        disabled={!this.props.hasEditedItems}
+                      />
+                    </div>
+                  )
+            }
           {this.renderCancelStagingConfirmation()}
         </div>
       )
