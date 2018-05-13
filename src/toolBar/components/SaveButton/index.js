@@ -11,6 +11,7 @@ class SaveButton extends React.Component {
   }
 
   render() {
+    const { customStyle } = this.props
     return (
       <div
         className={`pv2 br3 ph2 inline-flex nowrap ${
@@ -19,6 +20,7 @@ class SaveButton extends React.Component {
             : 'pointer'
         }`}
         onClick={this.handleClick}
+        style={customStyle || {}}
       >
         <i className="fa fa-save pr2 blue" />
         <div className="dn di-l blue">
@@ -46,6 +48,7 @@ class SaveButton extends React.Component {
 SaveButton.propTypes = {
   handleSaveAll: PropTypes.func,
   disabled: PropTypes.bool,
+  customStyle: PropTypes.object,
 }
 
 export default SaveButton
