@@ -104,12 +104,13 @@ const fakeData = new Array(50).fill(true).map((item, index) => {
       email: faker.internet.email(),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
-      birthDate: faker.date.past().toISOString(),
+      birthdate: faker.date.past(),
       address: {
         street: faker.address.streetName(),
         postalcode: faker.address.zipCode(),
         number: faker.random.number(),
-      }
+      },
+      isActive: faker.random.boolean()
     },
     status: 'loaded',
   }
@@ -150,7 +151,7 @@ class App extends Component {
 
   renderReadOnlyComponent = () => {
     return (
-      <div className="mh6">
+      <div className="mh6 relative vh-75">
         <ReadOnlyTable
           schema={schema}
           items={fakeData}

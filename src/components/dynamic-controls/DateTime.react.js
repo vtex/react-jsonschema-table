@@ -32,7 +32,6 @@ class DateTime extends React.Component {
   }
 
   render() {
-    window.momento = moment
     const handlers = {
       moveUp: this.onArrow,
       moveDown: this.onArrow,
