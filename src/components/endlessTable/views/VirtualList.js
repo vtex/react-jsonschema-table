@@ -159,7 +159,6 @@ export default class VirtualList extends React.Component {
     return this.state.items
   }
   render() {
-    console.log('rendering virtual list with this state:', this.state)
     return (
       <this.props.tagName
         // style={{
