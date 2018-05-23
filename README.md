@@ -18,7 +18,7 @@ npm install --save react-jsonschema-table
 ```js
 import React, { Component } from 'react'
 
-import Table from 'react-jsonschema-table'
+import { SpreadSheetTable } from 'react-jsonschema-table'
 
 const schema = {
   properties: {
@@ -38,10 +38,49 @@ const schema = {
   }
 }
 
+const UIschema = {
+  title: 'Users',
+  fields: {
+    firstName: {
+      width: 300,
+    },
+    lastName: {
+      width: 300,
+    },
+    email: {
+      width: 300,
+    }
+  },
+  list: ['email', 'firstName', 'lastName'],
+  editor: {
+    settings: {
+      sections: [
+        {
+          name: 'Personal Data',
+          fields: [
+            'firstName',
+            'email',
+            'lastName',
+          ],
+        },
+      ],
+    },
+  },
+}
+
+const items = [{
+  virtualId: 0,
+  document: {
+    name: 'Jhon',
+    lastName: 'Doe',
+    email: 'jhon@doe.com',
+  }
+}]
+
 class Example extends Component {
   render () {
     return (
-      <Table schema={schema} />
+      <SpreadSheetTable schema={schema} UIschema={UIschema} items={items} />
     )
   }
 }
@@ -49,6 +88,8 @@ class Example extends Component {
 ## API
 
 **schema:** Is the JSONSchema that contains the estructure and validation rules of the rendered data.
+
+**UIschema:** Is the JSONSchema that contains necessary data for UI purposes, such as labels, width and editor sections for complete row editing.
 
 **items**: An array of document objectcs compliant to the schema format. exemple:
 ```js
