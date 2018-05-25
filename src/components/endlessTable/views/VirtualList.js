@@ -7,7 +7,7 @@ export default class VirtualList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      items: [],
+      items: props.items || [],
       bufferStart: 0,
       height: 0,
     }
@@ -17,7 +17,7 @@ export default class VirtualList extends React.Component {
   getVirtualState(props) {
     // default values
     var state = {
-      items: [],
+      items: props.items || [],
       bufferStart: 0,
       height: 0,
     }
@@ -161,11 +161,11 @@ export default class VirtualList extends React.Component {
   render() {
     return (
       <this.props.tagName
-        style={{
-          boxSizing: 'border-box',
-          height: this.state.height,
-          paddingTop: this.state.bufferStart,
-        }}
+        // style={{
+        //   boxSizing: 'border-box',
+        //   height: this.state.height,
+        //   paddingTop: this.state.bufferStart,
+        // }} // keeping this in case of returning to overflow-scroll
       >
         {this.state.items.map(this.props.renderItem)}
       </this.props.tagName>

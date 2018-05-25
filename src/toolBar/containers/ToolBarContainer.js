@@ -29,6 +29,7 @@ const mapStateToProps = (state, ownProps) => {
     items: state.items,
     stagingItemsCallback: ownProps.stagingItemsCallback,
     checkedItemsCallback: ownProps.checkedItemsCallback,
+    toolbarConfigs: ownProps.toolbarConfigs,
   }
 }
 

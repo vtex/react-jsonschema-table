@@ -40,7 +40,7 @@
   "FixedToolbar.StateFilters.invalid": "Invalid",
   "FixedToolbar.download": "Download",
   "FixedToolbar.deleteChecked": "Delete Checked",
-  "FixedToolbar.undo": "Undo Changes",
+  "FixedToolbar.undo": "Reset Changes",
   "Contextualmenu.copy": "Copy",
   "Contextualmenu.paste": "Paste",
   "LogicalOperator.and": "AND",

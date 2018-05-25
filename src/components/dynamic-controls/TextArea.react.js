@@ -69,16 +69,20 @@ class TextArea extends React.Component {
     } else {
       control = (
         <div
-          className={`flex items-center w-100 ph4 h-inherit outline-0 ${this.props.isFocus ? `bw1 ba ${borderColor} bg-lightest-blue pl05 ` : this.props.hasError ? 'bw1 ba b--red pl05' : 'pl2'}`}
+          className={`flex items-center w-100 ph4 h-inherit outline-0 ${
+            this.props.isFocus
+              ? `bw1 ba ${borderColor} pl5 `
+              : this.props.hasError
+                ? 'bw1 ba b--red pl05'
+                : 'pl2'
+          }`}
           ref={ref => {
             this.refTextArea = ref
           }}
           onDoubleClick={this.props.onEditCell}
           onKeyDown={this.handleKeyDown}
         >
-          <div className="relative h-auto truncate">
-            {this.state.value}
-          </div>
+          <div className="relative h-auto truncate">{this.state.value}</div>
         </div>
       )
     }
@@ -89,7 +93,7 @@ class TextArea extends React.Component {
     if (this.props.value !== this.state.value) {
       this.props.setChange(this.state.value)
     }
-  };
+  }
 
   onEscape = () => {
     if (this.props.isEditing) {
@@ -100,13 +104,13 @@ class TextArea extends React.Component {
         this.props.onExitEditCell(this.props.cell)
       }
     }
-  };
+  }
 
-  onArrow = () => {};
+  onArrow = () => {}
 
   handleChange = e => {
     this.setState({ value: e.target.value })
-  };
+  }
 }
 
 TextArea.propTypes = {

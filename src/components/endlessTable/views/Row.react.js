@@ -67,12 +67,12 @@ class Row extends React.Component {
     }
     var shouldUpdate = false
     var currentProps = this.props
-    var attrs = _.filter(_.allKeys(nextProps.item.document), function(key) {
+    var attrs = _.filter(_.allKeys(nextProps.item.document), function (key) {
       return key[0] !== '_'
     })
     shouldUpdate =
       !shouldUpdate &&
-      _.some(attrs, function(key) {
+      _.some(attrs, function (key) {
         return (
           (nextProps.item.document && !currentProps.item.document) ||
           (!nextProps.item.document && currentProps.item.document) ||
@@ -115,7 +115,6 @@ class Row extends React.Component {
     var itemDocument = item.document
     var virtualID = item.virtualID
     var columns = this.props.columns || []
-    var focusedCell = this.props.focusedCell
     var selectionRange = this.props.selectionRange
     var fillHandleCell =
       selectionRange.cellA && selectionRange.cellB
@@ -141,18 +140,18 @@ class Row extends React.Component {
           this.rowlist = input
         }}
         handlers={handlers}
-        className="flex relative no-underline br b--silver mv0"
-        style={{ height: '35px' }}
+        className="flex relative no-underline mv0"
+        style={{ height: '44px' }}
       >
         <div
-            onMouseEnter={() => this.setState({ isHoveringIndexCell: true })}
-            onMouseLeave={() => this.setState({ isHoveringIndexCell: false })}
-            className="flex items-center justify-center bl br bb b--silver"
-            style={{minWidth: '50px', height: '35px'}} >
+          onMouseEnter={() => this.setState({ isHoveringIndexCell: true })}
+          onMouseLeave={() => this.setState({ isHoveringIndexCell: false })}
+          className="flex items-center justify-center bg-near-white bl br bb b--silver"
+          style={{ minWidth: '50px', height: '44px' }} >
           <div
             className={
               this.props.isChecking || this.state.isHoveringIndexCell
-              ? 'db' : 'dn'}>
+                ? 'db' : 'dn'}>
             <input
               ref={input => {
                 this.rowCheckBox = input
@@ -165,15 +164,9 @@ class Row extends React.Component {
           <div
             className={
               this.props.isChecking || this.state.isHoveringIndexCell
-              ? 'dn' : 'db'}>
+                ? 'dn' : 'db'}>
             {new Intl.NumberFormat().format(virtualID + 1)}
           </div>
-        </div>
-        <div
-          className="relative flex items-center justify-center bg-transparent bb b--silver tl ph4 f3"
-          style={{ minWidth: '30px', width: '30px'}}
-          onClick={this.handleEdit}>
-          <i className="pointer fa fa-expand" />
         </div>
         {columns.map((column, colIndex) => {
           const props = this.createPropsObject(
@@ -209,8 +202,8 @@ class Row extends React.Component {
         ? _.filter(item.validationErrors, error => {
           return (
             error.dataPath.includes(`.${column.fieldName}[`) ||
-              error.dataPath.includes(`.${column.fieldName}.`) ||
-              error.dataPath === `.${column.fieldName}`
+            error.dataPath.includes(`.${column.fieldName}.`) ||
+            error.dataPath === `.${column.fieldName}`
           )
         })
         : [],

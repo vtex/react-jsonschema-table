@@ -1,18 +1,23 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader'
+import faker from 'faker'
+import Toggle from '@vtex/styleguide/lib/Toggle'
 
-import JsonSchemaTable from './index.js'
+import {
+  SpreadsheetTable,
+  ReadOnlyTable,
+} from './index.js'
 
 const schema = {
   properties: {
-    name: {
+    firstName: {
       type: 'string',
-      title: 'Name',
+      title: 'First Name',
     },
     lastName: {
       type: 'string',
-      title: 'LastName',
+      title: 'Last Name',
     },
     email: {
       type: 'string',
@@ -22,6 +27,7 @@ const schema = {
     birthdate: {
       type: 'string',
       format: 'date-time',
+      title: 'Birth date'
     },
     address: {
       type: 'object',
@@ -51,13 +57,16 @@ const schema = {
 const UIschema = {
   title: 'Users',
   fields: {
-    name: {
-      width: 200,
+    firstName: {
+      width: 300,
     },
     lastName: {
       width: 300,
     },
     email: {
+      width: 300,
+    },
+    birthdate: {
       width: 300,
     },
     address: {
@@ -67,14 +76,14 @@ const UIschema = {
       width: 300,
     },
   },
-  list: ['email', 'name', 'lastName', 'birthdate', 'address', 'isActive'],
+  list: ['email', 'firstName', 'lastName', 'birthdate', 'address', 'isActive'],
   editor: {
     settings: {
       sections: [
         {
           name: 'Personal Data',
           fields: [
-            'name',
+            'firstName',
             'email',
             'lastName',
             'birthdate',
@@ -87,11 +96,38 @@ const UIschema = {
   },
 }
 
+const fakeData = new Array(50).fill(true).map((item, index) => {
+  return {
+    virtualID: index,
+    document: {
+      index,
+      email: faker.internet.email(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      birthdate: faker.date.past(),
+      address: {
+        street: faker.address.streetName(),
+        postalcode: faker.address.zipCode(),
+        number: faker.random.number(),
+      },
+      isActive: faker.random.boolean()
+    },
+    status: 'loaded',
+  }
+})
+
 class App extends Component {
-  render() {
+  constructor(){
+    super()
+    this.state = {
+      readOnly: false
+    }
+  }
+
+  renderSpreadSheetComponent = () => {
     return (
       <div>
-        <JsonSchemaTable
+        <SpreadsheetTable
           schema={schema}
           stagingItemsCallback={docs => {
             console.log('save this staging documents:', docs)
@@ -99,41 +135,59 @@ class App extends Component {
           checkedItemsCallback={docs => {
             console.log('delete this checked documents:', docs)
           }}
-          items={[
-            {
-              virtualID: 0,
-              document: {
-                id: '4c177c9e-499e-11e8-81e8-88f7b34fff36',
-                email: 'jhon@doe.com',
-                name: 'Jhon',
-                lastName: 'Doe',
-                birthdate: '2018-04-20T03:00:00.000Z',
-                address: {},
-              },
-              status: 'loaded',
-            },
-            {
-              virtualID: 1,
-              document: {
-                id: '2316cc32-47f2-11e8-81e8-915df33538ea',
-                email: 'jane@doe.com',
-                name: 'Jane',
-                lastName: 'Doe',
-                address: {
-                  street: 'P. Sherman',
-                  number: 42,
-                  Postalcode: 'Wallaby Way, Sidney',
-                },
-                isActive: true,
-              },
-              status: 'loaded',
-            },
-          ]}
+          items={fakeData}
           context={{}}
           UIschema={UIschema}
         >
-          <p>Children prop</p>
-        </JsonSchemaTable>
+          <input
+            type="text"
+            className="ml4 mv3 pa3 h2 ba br2 b--light-gray w-70"
+            placeholder="Children can be passed to be rendered here..."
+          />
+        </SpreadsheetTable>
+      </div>
+    )
+  }
+
+  renderReadOnlyComponent = () => {
+    return (
+      <div className="mh6 relative vh-75">
+        <ReadOnlyTable
+          schema={schema}
+          items={fakeData}
+          UIschema={UIschema}
+        />
+      </div>
+    )
+  }
+
+  toggleReadOnly = () => {
+    const { readOnly } = this.state
+    this.setState({ readOnly: !readOnly })
+  }
+
+  render() {
+    const { readOnly } = this.state
+    return (
+      <div>
+        <div
+          className="flex flex-row justify-between w-100 bg-near-white pl7 pt8 pb5 b f2 mb7"
+        >
+          React JsonschemaTable Examples
+          <div className="mr6 flex items-center">
+            <span className="mr6 f4">
+              Read Only Mode
+            </span>
+            <div style={{ transform: 'scale(0.6)' }}>
+              <Toggle checked={readOnly} onChange={this.toggleReadOnly} />
+            </div>
+          </div>
+        </div>
+        {
+          readOnly
+            ? this.renderReadOnlyComponent()
+            : this.renderSpreadSheetComponent()
+        }
       </div>
     )
   }

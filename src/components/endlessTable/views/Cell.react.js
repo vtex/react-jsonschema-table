@@ -84,13 +84,12 @@ class Cell extends React.Component {
           (this.props.cell.col === 0
             ? 'relative h-100 outline-0 bb b--silver'
             : 'relative h-100 outline-0 bl bb b--silver') +
-          (this.props.cell.col === this.props.columnsCount - 1
-            ? ' br'
-            : ' ') +
-          (this.props.isSelected ? ' bg-lightest-blue' : '') +
-          (this.props.isFillHandleSelected ? ' bg-near-white' : '')
+          (this.props.cell.col === this.props.columnsCount - 1 ? ' br' : '') +
+          (this.props.isSelected || this.props.isFillHandleSelected
+            ? ' bg-washed-blue'
+            : '')
         }
-        style={this.getInlineStyle(this.props.width, this.props.cell.col)}
+        style={{ minWidth: this.props.width, width: this.props.width }}
         onMouseDown={this.handleFocus}
         onKeyDown={this.handleKeyDown}
         onKeyPress={this.handleKeyPress}
@@ -116,16 +115,6 @@ class Cell extends React.Component {
         {popover}
       </HotKeys>
     )
-  }
-
-  getInlineStyle(width, col) {
-    var style = {}
-    if (width) { // 30px is the size of the edit row btn
-      style.minWidth = `${col === 0 ? width - 30 : width}px`
-      style.width = `${col === 0 ? width - 30 : width}px`
-    }
-
-    return style
   }
 
   handleFocus = () => {
