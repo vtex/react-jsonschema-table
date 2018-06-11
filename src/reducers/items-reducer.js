@@ -177,11 +177,24 @@ export default (state = initialState, action) => {
       const { id, checked } = action
       const newState = Object.assign({}, state)
       if (checked && !newState.checkedItems.includes(id)) {
+        console.log('>> marca esse: ', id)
         newState.checkedItems.push(id)
       }
+      if (checked && !id) {
+        console.log('>> marca tudo')
+        newState.source.forEach(doc => {
+          if (!newState.checkedItems.includes(doc.document.id)) {
+            newState.checkedItems.push(doc.document.id)
+          }
+        })
+      }
       if (!checked) {
-        if (!id) newState.checkedItems = []
+        if (!id) {
+          console.log('>> desmarca tudo')
+          newState.checkedItems = []
+        }
         else {
+          console.log('>> desmarca esse: ', id)
           newState.checkedItems = newState.checkedItems.filter(
             item => item !== id
           )

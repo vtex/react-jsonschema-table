@@ -27,6 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     selectionRange: state.table.selectionRange,
     selectionFillHandleRange: state.table.selectionFillHandleRange,
     isChecking: state.items.checkedItems && state.items.checkedItems.length > 0,
+    checkedItems: state.items.checkedItems,
     hiddenFields: state.filter.hiddenFields,
   }
 }

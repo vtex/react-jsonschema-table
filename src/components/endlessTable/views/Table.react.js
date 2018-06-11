@@ -44,6 +44,7 @@ class Table extends React.Component {
       <div className={this.props.form.showModal ? 'z-0' : ''}>
         <div className="mh4 w-100 overflow-hidden" style={{ height: '39px' }}>
           <Header
+            checkedItems={this.props.checkedItems}
             onCheckRow={this.props.onCheckRow}
             {...this.props}
             ref={ref => {
