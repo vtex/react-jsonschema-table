@@ -50,7 +50,7 @@ class ObjectControl extends React.Component {
   };
 
   renderObjectValues = (value, schema) => {
-    if (!value) {
+    if (!value || !schema) {
       return
     }
     let stringValue = ''
