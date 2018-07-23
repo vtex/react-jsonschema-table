@@ -74,6 +74,19 @@ class Example extends Component {
 
 **checkedItemsCallback**: function that return all the checked documents when 'delete' button is clicked, so you can delete them in your API or whatever.
 
+**toolbarConfigs**: object to configure and toggle toolbar functions. example:
+```js
+toolbarConfigs: {
+  hideStateFilterBtn: true,
+  hideColumnsVisibilityBtn: true,
+  hideDownloadBtn: true,
+  hideNewLineBtn: true,
+  hideDeleteBtn: true,
+  hideUndoBtn: true,
+  hideSaveBtn: true,
+}
+```
+
 ## Local setup for developing
 
 Setup project

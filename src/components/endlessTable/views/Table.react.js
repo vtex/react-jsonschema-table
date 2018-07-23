@@ -42,8 +42,9 @@ class Table extends React.Component {
 
     return (
       <div className={this.props.form.showModal ? 'z-0' : ''}>
-        <div className="mh4 overflow-hidden" style={{height: '39px'}}>
+        <div className="mh4 w-100 overflow-hidden" style={{ height: '39px' }}>
           <Header
+            checkedItems={this.props.checkedItems}
             onCheckRow={this.props.onCheckRow}
             {...this.props}
             ref={ref => {
@@ -54,26 +55,26 @@ class Table extends React.Component {
           </Header>
         </div>
         <div
-          className="fixed overflow-scroll vh-75 w-100 mh4 ph2"
+          className="mh4 w-100 overflow-x-scroll overflow-y-hidden"
           id="listContainer"
           onScroll={this.handleScroll}
           ref={div => {
             this.scrollDiv = div
-            !this.state.scrollDiv && this.setState({scrollDiv: div})
+            !this.state.scrollDiv && this.setState({ scrollDiv: div })
           }}
         >
-          {this.state.scrollDiv
-            ? <HotKeys className="list">
-                <Rows
-                  onGetNotLoadedDocument={this.handleFetchItems}
-                  onScroll={this.handleScrollVertically}
-                  onCheckRow={this.props.onCheckRow}
-                  columns={columns}
-                  listContainer={this.state.scrollDiv}
-                  {...this.props}
-                />
-              </HotKeys>
-            : null //loader
+          {this.state.scrollDiv ? (
+            <HotKeys className="list">
+              <Rows
+                onGetNotLoadedDocument={this.handleFetchItems}
+                onScroll={this.handleScrollVertically}
+                onCheckRow={this.props.onCheckRow}
+                columns={columns}
+                listContainer={this.state.scrollDiv}
+                {...this.props}
+              />
+            </HotKeys>
+          ) : null // loader
           }
         </div>
       </div>

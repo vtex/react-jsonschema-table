@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 class Header extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      isHoveringIndexHeaderCell: false
+    }
     this.shouldComponentUpdate = this.shouldComponentUpdate.bind(this)
-    this.handleClearCheckedRows = this.handleClearCheckedRows.bind(this)
-    this.getInlineStyle = this.getInlineStyle.bind(this)
   }
 
   shouldComponentUpdate(nextProps) {
@@ -32,25 +33,30 @@ class Header extends React.Component {
   }
 
   render() {
+    const { isHoveringIndexHeaderCell } = this.state
+    const { checkedItems, items } = this.props
+    const areAllRowsChecked = !!(checkedItems.length >= items.length)
+
     return (
       <div
-        className="relative inline-flex pt1 mt0" 
-        style={this.getInlineStyle()}>
-        <div className="pt1 ph2 flex dib">
+        className="relative inline-flex pt1 mt0"
+        style={this.getInlineStyle()}
+      >
+        <div className="pt1 flex dib">
           <div
-            className="flex items-center justify-center ba b--silver"
-            style={{width: '50px', height: '35px'}}>
+            className="flex items-center justify-center bg-near-white ba b--silver"
+            style={{ width: '50px', height: '35px' }}
+            onMouseEnter={() => this.setState({ isHoveringIndexHeaderCell: true })}
+            onMouseLeave={() => this.setState({ isHoveringIndexHeaderCell: false })}
+          >
             <div className="flex items-center justify-center">
-              {this.props.isChecking ? (
-                <input
+              <input
                   type="checkbox"
-                  title="Limpar seleção"
-                  checked={this.props.isChecking}
-                  onChange={this.handleClearCheckedRows}
+                  title={areAllRowsChecked ? 'Uncheck All' : 'Check All'}
+                  className={this.props.isChecking || isHoveringIndexHeaderCell ? '' : 'dn' }
+                  checked={areAllRowsChecked}
+                  onChange={areAllRowsChecked ? this.handleClearCheckedRows : this.handleCheckAllRows}
                 />
-              ) : (
-                ''
-              )}
             </div>
           </div>
           {this.props.children}
@@ -59,11 +65,15 @@ class Header extends React.Component {
     )
   }
 
-  handleClearCheckedRows() {
+  handleClearCheckedRows = () => {
     this.props.onCheckRowChange(null, false)
   }
 
-  getInlineStyle() {
+  handleCheckAllRows = () => {
+    this.props.onCheckRowChange(null, true)
+  }
+
+  getInlineStyle = () => {
     var style = {}
     var scrollLeft = this.props.scrollLeft
     if (scrollLeft) {

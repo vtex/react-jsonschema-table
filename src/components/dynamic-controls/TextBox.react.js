@@ -14,9 +14,7 @@ var PTRN_REGEX = new RegExp(`[${MASK_CHARS.join(',')}]`, 'g')
 class TextBox extends React.Component {
   constructor(props) {
     super(props)
-    const type = this.props.type === ('number' || 'integer')
-      ? 'number'
-      : 'text'
+    const type = this.props.type === ('number' || 'integer') ? 'number' : 'text'
     this.state = { type: type }
   }
 
@@ -107,8 +105,7 @@ class TextBox extends React.Component {
           handlers={handlers}
           className={
             this.props.renderType === 'cell'
-              ? `flex items-center h-inherit z-3 w-100 bw1 bg-white ba ${
-                borderColor}`
+              ? `flex items-center h-inherit z-3 w-100 bw1 bg-white ba ${borderColor}`
               : `w100 z-3 bw1 br3 pa2 ba ${formBorderColor}`
           }
         >
@@ -129,17 +126,16 @@ class TextBox extends React.Component {
     } else {
       control = (
         <div
-          className={
-            `flex items-center w-100 ph4 h-inherit outline-0 ${
-              this.props.isFocus
-                ? `bw1 ba ${borderColor} bg-lightest-blue pl05 `
-                : this.props.hasError ? 'bw1 ba b--red pl05' : 'pl2'}`
-          }
+          className={`flex items-center w-100 ph4 h-inherit outline-0 ${
+            this.props.isFocus
+              ? `bw1 ba ${borderColor} pl5 `
+              : this.props.hasError
+                ? 'bw1 ba b--red pl5'
+                : 'pl2'
+          }`}
           onDoubleClick={this.handleEdit}
         >
-          <div className={'truncate'}>
-            {this.state.maskedValue}
-          </div>
+          <div className={'truncate'}>{this.state.maskedValue}</div>
         </div>
       )
     }
@@ -200,21 +196,21 @@ class TextBox extends React.Component {
     console.log('textBoxBlur')
     if (!this.state.value && !this.props.value) return
     if (this.props.value !== this.state.value) {
-      const value = this.props.type === 'integer' ||
-        this.props.type === 'number'
-        ? Number(this.state.value)
-        : this.state.value
+      const value =
+        this.props.type === 'integer' || this.props.type === 'number'
+          ? Number(this.state.value)
+          : this.state.value
       this.props.setChange(value)
     }
-  };
+  }
 
   handleEdit = ev => {
     this.props.onEditCell(ev)
-  };
+  }
 
   handleChange = e => {
     this.processValue(e.target.value, this.props.isEditing)
-  };
+  }
 
   onEnter = () => {
     if (this.props.isEditing) {
@@ -223,20 +219,20 @@ class TextBox extends React.Component {
         this.props.onExitEditCell(this.props.cell)
       }
     }
-  };
+  }
 
   handleInputClick = () => {
     this.refTextBox.focus()
-  };
+  }
 
   onExitEdit = () => {
     this.setState({ value: this.props.value })
     if (this.props.onExitEditCell) {
       this.props.onExitEditCell(this.props.cell)
     }
-  };
+  }
 
-  onArrow = () => {};
+  onArrow = () => {}
 }
 
 TextBox.propTypes = {
