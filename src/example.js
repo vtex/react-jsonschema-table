@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader'
+import faker from 'faker'
 
 import JsonSchemaTable from './index.js'
 
@@ -9,10 +10,6 @@ const schema = {
     name: {
       type: 'string',
       title: 'Name',
-    },
-    lastName: {
-      type: 'string',
-      title: 'LastName',
     },
     email: {
       type: 'string',
@@ -54,20 +51,20 @@ const UIschema = {
     name: {
       width: 200,
     },
-    lastName: {
-      width: 300,
-    },
     email: {
       width: 300,
     },
     address: {
       width: 300,
     },
+    birthdate: {
+      width: 300,
+    },
     isActive: {
       width: 300,
     },
   },
-  list: ['email', 'name', 'lastName', 'birthdate', 'address', 'isActive'],
+  list: ['email', 'name', 'birthdate', 'address', 'isActive'],
   editor: {
     settings: {
       sections: [
@@ -76,7 +73,6 @@ const UIschema = {
           fields: [
             'name',
             'email',
-            'lastName',
             'birthdate',
             'address',
             'isActive',
@@ -86,6 +82,22 @@ const UIschema = {
     },
   },
 }
+
+const fakeData = new Array(50).fill(true).map((item, index) => {
+  return {
+    document: {
+      email: faker.internet.email().toLowerCase(),
+      name: faker.name.findName(),
+      birthdate: faker.date.past(),
+      isActive: faker.random.boolean(),
+      address: {
+        street: faker.address.streetName(),
+        postalcode: faker.address.zipCode(),
+        number: faker.random.number(),
+      }
+    },
+  }
+})
 
 class App extends Component {
   render() {
@@ -99,36 +111,7 @@ class App extends Component {
           checkedItemsCallback={docs => {
             console.log('delete this checked documents:', docs)
           }}
-          items={[
-            {
-              virtualID: 0,
-              document: {
-                id: '4c177c9e-499e-11e8-81e8-88f7b34fff36',
-                email: 'jhon@doe.com',
-                name: 'Jhon',
-                lastName: 'Doe',
-                birthdate: '2018-04-20T03:00:00.000Z',
-                address: {},
-              },
-              status: 'loaded',
-            },
-            {
-              virtualID: 1,
-              document: {
-                id: '2316cc32-47f2-11e8-81e8-915df33538ea',
-                email: 'jane@doe.com',
-                name: 'Jane',
-                lastName: 'Doe',
-                address: {
-                  street: 'P. Sherman',
-                  number: 42,
-                  Postalcode: 'Wallaby Way, Sidney',
-                },
-                isActive: true,
-              },
-              status: 'loaded',
-            },
-          ]}
+          items={fakeData}
           context={{}}
           UIschema={UIschema}
         >
